@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التفاعل الذكي | Social Manager AI</title>
+    <meta name="description" content="أداة الردود الذكية والتفاعل الاستباقي مع منشورات لينكدإن">
+    <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="navbar-inner">
+        <a href="index.html" class="navbar-brand">
+            <span class="logo-icon">🚀</span>
+            Social Manager AI
+        </a>
+        <div class="navbar-links">
+            <a href="index.html" class="nav-link" id="navHome">✨ توليد</a>
+            <a href="history.html" class="nav-link" id="navHistory">📋 السجل</a>
+            <a href="engagement.html" class="nav-link active" id="navEngage">💬 التفاعل</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="page-header">
+        <h1>💬 مركز التفاعل الذكي</h1>
+        <p>الأداة السرية لبناء شبكتك. ارد على تعليقات جمهورك، وتفاعل مع منشورات المؤثرين باحترافية تامة.</p>
+    </div>
+
+    <!-- Mode Switcher -->
+    <div class="engage-mode-switcher">
+        <button id="modeEngagement" class="mode-btn mode-btn-active">
+            <span>⚔️</span>
+            <div>
+                <strong>التفاعل الاستباقي</strong>
+                <small>علّق على منشور مؤثر واجذب متابعيه</small>
+            </div>
+        </button>
+        <button id="modeReply" class="mode-btn">
+            <span>💌</span>
+            <div>
+                <strong>الرد على تعليقاتك</strong>
+                <small>الرد على تعليق جاءك على منشوراتك</small>
+            </div>
+        </button>
+    </div>
+
+    <!-- Input Card -->
+    <div class="card" style="margin-top: 2rem;">
+        <div id="modeLabel">
+            <h2 id="inputTitle">⚔️ التفاعل الاستباقي مع المؤثرين</h2>
+            <p id="inputHint" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+                انسخ نص منشور أي مؤثر في مجالك والصقه هنا، وسيكتب لك الذكاء الاصطناعي 3 تعليقات مختلفة تجذب متابعيه.
+            </p>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem; background: var(--bg); padding: 1.5rem; border-radius: var(--radius); border: 1px dashed var(--primary);">
+            <label for="urlInput" style="display: flex; justify-content: space-between; align-items: center;">
+                <span>🔗 خيار 1: جلب التعليقات من رابط المنشور (جديد!)</span>
+            </label>
+            <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                <input type="url" id="urlInput" placeholder="https://www.linkedin.com/posts/..." style="flex: 1; padding: 0.8rem; border: 1px solid var(--border); border-radius: var(--radius);">
+                <button id="scrapeBtn" class="btn btn-outline" style="white-space: nowrap;">
+                    <span class="btn-text">📥 اسحب التعليقات</span>
+                    <span class="loader hidden" style="width: 16px; height: 16px; border-width: 2px;"></span>
+                </button>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.8rem; line-height: 1.5;">
+                سيقوم النظام بفتح متصفح مخفي لجلب التعليقات. في المرة الأولى قد يطلب منك تسجيل الدخول لحسابك لتتمكن من القراءة.
+            </p>
+        </div>
+
+        <div class="form-group">
+            <label for="postInput" id="inputLabel">📋 خيار 2: نص المنشور أو التعليق (نسخ ولصق)</label>
+            <textarea id="postInput" style="min-height: 160px;" placeholder="إذا لم يعمل الرابط، الصق هنا نص المنشور أو التعليق مباشرة..."></textarea>
+        </div>
+
+        <button id="generateRepliesBtn" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">
+            <span class="btn-text">🪄 ولّد الردود الذكية الآن</span>
+            <span class="loader hidden"></span>
+        </button>
+    </div>
+
+    <!-- Results Section -->
+    <div id="repliesSection" class="hidden" style="margin-top: 2rem;">
+        <h2 style="margin-bottom: 1.5rem; font-size: 1.3rem;">✨ اختر الرد الأمثل:</h2>
+        <div id="repliesList" style="display: flex; flex-direction: column; gap: 1.5rem;"></div>
+        
+        <!-- Tips -->
+        <div class="card" style="margin-top: 2rem; background: linear-gradient(135deg, var(--primary-soft), var(--accent-soft)); border-color: var(--primary);">
+            <h3 style="color: var(--primary); margin-bottom: 0.8rem;">💡 نصائح من الخبراء لزيادة التفاعل:</h3>
+            <ul style="padding-right: 1.5rem; color: var(--text); line-height: 2.2; font-size: 0.95rem;">
+                <li>علّق على منشورات المؤثرين في أول <strong>60 دقيقة</strong> من نشرها لتظهر في الأعلى.</li>
+                <li>تجنب التعليقات القصيرة مثل "رائع!" لأن الخوارزمية تخفيها.</li>
+                <li>ابدأ تعليقك بـ "@اسم المؤثر" لإرسال إشعار له وزيادة فرصة رده عليك.</li>
+                <li>استهدف 3-5 مؤثرين في مجالك يومياً بتعليقات متنوعة.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="engagement.js?v=1"></script>
+</body>
+</html>

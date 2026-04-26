@@ -1,0 +1,31 @@
+# Environment variables (NEVER push this)
+.env
+
+# LinkedIn session (sensitive)
+src/linkedin_state.json
+
+# Database (local data)
+*.db
+
+# Generated images
+outputs/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

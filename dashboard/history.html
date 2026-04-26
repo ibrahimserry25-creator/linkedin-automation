@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سجل المنشورات | Social Manager AI</title>
+    <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="navbar-inner">
+        <a href="index.html" class="navbar-brand">
+            <span class="logo-icon">🚀</span>
+            Social Manager AI
+        </a>
+        <div class="navbar-links">
+            <a href="index.html" class="nav-link">✨ توليد</a>
+            <a href="history.html" class="nav-link active">📋 السجل</a>
+            <a href="engagement.html" class="nav-link">💬 التفاعل</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="page-header">
+        <h1>📋 سجل المنشورات</h1>
+        <p>جميع المنشورات التي تم توليدها — يمكنك التعديل أو الحذف</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-bar" id="statsBar">
+        <div class="stat-card stat-primary">
+            <div class="stat-num" id="statTotal">—</div>
+            <div class="stat-label">إجمالي المنشورات</div>
+        </div>
+        <div class="stat-card stat-success">
+            <div class="stat-num" id="statPublished">—</div>
+            <div class="stat-label">تم نشرها</div>
+        </div>
+        <div class="stat-card stat-warning">
+            <div class="stat-num" id="statScheduled">—</div>
+            <div class="stat-label">مجدولة</div>
+        </div>
+    </div>
+
+    <!-- List -->
+    <div id="historyList" class="history-grid"></div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay hidden" id="editModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>✏️ تعديل المنشور</h3>
+            <button class="modal-close" id="modalClose">✕</button>
+        </div>
+        <textarea class="modal-textarea" id="modalContent" placeholder="اكتب المحتوى هنا..."></textarea>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="modalSave">💾 حفظ التعديلات</button>
+            <button class="btn btn-outline" id="modalCancel">إلغاء</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay hidden" id="deleteModal">
+    <div class="modal" style="max-width: 400px; text-align: center;">
+        <div style="font-size: 3.5rem; margin-bottom: 1rem;">⚠️</div>
+        <h3 style="margin-bottom: 0.5rem; color: var(--text);">تأكيد الحذف</h3>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">هل أنت متأكد من حذف هذا المنشور نهائياً؟ لا يمكن التراجع عن هذا الإجراء.</p>
+        <div class="modal-footer" style="flex-direction: column;">
+            <button class="btn btn-danger" id="confirmDelete" style="width: 100%;">🗑️ نعم، احذف المنشور</button>
+            <button class="btn btn-outline" id="cancelDelete" style="width: 100%;">إلغاء</button>
+        </div>
+    </div>
+</div>
+
+<script src="history.js?v=2"></script>
+</body>
+</html>

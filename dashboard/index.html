@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدير التواصل الاجتماعي | لوحة التحكم</title>
+    <meta name="description" content="أداة ذكاء اصطناعي لتوليد ونشر المنشورات الاحترافية على لينكدإن">
+    <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="navbar-inner">
+        <a href="index.html" class="navbar-brand">
+            <span class="logo-icon">🚀</span>
+            Social Manager AI
+        </a>
+        <div class="navbar-links">
+            <a href="index.html" class="nav-link active" id="navHome">✨ توليد</a>
+            <a href="history.html" class="nav-link" id="navHistory">📋 السجل</a>
+            <a href="engagement.html" class="nav-link" id="navEngage">💬 التفاعل</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="page-header">
+        <h1>توليد منشور جديد</h1>
+        <p>اكتب فكرتك وسيقوم الذكاء الاصطناعي ببناء منشور احترافي وصورة مناسبة</p>
+    </div>
+
+    <!-- Trend Finder Section (Phase 3) -->
+    <div class="card" style="margin-bottom: 2rem; background: linear-gradient(to right, #f8f9fa, #e9ecef);">
+        <h2 style="margin-top: 0;">🔥 صائد التريندات</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">أدخل أي كلمة مفتاحية (مثلاً: الذكاء الاصطناعي، العمل عن بعد) وسيبحث الذكاء الاصطناعي عن أبرز ما يُقال عنها الآن ليقترح لك زوايا كتابة مميزة.</p>
+        
+        <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+            <input type="text" id="trendKeyword" placeholder="أدخل الكلمة المفتاحية هنا..." style="flex: 1; min-width: 200px; padding: 0.8rem; border: 1px solid var(--border); border-radius: var(--radius);">
+            <button id="searchTrendBtn" class="btn btn-primary" style="width: auto; flex-shrink: 0; white-space: nowrap;">🔍 حلل التريند</button>
+        </div>
+        
+        <div id="trendResultBox" class="hidden" style="margin-top: 1.5rem; padding: 1.5rem; background: white; border-radius: var(--radius); border-right: 4px solid var(--primary);">
+            <h3 style="font-size: 1.1rem; color: var(--primary); margin-top: 0;">الخلاصة:</h3>
+            <p id="trendSummary" style="font-size: 0.95rem; line-height: 1.6; color: var(--text);"></p>
+            
+            <h3 style="font-size: 1.1rem; color: var(--primary); margin-top: 1.5rem;">زوايا مقترحة للكتابة:</h3>
+            <div id="trendAngles" style="display: flex; flex-direction: column; gap: 0.8rem;"></div>
+        </div>
+    </div>
+
+    <!-- Recommendations Section (Phase 3) -->
+    <div class="card" id="recommendationsCard" style="margin-bottom: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2 style="margin: 0;">🎯 أفكار اليوم الذكية (تريند)</h2>
+            <button id="refreshIdeasBtn" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;">🔄 تحديث الأفكار</button>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">استلهم من أهم المواضيع التي يبحث عنها جمهورك اليوم. اضغط على الفكرة لاستخدامها مباشرة.</p>
+        
+        <div id="recommendationsList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+            <!-- Placeholder items while loading -->
+            <div style="background: var(--bg); padding: 1rem; border-radius: var(--radius); border: 1px dashed var(--primary); text-align: center;">
+                <span class="loader" style="width: 20px; height: 20px; border-width: 2px; border-top-color: var(--primary);"></span>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">جاري جلب التريندات...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>💡 فكرة المنشور</h2>
+
+        <div class="form-group">
+            <label for="topic">عن ماذا تريد أن تتحدث؟</label>
+            <textarea id="topic" placeholder="مثال: كيف يغير الذكاء الاصطناعي سوق العمل في 2025..."></textarea>
+        </div>
+
+        <div class="form-group" style="margin-top: 1.5rem; border-top: 1.5px solid var(--border); padding-top: 1.5rem;">
+            <label style="display: flex; align-items: center; gap: 0.8rem; cursor: pointer; text-transform: none;">
+                <input type="checkbox" id="enableSchedule" style="width: 20px; height: 20px; cursor: pointer;">
+                <span style="font-size: 1rem; color: var(--text);">📅 هل تريد جدولة هذا المنشور لوقت لاحق؟</span>
+            </label>
+            
+            <div id="scheduleWrapper" class="hidden" style="margin-top: 1rem; animation: fadeSlideIn 0.3s ease;">
+                <label for="scheduleTime">اختر تاريخ ووقت النشر:</label>
+                <input type="datetime-local" id="scheduleTime" style="font-size: 1.1rem; padding: 1rem; border-color: var(--primary);">
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">💡 سيقوم النظام بنشر المنشور تلقائياً في هذا الموعد.</p>
+            </div>
+        </div>
+
+        <button id="generateBtn" class="btn btn-primary" style="margin-top: 1rem;">
+            <span class="btn-text">✨ توليد المحتوى بالذكاء الاصطناعي</span>
+            <span class="loader hidden"></span>
+        </button>
+
+        <div id="progressContainer" class="progress-container hidden">
+            <div class="progress-info">
+                <span id="progressText">جاري تحليل الموضوع...</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div id="progressBar" class="progress-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <section class="card hidden" id="resultSection">
+        <div class="result-header">
+            <h2>📄 المنشور الجاهز</h2>
+            <span class="badge badge-linkedin" id="platformBadge">LinkedIn</span>
+        </div>
+
+        <div class="post-preview">
+            <div class="image-container">
+                <img id="generatedImage" src="" alt="صورة المنشور">
+            </div>
+            <div>
+                <textarea id="generatedContent"></textarea>
+            </div>
+        </div>
+
+        <button id="publishBtn" class="btn btn-success">
+            🚀 نشر على لينكدإن الآن
+        </button>
+        <p id="publishStatus" class="status-msg"></p>
+    </section>
+</div>
+
+<script src="app.js?v=8"></script>
+</body>
+</html>
