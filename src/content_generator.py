@@ -72,7 +72,7 @@ def generate_image_prompt(topic, content):
     except:
         return "professional illustration of " + topic
 
-def generate_recommendations(niche="ريادة الأعمال والتكنولوجيا"):
+def generate_recommendations(niche="الوظائف، مقابلات العمل، التكنولوجيا، الذكاء الاصطناعي، مشاكل العمل، تطوير الذات، وكيفية الحصول على ترقية"):
     """
     Generates 3 trending and engaging post ideas for the given niche.
     Returns a JSON string containing an array of objects with 'title' and 'angle'.

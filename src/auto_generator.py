@@ -7,7 +7,7 @@ from src.content_generator import generate_recommendations, generate_post, gener
 from src.image_generator import generate_image
 from src.database import save_post
 
-def run_daily_generation(niche="ريادة الأعمال والتكنولوجيا"):
+def run_daily_generation(niche="الوظائف، مقابلات العمل، التكنولوجيا، الذكاء الاصطناعي، مشاكل العمل، تطوير الذات، وكيفية الحصول على ترقية"):
     print(f"[*] Starting Daily Auto-Generation for niche: {niche}")
     
     # 1. Get 3 ideas from Gemini
