@@ -285,7 +285,17 @@ def update_post_api(post_id: int, req: UpdateContentRequest):
     update_post_content(post_id, req.content)
     return {"message": "Post updated"}
 
+from fastapi import Request, BackgroundTasks
+
 # ─── New Automation Endpoints ──────────────────────────────────
+
+@app.post("/api/webhook/telegram")
+async def telegram_webhook(request: Request, background_tasks: BackgroundTasks):
+    data = await request.json()
+    from src.telegram_bot import process_telegram_update
+    background_tasks.add_task(process_telegram_update, data)
+    return {"status": "ok"}
+
 
 @app.get("/api/health")
 def health_check_api():
