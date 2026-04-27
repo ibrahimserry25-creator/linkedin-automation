@@ -56,45 +56,19 @@ def process_telegram_update(update):
         else:
             send_telegram_alert(f"❌ <b>فشل الذكاء الاصطناعي في كتابة البوست.</b> حاول مرة أخرى.")
 
-def check_telegram_commands():
-    """
-    Checks Telegram for new messages and triggers post generation if requested.
-    """
-    bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
-    if not bot_token:
-        print("[*] No Telegram Bot Token found. Skipping bot check.")
-        return
-
-    # Ensure KV table exists
-    init_db()
-
-    offset = get_kv("telegram_offset", 0)
-    if offset:
-        offset = int(offset)
-
-    url = f"https://api.telegram.org/bot{bot_token}/getUpdates?offset={offset}&timeout=5"
-    
-    try:
-        response = requests.get(url, timeout=10)
-        data = response.json()
+def process_webhook_message():
+    import os
+    message_text = os.getenv("TELEGRAM_MESSAGE", "")
+    if message_text:
+        print(f"[*] Processing webhook message: {message_text}")
+        update = {
+            "message": {
+                "text": message_text
+            }
+        }
+        process_telegram_update(update)
+    else:
+        print("[*] No webhook message found.")
         
-        if not data.get("ok"):
-            print(f"[!] Error fetching Telegram updates: {data}")
-            return
-            
-        results = data.get("result", [])
-        if not results:
-            print("[*] No new Telegram commands.")
-            return
-            
-        for update in results:
-            update_id = update["update_id"]
-            process_telegram_update(update)
-            # Update offset to mark as read
-            set_kv("telegram_offset", update_id + 1)
-            
-    except Exception as e:
-        print(f"[!] Error in Telegram bot loop: {e}")
-
 if __name__ == "__main__":
-    check_telegram_commands()
+    process_webhook_message()
