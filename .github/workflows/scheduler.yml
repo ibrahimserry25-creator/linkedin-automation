@@ -2,8 +2,8 @@ name: LinkedIn Automation Scheduler
 
 on:
   schedule:
-    # Post times: 9:00 AM, 2:00 PM, 7:00 PM Cairo (UTC+3 = 6,11,16 UTC)
-    - cron: '0 6,11,16 * * *'
+    # Post times: 9:00 AM, 3:00 PM Cairo (UTC+3 = 6,12 UTC)
+    - cron: '0 6,12 * * *'
   workflow_dispatch:
     inputs:
       telegram_message:

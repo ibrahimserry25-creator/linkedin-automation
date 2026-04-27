@@ -2,8 +2,8 @@
 standalone_scheduler.py
 -----------------------
 One-shot script designed to run on GitHub Actions.
-At 9:00, 14:00, 19:00 -> generates a post and publishes it DIRECTLY.
-Every 5 minutes -> checks for Telegram webhook commands.
+At 9:00 AM, 3:00 PM Cairo -> generates a post and publishes it DIRECTLY.
+Telegram webhook commands are processed via workflow_dispatch.
 """
 import os
 import sys
@@ -21,8 +21,8 @@ from src.linkedin_publisher import publish_to_linkedin, check_linkedin_token_hea
 from src.telegram_notifier import send_telegram_alert
 from src.database import save_post, init_db
 
-# Post hours (Cairo time)
-POST_HOURS = [9, 14, 19]
+# Post hours (Cairo time): 9 AM and 3 PM
+POST_HOURS = [9, 15]
 
 def generate_and_publish_now():
     """Generates a single post with AI and publishes it directly to LinkedIn."""
