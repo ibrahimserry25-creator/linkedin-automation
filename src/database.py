@@ -24,6 +24,27 @@ def init_db():
             post_url TEXT
         )
     ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS key_value (
+            key TEXT PRIMARY KEY,
+            value TEXT
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+def get_kv(key, default=None):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT value FROM key_value WHERE key = ?", (key,))
+    row = cursor.fetchone()
+    conn.close()
+    return row[0] if row else default
+
+def set_kv(key, value):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("INSERT OR REPLACE INTO key_value (key, value) VALUES (?, ?)", (key, str(value)))
     conn.commit()
     conn.close()
 
