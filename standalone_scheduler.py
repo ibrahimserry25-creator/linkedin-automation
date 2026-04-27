@@ -111,10 +111,13 @@ def run_scheduler():
     # ── Step 2: Check if it's posting time (9, 14, 19) ────
     current_hour = datetime.now().hour
     current_minute = datetime.now().minute
+    is_webhook = bool(os.getenv("TELEGRAM_MESSAGE", "").strip())
     
-    if current_hour in POST_HOURS and current_minute < 10:
+    if current_hour in POST_HOURS and current_minute < 10 and not is_webhook:
         print(f"[*] It's posting time! Hour: {current_hour}:00")
         generate_and_publish_now()
+    elif is_webhook:
+        print(f"[*] Skipping auto-post (this is a Telegram webhook run).")
     else:
         print(f"[*] Not posting time (current: {current_hour}:{current_minute:02d}). Next posts at: {POST_HOURS}")
 

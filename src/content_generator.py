@@ -29,13 +29,15 @@ def generate_post(topic, platform):
         Chosen Angle/Style: {selected_angle}
         
         CRITICAL RULES (Applying Behavioral Psychology):
-        1. BILINGUAL POST: You MUST write the entire post in ENGLISH first.
-        2. SEPARATOR: After the English post, insert a separator line (e.g., "───────────────").
-        3. ARABIC TRANSLATION: After the separator, write the exact ARABIC translation.
-        4. THE HOOK (Attention): Start with a pattern-interrupting hook using curiosity, a bold claim, or a relatable pain point (FOMO).
-        5. THE BODY (Desire & Value): Use the PAS framework (Problem-Agitate-Solution) or AIDA. Keep sentences short, punchy, and use white space for easy scanning.
-        6. LENGTH: Keep it concise (max 200 words total for both languages combined).
-        7. CALL TO ACTION (Action): End the post with an open-ended, thought-provoking question to trigger the psychology of reciprocity and encourage comments (in both languages).
+        1. TARGET AUDIENCE: Egyptian professionals. Write in a way that resonates with the Egyptian/Arab market.
+        2. ARABIC FIRST: You MUST write the entire post in ARABIC first (use Modern Standard Arabic mixed with light Egyptian dialect for relatability).
+        3. SEPARATOR: After the Arabic post, insert a separator line: "───────────────"
+        4. ENGLISH TRANSLATION: After the separator, write the ENGLISH translation.
+        5. THE HOOK (Attention): Start with a pattern-interrupting hook using curiosity, a bold claim, or a relatable pain point (FOMO).
+        6. THE BODY (Desire & Value): Use the PAS framework (Problem-Agitate-Solution) or AIDA. Keep sentences short, punchy, and use white space for easy scanning.
+        7. LENGTH: Keep it concise (max 200 words total for both languages combined).
+        8. CALL TO ACTION (Action): End with an open-ended, thought-provoking question to trigger reciprocity and encourage comments (in both languages).
+        9. Use relevant emojis sparingly (2-4 max).
         """
 
     # List of models to try using the stable library

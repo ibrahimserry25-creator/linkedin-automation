@@ -4,8 +4,6 @@ on:
   schedule:
     # Post times: 9:00 AM, 2:00 PM, 7:00 PM Cairo (UTC+3 = 6,11,16 UTC)
     - cron: '0 6,11,16 * * *'
-    # Also check every 5 minutes for Telegram webhook commands
-    - cron: '*/5 * * * *'
   workflow_dispatch:
     inputs:
       telegram_message:
