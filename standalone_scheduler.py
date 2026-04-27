@@ -78,9 +78,9 @@ def run_scheduler():
         print("[*] Already have 3+ posts today. Skipping generation.")
 
     # ── Step 4: Check Telegram for direct commands ────────
-    print("[*] Checking Telegram for direct webhook commands...")
-    from src.telegram_bot import process_webhook_message
-    process_webhook_message()
+    print("[*] Checking Telegram for commands...")
+    from src.telegram_bot import check_telegram_commands
+    check_telegram_commands()
 
     # ── Step 5: Auto-reply (only runs at specific times) ───
     # Run auto-reply every 4 hours: at minute 0 of hours 0,4,8,12,16,20
