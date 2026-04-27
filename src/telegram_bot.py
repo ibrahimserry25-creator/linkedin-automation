@@ -49,11 +49,11 @@ def check_telegram_commands():
             text = message.get("text", "")
             chat_id = message.get("chat", {}).get("id")
             
-            if text and ("انشر عن" in text or "اكتب عن" in text or "بوست عن" in text):
+            if text and any(word in text for word in ["انشر عن", "اكتب عن", "بوست عن", "اتكلم عن"]):
                 print(f"[*] Received Telegram command: {text}")
                 
                 # Extract topic
-                topic = text.replace("انشر عن", "").replace("اكتب عن", "").replace("بوست عن", "").strip()
+                topic = text.replace("انشر عن", "").replace("اكتب عن", "").replace("بوست عن", "").replace("اتكلم عن", "").strip()
                 if not topic:
                     topic = "موضوع عشوائي في مجال التكنولوجيا"
                 
