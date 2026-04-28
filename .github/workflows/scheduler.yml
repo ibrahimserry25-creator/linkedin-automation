@@ -60,5 +60,14 @@ jobs:
       - name: Initialize database (if new)
         run: python -c "from src.database import init_db; init_db()"
 
+      - name: Restore LinkedIn session
+        run: |
+          if [ -n "${{ secrets.LINKEDIN_STATE_B64 }}" ]; then
+            echo "${{ secrets.LINKEDIN_STATE_B64 }}" | base64 -d > src/linkedin_state.json
+            echo "[*] LinkedIn state file restored from secret."
+          else
+            echo "[!] No LINKEDIN_STATE_B64 secret found. Scraping will require login."
+          fi
+
       - name: Run scheduler
         run: python standalone_scheduler.py
