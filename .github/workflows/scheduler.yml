@@ -73,3 +73,11 @@ jobs:
 
       - name: Run scheduler
         run: python standalone_scheduler.py
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scraper-screenshots
+          path: outputs/
+          retention-days: 1
