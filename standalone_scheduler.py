@@ -22,7 +22,7 @@ from src.telegram_notifier import send_telegram_alert
 from src.database import save_post, init_db
 
 # Post hours (Cairo time): 9 AM and 3 PM
-POST_HOURS = [9, 15]
+POST_HOURS = [9, 14]
 
 def generate_and_publish_now():
     """Generates a single post with AI and publishes it directly to LinkedIn."""
