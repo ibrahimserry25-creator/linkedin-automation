@@ -171,7 +171,7 @@ def generate_smart_replies(post_text, context="engagement"):
     
     Write exactly 3 distinct, thoughtful replies in ARABIC. Each reply should be:
     - Natural, human-sounding, not generic or sycophantic
-    - Max 3-4 sentences
+    - EXTREMELY CONCISE: Max 1-2 short sentences. Do not write long paragraphs.
     - Match these styles: {types[0]}, {types[1]}, {types[2]}
     
     IMPORTANT: Return ONLY valid JSON in the following format, no markdown:

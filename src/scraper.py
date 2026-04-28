@@ -1,7 +1,7 @@
 import os
 import asyncio
 from playwright.async_api import async_playwright
-
+from playwright_stealth import stealth_async
 STATE_FILE = os.path.join(os.path.dirname(__file__), "linkedin_state.json")
 
 async def scrape_linkedin_comments(url: str):
@@ -22,6 +22,7 @@ async def scrape_linkedin_comments(url: str):
         if needs_login:
             context = await browser.new_context()
             page = await context.new_page()
+            await stealth_async(page)
             print("[!] No saved state found. Forcing login...")
             await page.goto("https://www.linkedin.com/login", wait_until="domcontentloaded")
             try:
@@ -35,6 +36,7 @@ async def scrape_linkedin_comments(url: str):
         else:
             context = await browser.new_context(storage_state=STATE_FILE)
             page = await context.new_page()
+            await stealth_async(page)
 
         try:
             print(f"Navigating to {url}")
