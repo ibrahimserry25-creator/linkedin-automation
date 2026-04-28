@@ -40,13 +40,15 @@ async def run_auto_replies():
     _ensure_comments_table(cursor)
     conn.commit()
 
-    # Fetch posts that are published and have a URL (only check last 7 days)
+    # Fetch posts that are published and have a URL (only check last 7 days, max 3 posts)
     cursor.execute("""
         SELECT id, content, post_url FROM posts 
         WHERE status = 'Published' 
           AND post_url IS NOT NULL 
           AND post_url != ''
           AND created_at >= datetime('now', '-7 days', 'localtime')
+        ORDER BY created_at DESC
+        LIMIT 3
     """)
     published_posts = cursor.fetchall()
 

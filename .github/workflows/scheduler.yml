@@ -14,7 +14,7 @@ on:
 jobs:
   run-scheduler:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     env:
       TZ: 'Africa/Cairo'
 

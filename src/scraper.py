@@ -41,8 +41,21 @@ async def scrape_linkedin_comments(url: str):
 
         try:
             print(f"Navigating to {url}")
-            await page.goto(url, wait_until="domcontentloaded")
+            try:
+                await page.goto(url, wait_until="networkidle", timeout=30000)
+            except Exception:
+                await page.goto(url, wait_until="domcontentloaded", timeout=20000)
             await page.wait_for_timeout(5000)
+
+            # Save screenshot for debugging
+            try:
+                import time as _time
+                screenshot_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "outputs", f"screenshot_{_time.time():.0f}.png")
+                os.makedirs(os.path.dirname(screenshot_path), exist_ok=True)
+                await page.screenshot(path=screenshot_path, full_page=False)
+                print(f"[*] Screenshot saved: {screenshot_path}")
+            except Exception as e:
+                print(f"[!] Screenshot failed: {e}")
 
             # Check if login is still required (cookie expired)
             current_url = page.url
