@@ -4,8 +4,8 @@
 # LinkedIn session (sensitive)
 src/linkedin_state.json
 
-# Database (local data)
-*.db
+# Database (managed via git, do not ignore)
+# *.db
 
 # Generated images
 outputs/
