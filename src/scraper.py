@@ -12,10 +12,10 @@ async def scrape_linkedin_comments(url: str):
     async with async_playwright() as p:
         # Launch real Google Chrome to bypass Google SSO "Insecure Browser" blocks
         try:
-            browser = await p.chromium.launch(headless=False, channel="chrome")
+            browser = await p.chromium.launch(headless=True)
         except Exception:
             # Fallback to default chromium if Chrome is not installed
-            browser = await p.chromium.launch(headless=False)
+            browser = await p.chromium.launch(headless=True)
         
         needs_login = not os.path.exists(STATE_FILE)
         
