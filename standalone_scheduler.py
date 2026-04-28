@@ -126,8 +126,8 @@ def run_scheduler():
     from src.telegram_bot import process_webhook_message
     process_webhook_message()
 
-    # ── Step 4: Auto-reply (only runs at specific times) ───
-    if current_hour % 4 == 0 and current_minute < 10:
+    # ── Step 4: Auto-reply (only runs at specific times or manual trigger) ───
+    if (current_hour % 4 == 0 and current_minute < 10) or is_webhook:
         print("[*] Running auto-reply check...")
         import asyncio
         from src.auto_reply import run_auto_replies
