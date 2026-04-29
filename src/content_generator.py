@@ -42,8 +42,10 @@ def generate_post(topic, platform):
 
     # List of models to try using the stable library
     models_to_try = [
-        'gemini-1.5-flash',
-        'gemini-1.5-pro'
+        'gemini-1.5-flash-latest',
+        'gemini-1.5-pro-latest',
+        'gemini-pro',
+        'gemini-1.0-pro'
     ]
     
     for model_name in models_to_try:
@@ -65,12 +67,15 @@ def generate_image_prompt(topic, content):
     """
     prompt = f"Create a short, descriptive English prompt for an AI image generator. Topic: {topic}. Style: Highly realistic candid photography, natural lighting, shot on 35mm lens, Unsplash style, professional, no text, no cartoons, no fake 3D look."
     
-    try:
-        model = genai.GenerativeModel('gemini-flash-latest')
-        response = model.generate_content(prompt)
-        return response.text.strip()
-    except:
-        return "professional illustration of " + topic
+    for model_name in ['gemini-1.5-flash-latest', 'gemini-pro', 'gemini-1.0-pro']:
+        try:
+            model = genai.GenerativeModel(model_name)
+            response = model.generate_content(prompt)
+            if response and response.text:
+                return response.text.strip()
+        except:
+            continue
+    return "professional illustration of " + topic
 
 def generate_recommendations(niche="الوظائف، مقابلات العمل، التكنولوجيا، الذكاء الاصطناعي، مشاكل العمل، تطوير الذات، وكيفية الحصول على ترقية"):
     """
@@ -90,23 +95,25 @@ def generate_recommendations(niche="الوظائف، مقابلات العمل،
     ]
     Do not include markdown formatting like ```json or any other text.
     """
-    try:
-        model = genai.GenerativeModel('gemini-flash-latest')
-        response = model.generate_content(prompt)
-        text = response.text.strip()
-        if text.startswith("```json"):
-            text = text[7:-3].strip()
-        elif text.startswith("```"):
-            text = text[3:-3].strip()
-        return json.loads(text)
-    except Exception as e:
-        print(f"[!] Error generating recommendations: {e}")
-        # Fallback recommendations if API fails
-        return [
-            {"title": "كيف تستخدم الذكاء الاصطناعي في عملك اليومي", "angle": "مقارنة بين الماضي والحاضر"},
-            {"title": "أكبر خطأ مهني ارتكبته وكيف تعلمت منه", "angle": "قصة شخصية"},
-            {"title": "أدوات مجانية تزيد إنتاجيتك للضعف", "angle": "نصيحة عملية مباشرة"}
-        ]
+    for model_name in ['gemini-1.5-flash-latest', 'gemini-pro']:
+        try:
+            model = genai.GenerativeModel(model_name)
+            response = model.generate_content(prompt)
+            text = response.text.strip()
+            if text.startswith("```json"):
+                text = text[7:-3].strip()
+            elif text.startswith("```"):
+                text = text[3:-3].strip()
+            return json.loads(text)
+        except:
+            continue
+            
+    # Fallback recommendations if all API calls fail
+    return [
+        {"title": "كيف تستخدم الذكاء الاصطناعي في عملك اليومي", "angle": "مقارنة بين الماضي والحاضر"},
+        {"title": "أكبر خطأ مهني ارتكبته وكيف تعلمت منه", "angle": "قصة شخصية"},
+        {"title": "أدوات مجانية تزيد إنتاجيتك للضعف", "angle": "نصيحة عملية مباشرة"}
+    ]
 
 def analyze_trend(keyword):
     """
