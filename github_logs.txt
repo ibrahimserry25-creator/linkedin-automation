@@ -1,769 +1,772 @@
-ï»¿2026-04-29T02:03:54.2302711Z Current runner version: '2.334.0'
-2026-04-29T02:03:54.2328497Z ##[group]Runner Image Provisioner
-2026-04-29T02:03:54.2329319Z Hosted Compute Agent
-2026-04-29T02:03:54.2329848Z Version: 20260213.493
-2026-04-29T02:03:54.2330563Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
-2026-04-29T02:03:54.2331261Z Build Date: 2026-02-13T00:28:41Z
-2026-04-29T02:03:54.2331919Z Worker ID: {a2df9eb9-a77f-4f53-b84f-219c35c9affd}
-2026-04-29T02:03:54.2332712Z Azure Region: eastus2
-2026-04-29T02:03:54.2333261Z ##[endgroup]
-2026-04-29T02:03:54.2334763Z ##[group]Operating System
-2026-04-29T02:03:54.2335678Z Ubuntu
-2026-04-29T02:03:54.2336502Z 24.04.4
-2026-04-29T02:03:54.2337321Z LTS
-2026-04-29T02:03:54.2338226Z ##[endgroup]
-2026-04-29T02:03:54.2339032Z ##[group]Runner Image
-2026-04-29T02:03:54.2340050Z Image: ubuntu-24.04
-2026-04-29T02:03:54.2340644Z Version: 20260413.86.1
-2026-04-29T02:03:54.2341937Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260413.86/images/ubuntu/Ubuntu2404-Readme.md
-2026-04-29T02:03:54.2343415Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260413.86
-2026-04-29T02:03:54.2344402Z ##[endgroup]
-2026-04-29T02:03:54.2345580Z ##[group]GITHUB_TOKEN Permissions
-2026-04-29T02:03:54.2347479Z Contents: read
-2026-04-29T02:03:54.2348468Z Metadata: read
-2026-04-29T02:03:54.2349003Z Packages: read
-2026-04-29T02:03:54.2349979Z ##[endgroup]
-2026-04-29T02:03:54.2352256Z Secret source: Actions
-2026-04-29T02:03:54.2353170Z Prepare workflow directory
-2026-04-29T02:03:54.2738055Z Prepare all required actions
-2026-04-29T02:03:54.2773907Z Getting action download info
-2026-04-29T02:03:54.6534180Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
-2026-04-29T02:03:54.7382145Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
-2026-04-29T02:03:54.8122258Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
-2026-04-29T02:03:54.9032913Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
-2026-04-29T02:03:55.1875316Z Complete job name: run-scheduler
-2026-04-29T02:03:55.2710882Z ##[group]Run actions/checkout@v4
-2026-04-29T02:03:55.2711936Z with:
-2026-04-29T02:03:55.2712782Z   repository: ibrahimserry25-creator/linkedin-automation
-2026-04-29T02:03:55.2714180Z   token: ***
-2026-04-29T02:03:55.2714923Z   ssh-strict: true
-2026-04-29T02:03:55.2715494Z   ssh-user: git
-2026-04-29T02:03:55.2716059Z   persist-credentials: true
-2026-04-29T02:03:55.2716711Z   clean: true
-2026-04-29T02:03:55.2717299Z   sparse-checkout-cone-mode: true
-2026-04-29T02:03:55.2718231Z   fetch-depth: 1
-2026-04-29T02:03:55.2718776Z   fetch-tags: false
-2026-04-29T02:03:55.2719340Z   show-progress: true
-2026-04-29T02:03:55.2719903Z   lfs: false
-2026-04-29T02:03:55.2720396Z   submodules: false
-2026-04-29T02:03:55.2720982Z   set-safe-directory: true
-2026-04-29T02:03:55.2721910Z env:
-2026-04-29T02:03:55.2722392Z   TZ: Africa/Cairo
-2026-04-29T02:03:55.2722956Z ##[endgroup]
-2026-04-29T02:03:55.3814209Z Syncing repository: ibrahimserry25-creator/linkedin-automation
-2026-04-29T02:03:55.3816832Z ##[group]Getting Git version info
-2026-04-29T02:03:55.3818397Z Working directory is '/home/runner/work/linkedin-automation/linkedin-automation'
-2026-04-29T02:03:55.3820139Z [command]/usr/bin/git version
-2026-04-29T02:03:55.3833945Z git version 2.53.0
-2026-04-29T02:03:55.3859797Z ##[endgroup]
-2026-04-29T02:03:55.3873925Z Temporarily overriding HOME='/home/runner/work/_temp/af247dcc-3d7e-4a40-ad73-1891810cd09e' before making global git config changes
-2026-04-29T02:03:55.3876340Z Adding repository directory to the temporary git global config as a safe directory
-2026-04-29T02:03:55.3885877Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/linkedin-automation/linkedin-automation
-2026-04-29T02:03:55.3915639Z Deleting the contents of '/home/runner/work/linkedin-automation/linkedin-automation'
-2026-04-29T02:03:55.3918734Z ##[group]Initializing the repository
-2026-04-29T02:03:55.3923191Z [command]/usr/bin/git init /home/runner/work/linkedin-automation/linkedin-automation
-2026-04-29T02:03:55.3971891Z hint: Using 'master' as the name for the initial branch. This default branch name
-2026-04-29T02:03:55.3974118Z hint: will change to "main" in Git 3.0. To configure the initial branch name
-2026-04-29T02:03:55.3975654Z hint: to use in all of your new repositories, which will suppress this warning,
-2026-04-29T02:03:55.3976935Z hint: call:
-2026-04-29T02:03:55.3977833Z hint:
-2026-04-29T02:03:55.3978538Z hint: 	git config --global init.defaultBranch <name>
-2026-04-29T02:03:55.3979412Z hint:
-2026-04-29T02:03:55.3980212Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
-2026-04-29T02:03:55.3981711Z hint: 'development'. The just-created branch can be renamed via this command:
-2026-04-29T02:03:55.3982932Z hint:
-2026-04-29T02:03:55.3983443Z hint: 	git branch -m <name>
-2026-04-29T02:03:55.3984057Z hint:
-2026-04-29T02:03:55.3984957Z hint: Disable this message with "git config set advice.defaultBranchName false"
-2026-04-29T02:03:55.3986902Z Initialized empty Git repository in /home/runner/work/linkedin-automation/linkedin-automation/.git/
-2026-04-29T02:03:55.3990459Z [command]/usr/bin/git remote add origin https://github.com/ibrahimserry25-creator/linkedin-automation
-2026-04-29T02:03:55.4013772Z ##[endgroup]
-2026-04-29T02:03:55.4014752Z ##[group]Disabling automatic garbage collection
-2026-04-29T02:03:55.4017318Z [command]/usr/bin/git config --local gc.auto 0
-2026-04-29T02:03:55.4044564Z ##[endgroup]
-2026-04-29T02:03:55.4045468Z ##[group]Setting up auth
-2026-04-29T02:03:55.4051044Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
-2026-04-29T02:03:55.4082349Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
-2026-04-29T02:03:55.4320870Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
-2026-04-29T02:03:55.4352442Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
-2026-04-29T02:03:55.4562930Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
-2026-04-29T02:03:55.4601688Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
-2026-04-29T02:03:55.4817351Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
-2026-04-29T02:03:55.4849408Z ##[endgroup]
-2026-04-29T02:03:55.4850399Z ##[group]Fetching the repository
-2026-04-29T02:03:55.4858248Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +201298272e949b4c97f712a92b8df9004196fad7:refs/remotes/origin/main
-2026-04-29T02:03:55.6858340Z From https://github.com/ibrahimserry25-creator/linkedin-automation
-2026-04-29T02:03:55.6861257Z  * [new ref]         201298272e949b4c97f712a92b8df9004196fad7 -> origin/main
-2026-04-29T02:03:55.6886718Z ##[endgroup]
-2026-04-29T02:03:55.6888292Z ##[group]Determining the checkout info
-2026-04-29T02:03:55.6889778Z ##[endgroup]
-2026-04-29T02:03:55.6893990Z [command]/usr/bin/git sparse-checkout disable
-2026-04-29T02:03:55.6931716Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
-2026-04-29T02:03:55.6957869Z ##[group]Checking out the ref
-2026-04-29T02:03:55.6961522Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
-2026-04-29T02:03:55.7031767Z Switched to a new branch 'main'
-2026-04-29T02:03:55.7034843Z branch 'main' set up to track 'origin/main'.
-2026-04-29T02:03:55.7042664Z ##[endgroup]
-2026-04-29T02:03:55.7075685Z [command]/usr/bin/git log -1 --format=%H
-2026-04-29T02:03:55.7096954Z 201298272e949b4c97f712a92b8df9004196fad7
-2026-04-29T02:03:55.7458400Z ##[group]Run actions/setup-python@v5
-2026-04-29T02:03:55.7459563Z with:
-2026-04-29T02:03:55.7460405Z   python-version: 3.11
-2026-04-29T02:03:55.7461365Z   check-latest: false
-2026-04-29T02:03:55.7462527Z   token: ***
-2026-04-29T02:03:55.7463404Z   update-environment: true
-2026-04-29T02:03:55.7464411Z   allow-prereleases: false
-2026-04-29T02:03:55.7465403Z   freethreaded: false
-2026-04-29T02:03:55.7466281Z env:
-2026-04-29T02:03:55.7467058Z   TZ: Africa/Cairo
-2026-04-29T02:03:55.7468211Z ##[endgroup]
-2026-04-29T02:03:55.9131748Z ##[group]Installed versions
-2026-04-29T02:03:55.9225180Z Successfully set up CPython (3.11.15)
-2026-04-29T02:03:55.9227067Z ##[endgroup]
-2026-04-29T02:03:55.9979250Z ##[group]Run actions/cache@v4
-2026-04-29T02:03:55.9980234Z with:
-2026-04-29T02:03:55.9980971Z   path: ~/.cache/pip
-2026-04-29T02:03:55.9982346Z   key: Linux-pip-3b36658a308ab5ff0f5baf21bf76a64740d38d60d83919f850a12c7208403754
-2026-04-29T02:03:55.9983951Z   restore-keys: Linux-pip-
+ï»¿2026-04-29T02:09:09.9408280Z Current runner version: '2.334.0'
+2026-04-29T02:09:09.9442183Z ##[group]Runner Image Provisioner
+2026-04-29T02:09:09.9443523Z Hosted Compute Agent
+2026-04-29T02:09:09.9444757Z Version: 20260213.493
+2026-04-29T02:09:09.9445952Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-04-29T02:09:09.9447788Z Build Date: 2026-02-13T00:28:41Z
+2026-04-29T02:09:09.9449001Z Worker ID: {85fc602d-fc1f-4098-a2bb-d45b2f61f4c9}
+2026-04-29T02:09:09.9450281Z Azure Region: northcentralus
+2026-04-29T02:09:09.9451462Z ##[endgroup]
+2026-04-29T02:09:09.9453722Z ##[group]Operating System
+2026-04-29T02:09:09.9454953Z Ubuntu
+2026-04-29T02:09:09.9455997Z 24.04.4
+2026-04-29T02:09:09.9457109Z LTS
+2026-04-29T02:09:09.9457955Z ##[endgroup]
+2026-04-29T02:09:09.9459075Z ##[group]Runner Image
+2026-04-29T02:09:09.9460226Z Image: ubuntu-24.04
+2026-04-29T02:09:09.9461185Z Version: 20260413.86.1
+2026-04-29T02:09:09.9463577Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260413.86/images/ubuntu/Ubuntu2404-Readme.md
+2026-04-29T02:09:09.9466459Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260413.86
+2026-04-29T02:09:09.9468524Z ##[endgroup]
+2026-04-29T02:09:09.9470597Z ##[group]GITHUB_TOKEN Permissions
+2026-04-29T02:09:09.9473201Z Contents: read
+2026-04-29T02:09:09.9474230Z Metadata: read
+2026-04-29T02:09:09.9475264Z Packages: read
+2026-04-29T02:09:09.9476309Z ##[endgroup]
+2026-04-29T02:09:09.9479568Z Secret source: Actions
+2026-04-29T02:09:09.9481515Z Prepare workflow directory
+2026-04-29T02:09:10.0077991Z Prepare all required actions
+2026-04-29T02:09:10.0133951Z Getting action download info
+2026-04-29T02:09:10.4468186Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-04-29T02:09:10.5819408Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-04-29T02:09:10.6618591Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-04-29T02:09:10.7541943Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-04-29T02:09:11.0057938Z Complete job name: run-scheduler
+2026-04-29T02:09:11.0958115Z ##[group]Run actions/checkout@v4
+2026-04-29T02:09:11.0959518Z with:
+2026-04-29T02:09:11.0960524Z   repository: ibrahimserry25-creator/linkedin-automation
+2026-04-29T02:09:11.0962050Z   token: ***
+2026-04-29T02:09:11.0962857Z   ssh-strict: true
+2026-04-29T02:09:11.0963683Z   ssh-user: git
+2026-04-29T02:09:11.0964534Z   persist-credentials: true
+2026-04-29T02:09:11.0965471Z   clean: true
+2026-04-29T02:09:11.0966310Z   sparse-checkout-cone-mode: true
+2026-04-29T02:09:11.0967542Z   fetch-depth: 1
+2026-04-29T02:09:11.0968596Z   fetch-tags: false
+2026-04-29T02:09:11.0969662Z   show-progress: true
+2026-04-29T02:09:11.0970623Z   lfs: false
+2026-04-29T02:09:11.0971404Z   submodules: false
+2026-04-29T02:09:11.0972258Z   set-safe-directory: true
+2026-04-29T02:09:11.0973450Z env:
+2026-04-29T02:09:11.0974194Z   TZ: Africa/Cairo
+2026-04-29T02:09:11.0975047Z ##[endgroup]
+2026-04-29T02:09:11.2086072Z Syncing repository: ibrahimserry25-creator/linkedin-automation
+2026-04-29T02:09:11.2089439Z ##[group]Getting Git version info
+2026-04-29T02:09:11.2091037Z Working directory is '/home/runner/work/linkedin-automation/linkedin-automation'
+2026-04-29T02:09:11.2093258Z [command]/usr/bin/git version
+2026-04-29T02:09:11.2131562Z git version 2.53.0
+2026-04-29T02:09:11.2158060Z ##[endgroup]
+2026-04-29T02:09:11.2172803Z Temporarily overriding HOME='/home/runner/work/_temp/13b1f2c4-00a7-4858-b353-805994f9f30a' before making global git config changes
+2026-04-29T02:09:11.2175574Z Adding repository directory to the temporary git global config as a safe directory
+2026-04-29T02:09:11.2185472Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/linkedin-automation/linkedin-automation
+2026-04-29T02:09:11.2215425Z Deleting the contents of '/home/runner/work/linkedin-automation/linkedin-automation'
+2026-04-29T02:09:11.2218800Z ##[group]Initializing the repository
+2026-04-29T02:09:11.2223173Z [command]/usr/bin/git init /home/runner/work/linkedin-automation/linkedin-automation
+2026-04-29T02:09:11.2319732Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-04-29T02:09:11.2323257Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-04-29T02:09:11.2326965Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-04-29T02:09:11.2329667Z hint: call:
+2026-04-29T02:09:11.2331043Z hint:
+2026-04-29T02:09:11.2332765Z hint: 	git config --global init.defaultBranch <name>
+2026-04-29T02:09:11.2334913Z hint:
+2026-04-29T02:09:11.2337100Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-04-29T02:09:11.2340052Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-04-29T02:09:11.2341529Z hint:
+2026-04-29T02:09:11.2342324Z hint: 	git branch -m <name>
+2026-04-29T02:09:11.2343235Z hint:
+2026-04-29T02:09:11.2345202Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-04-29T02:09:11.2349427Z Initialized empty Git repository in /home/runner/work/linkedin-automation/linkedin-automation/.git/
+2026-04-29T02:09:11.2353225Z [command]/usr/bin/git remote add origin https://github.com/ibrahimserry25-creator/linkedin-automation
+2026-04-29T02:09:11.2365590Z ##[endgroup]
+2026-04-29T02:09:11.2368430Z ##[group]Disabling automatic garbage collection
+2026-04-29T02:09:11.2370825Z [command]/usr/bin/git config --local gc.auto 0
+2026-04-29T02:09:11.2399956Z ##[endgroup]
+2026-04-29T02:09:11.2402400Z ##[group]Setting up auth
+2026-04-29T02:09:11.2407798Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-04-29T02:09:11.2439747Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-04-29T02:09:11.2721129Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-04-29T02:09:11.2753150Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-04-29T02:09:11.2963173Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-04-29T02:09:11.2994562Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-04-29T02:09:11.3220011Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-04-29T02:09:11.3253153Z ##[endgroup]
+2026-04-29T02:09:11.3255720Z ##[group]Fetching the repository
+2026-04-29T02:09:11.3264714Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +22142e0694750f897b66bbe769e1752e7833010e:refs/remotes/origin/main
+2026-04-29T02:09:11.5992223Z From https://github.com/ibrahimserry25-creator/linkedin-automation
+2026-04-29T02:09:11.5994119Z  * [new ref]         22142e0694750f897b66bbe769e1752e7833010e -> origin/main
+2026-04-29T02:09:11.6020562Z ##[endgroup]
+2026-04-29T02:09:11.6022927Z ##[group]Determining the checkout info
+2026-04-29T02:09:11.6025529Z ##[endgroup]
+2026-04-29T02:09:11.6028715Z [command]/usr/bin/git sparse-checkout disable
+2026-04-29T02:09:11.6065525Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-04-29T02:09:11.6092147Z ##[group]Checking out the ref
+2026-04-29T02:09:11.6095504Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-04-29T02:09:11.6166565Z Switched to a new branch 'main'
+2026-04-29T02:09:11.6169454Z branch 'main' set up to track 'origin/main'.
+2026-04-29T02:09:11.6177800Z ##[endgroup]
+2026-04-29T02:09:11.6209798Z [command]/usr/bin/git log -1 --format=%H
+2026-04-29T02:09:11.6230837Z 22142e0694750f897b66bbe769e1752e7833010e
+2026-04-29T02:09:11.6584860Z ##[group]Run actions/setup-python@v5
+2026-04-29T02:09:11.6585909Z with:
+2026-04-29T02:09:11.6586654Z   python-version: 3.11
+2026-04-29T02:09:11.6587947Z   check-latest: false
+2026-04-29T02:09:11.6589022Z   token: ***
+2026-04-29T02:09:11.6589815Z   update-environment: true
+2026-04-29T02:09:11.6590751Z   allow-prereleases: false
+2026-04-29T02:09:11.6591663Z   freethreaded: false
+2026-04-29T02:09:11.6592487Z env:
+2026-04-29T02:09:11.6593191Z   TZ: Africa/Cairo
+2026-04-29T02:09:11.6593979Z ##[endgroup]
+2026-04-29T02:09:11.8285175Z ##[group]Installed versions
+2026-04-29T02:09:11.8383595Z Successfully set up CPython (3.11.15)
+2026-04-29T02:09:11.8385623Z ##[endgroup]
+2026-04-29T02:09:11.9152419Z ##[group]Run actions/cache@v4
+2026-04-29T02:09:11.9154093Z with:
+2026-04-29T02:09:11.9155334Z   path: ~/.cache/pip
+2026-04-29T02:09:11.9157988Z   key: Linux-pip-3b36658a308ab5ff0f5baf21bf76a64740d38d60d83919f850a12c7208403754
+2026-04-29T02:09:11.9160824Z   restore-keys: Linux-pip-
 
-2026-04-29T02:03:55.9984947Z   enableCrossOsArchive: false
-2026-04-29T02:03:55.9985919Z   fail-on-cache-miss: false
-2026-04-29T02:03:55.9986849Z   lookup-only: false
-2026-04-29T02:03:55.9987984Z   save-always: false
-2026-04-29T02:03:55.9988826Z env:
-2026-04-29T02:03:55.9989554Z   TZ: Africa/Cairo
-2026-04-29T02:03:55.9990610Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:03:55.9992213Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
-2026-04-29T02:03:55.9993797Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:03:55.9995236Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:03:55.9996716Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:03:55.9998789Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
-2026-04-29T02:03:56.0000046Z ##[endgroup]
-2026-04-29T02:03:56.2575216Z Cache hit for: Linux-pip-3b36658a308ab5ff0f5baf21bf76a64740d38d60d83919f850a12c7208403754
-2026-04-29T02:03:56.7560462Z Received 86471787 of 86471787 (100.0%), 181.6 MBs/sec
-2026-04-29T02:03:56.7562118Z Cache Size: ~82 MB (86471787 B)
-2026-04-29T02:03:56.7594793Z [command]/usr/bin/tar -xf /home/runner/work/_temp/2dfaf070-339b-434b-9a5f-b2aa2150079c/cache.tzst -P -C /home/runner/work/linkedin-automation/linkedin-automation --use-compress-program unzstd
-2026-04-29T02:03:56.8991396Z Cache restored successfully
-2026-04-29T02:03:56.9108303Z Cache restored from key: Linux-pip-3b36658a308ab5ff0f5baf21bf76a64740d38d60d83919f850a12c7208403754
-2026-04-29T02:03:56.9255939Z ##[group]Run pip install -r requirements.txt
-2026-04-29T02:03:56.9257274Z [36;1mpip install -r requirements.txt[0m
-2026-04-29T02:03:56.9326693Z shell: /usr/bin/bash -e {0}
-2026-04-29T02:03:56.9327899Z env:
-2026-04-29T02:03:56.9328664Z   TZ: Africa/Cairo
-2026-04-29T02:03:56.9329719Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:03:56.9331322Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
-2026-04-29T02:03:56.9332946Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:03:56.9334441Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:03:56.9335927Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:03:56.9337429Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
-2026-04-29T02:03:56.9338893Z ##[endgroup]
-2026-04-29T02:03:59.8629413Z Collecting google-genai (from -r requirements.txt (line 1))
-2026-04-29T02:03:59.8644108Z   Using cached google_genai-1.73.1-py3-none-any.whl.metadata (52 kB)
-2026-04-29T02:03:59.8817256Z Collecting google-generativeai (from -r requirements.txt (line 2))
-2026-04-29T02:03:59.8831400Z   Using cached google_generativeai-0.8.6-py3-none-any.whl.metadata (3.9 kB)
-2026-04-29T02:03:59.9012306Z Collecting python-dotenv (from -r requirements.txt (line 3))
-2026-04-29T02:03:59.9031324Z   Using cached python_dotenv-1.2.2-py3-none-any.whl.metadata (27 kB)
-2026-04-29T02:03:59.9299320Z Collecting requests (from -r requirements.txt (line 4))
-2026-04-29T02:03:59.9313600Z   Using cached requests-2.33.1-py3-none-any.whl.metadata (4.8 kB)
-2026-04-29T02:03:59.9878973Z Collecting fastapi (from -r requirements.txt (line 5))
-2026-04-29T02:03:59.9893426Z   Using cached fastapi-0.136.1-py3-none-any.whl.metadata (28 kB)
-2026-04-29T02:04:00.0189708Z Collecting uvicorn (from -r requirements.txt (line 6))
-2026-04-29T02:04:00.0205361Z   Using cached uvicorn-0.46.0-py3-none-any.whl.metadata (6.7 kB)
-2026-04-29T02:04:00.1281644Z Collecting pydantic (from -r requirements.txt (line 7))
-2026-04-29T02:04:00.1296833Z   Using cached pydantic-2.13.3-py3-none-any.whl.metadata (108 kB)
-2026-04-29T02:04:00.1704494Z Collecting playwright (from -r requirements.txt (line 8))
-2026-04-29T02:04:00.1718968Z   Using cached playwright-1.58.0-py3-none-manylinux1_x86_64.whl.metadata (3.5 kB)
-2026-04-29T02:04:00.1877782Z Collecting playwright-stealth==1.0.6 (from -r requirements.txt (line 9))
-2026-04-29T02:04:00.1896421Z   Using cached playwright_stealth-1.0.6-py3-none-any.whl.metadata (2.2 kB)
-2026-04-29T02:04:00.2075773Z Collecting anyio<5.0.0,>=4.8.0 (from google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:00.2088766Z   Using cached anyio-4.13.0-py3-none-any.whl.metadata (4.5 kB)
-2026-04-29T02:04:00.2372973Z Collecting google-auth<3.0.0,>=2.48.1 (from google-auth[requests]<3.0.0,>=2.48.1->google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:00.2386517Z   Using cached google_auth-2.49.2-py3-none-any.whl.metadata (6.2 kB)
-2026-04-29T02:04:00.2582891Z Collecting httpx<1.0.0,>=0.28.1 (from google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:00.2596490Z   Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
-2026-04-29T02:04:00.2812562Z Collecting tenacity<9.2.0,>=8.2.3 (from google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:00.2826457Z   Using cached tenacity-9.1.4-py3-none-any.whl.metadata (1.2 kB)
-2026-04-29T02:04:00.3618169Z Collecting websockets<17.0,>=13.0.0 (from google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:00.3632932Z   Using cached websockets-16.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.8 kB)
-2026-04-29T02:04:00.3817114Z Collecting typing-extensions<5.0.0,>=4.14.0 (from google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:00.3831594Z   Using cached typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
-2026-04-29T02:04:00.3954753Z Collecting distro<2,>=1.7.0 (from google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:00.3968813Z   Using cached distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
-2026-04-29T02:04:00.4085269Z Collecting sniffio (from google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:00.4098696Z   Using cached sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
-2026-04-29T02:04:00.4994063Z Collecting charset_normalizer<4,>=2 (from requests->-r requirements.txt (line 4))
-2026-04-29T02:04:00.5009323Z   Using cached charset_normalizer-3.4.7-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (40 kB)
-2026-04-29T02:04:00.5173749Z Collecting idna<4,>=2.5 (from requests->-r requirements.txt (line 4))
-2026-04-29T02:04:00.5187670Z   Using cached idna-3.13-py3-none-any.whl.metadata (8.0 kB)
-2026-04-29T02:04:00.5405529Z Collecting urllib3<3,>=1.26 (from requests->-r requirements.txt (line 4))
-2026-04-29T02:04:00.5419350Z   Using cached urllib3-2.6.3-py3-none-any.whl.metadata (6.9 kB)
-2026-04-29T02:04:00.5599782Z Collecting certifi>=2023.5.7 (from requests->-r requirements.txt (line 4))
-2026-04-29T02:04:00.5613517Z   Using cached certifi-2026.4.22-py3-none-any.whl.metadata (2.5 kB)
-2026-04-29T02:04:00.5735248Z Collecting annotated-types>=0.6.0 (from pydantic->-r requirements.txt (line 7))
-2026-04-29T02:04:00.5749241Z   Using cached annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
-2026-04-29T02:04:01.2280068Z Collecting pydantic-core==2.46.3 (from pydantic->-r requirements.txt (line 7))
-2026-04-29T02:04:01.2303271Z   Using cached pydantic_core-2.46.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
-2026-04-29T02:04:01.2432381Z Collecting typing-inspection>=0.4.2 (from pydantic->-r requirements.txt (line 7))
-2026-04-29T02:04:01.2445776Z   Using cached typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
-2026-04-29T02:04:01.2674861Z Collecting pyasn1-modules>=0.2.1 (from google-auth<3.0.0,>=2.48.1->google-auth[requests]<3.0.0,>=2.48.1->google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:01.2687701Z   Using cached pyasn1_modules-0.4.2-py3-none-any.whl.metadata (3.5 kB)
-2026-04-29T02:04:01.4717049Z Collecting cryptography>=38.0.3 (from google-auth<3.0.0,>=2.48.1->google-auth[requests]<3.0.0,>=2.48.1->google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:01.4732672Z   Using cached cryptography-47.0.0-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.5 kB)
-2026-04-29T02:04:01.4973934Z Collecting httpcore==1.* (from httpx<1.0.0,>=0.28.1->google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:01.4986642Z   Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
-2026-04-29T02:04:01.5125355Z Collecting h11>=0.16 (from httpcore==1.*->httpx<1.0.0,>=0.28.1->google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:01.5138115Z   Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
-2026-04-29T02:04:01.5314455Z Collecting google-ai-generativelanguage==0.6.15 (from google-generativeai->-r requirements.txt (line 2))
-2026-04-29T02:04:01.5327420Z   Using cached google_ai_generativelanguage-0.6.15-py3-none-any.whl.metadata (5.7 kB)
-2026-04-29T02:04:01.5639529Z Collecting google-api-core (from google-generativeai->-r requirements.txt (line 2))
-2026-04-29T02:04:01.5652757Z   Using cached google_api_core-2.30.3-py3-none-any.whl.metadata (3.1 kB)
-2026-04-29T02:04:01.6119034Z Collecting google-api-python-client (from google-generativeai->-r requirements.txt (line 2))
-2026-04-29T02:04:01.6132353Z   Using cached google_api_python_client-2.194.0-py3-none-any.whl.metadata (7.0 kB)
-2026-04-29T02:04:01.7537154Z Collecting protobuf (from google-generativeai->-r requirements.txt (line 2))
-2026-04-29T02:04:01.7552064Z   Using cached protobuf-7.34.1-cp310-abi3-manylinux2014_x86_64.whl.metadata (595 bytes)
-2026-04-29T02:04:01.7858916Z Collecting tqdm (from google-generativeai->-r requirements.txt (line 2))
-2026-04-29T02:04:01.7872156Z   Using cached tqdm-4.67.3-py3-none-any.whl.metadata (57 kB)
-2026-04-29T02:04:01.8470418Z Collecting proto-plus<2.0.0dev,>=1.22.3 (from google-ai-generativelanguage==0.6.15->google-generativeai->-r requirements.txt (line 2))
-2026-04-29T02:04:01.8483189Z   Using cached proto_plus-1.27.2-py3-none-any.whl.metadata (2.2 kB)
-2026-04-29T02:04:01.8614624Z Collecting protobuf (from google-generativeai->-r requirements.txt (line 2))
-2026-04-29T02:04:01.8627682Z   Using cached protobuf-5.29.6-cp38-abi3-manylinux2014_x86_64.whl.metadata (592 bytes)
-2026-04-29T02:04:01.8801694Z Collecting googleapis-common-protos<2.0.0,>=1.63.2 (from google-api-core->google-generativeai->-r requirements.txt (line 2))
-2026-04-29T02:04:01.8814809Z   Using cached googleapis_common_protos-1.74.0-py3-none-any.whl.metadata (9.2 kB)
-2026-04-29T02:04:02.3771902Z Collecting grpcio<2.0.0,>=1.33.2 (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.10.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,<3.0.0dev,>=1.34.1->google-ai-generativelanguage==0.6.15->google-generativeai->-r requirements.txt (line 2))
-2026-04-29T02:04:02.3787536Z   Using cached grpcio-1.80.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (3.8 kB)
-2026-04-29T02:04:02.4149326Z Collecting grpcio-status<2.0.0,>=1.33.2 (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.10.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,<3.0.0dev,>=1.34.1->google-ai-generativelanguage==0.6.15->google-generativeai->-r requirements.txt (line 2))
-2026-04-29T02:04:02.4163077Z   Using cached grpcio_status-1.80.0-py3-none-any.whl.metadata (1.3 kB)
-2026-04-29T02:04:02.4290642Z INFO: pip is looking at multiple versions of grpcio-status to determine which version is compatible with other requirements. This could take a while.
-2026-04-29T02:04:02.4307256Z   Using cached grpcio_status-1.78.0-py3-none-any.whl.metadata (1.3 kB)
-2026-04-29T02:04:02.4334916Z   Using cached grpcio_status-1.76.0-py3-none-any.whl.metadata (1.1 kB)
-2026-04-29T02:04:02.4362489Z   Using cached grpcio_status-1.75.1-py3-none-any.whl.metadata (1.1 kB)
-2026-04-29T02:04:02.4389305Z   Using cached grpcio_status-1.75.0-py3-none-any.whl.metadata (1.1 kB)
-2026-04-29T02:04:02.4415587Z   Using cached grpcio_status-1.74.0-py3-none-any.whl.metadata (1.1 kB)
-2026-04-29T02:04:02.4442692Z   Using cached grpcio_status-1.73.1-py3-none-any.whl.metadata (1.1 kB)
-2026-04-29T02:04:02.4520431Z   Using cached grpcio_status-1.73.0-py3-none-any.whl.metadata (1.1 kB)
-2026-04-29T02:04:02.4533992Z INFO: pip is still looking at multiple versions of grpcio-status to determine which version is compatible with other requirements. This could take a while.
-2026-04-29T02:04:02.4549735Z   Using cached grpcio_status-1.72.2-py3-none-any.whl.metadata (1.1 kB)
-2026-04-29T02:04:02.4575972Z   Using cached grpcio_status-1.72.1-py3-none-any.whl.metadata (1.1 kB)
-2026-04-29T02:04:02.4602861Z   Using cached grpcio_status-1.71.2-py3-none-any.whl.metadata (1.1 kB)
-2026-04-29T02:04:02.4968640Z Collecting starlette>=0.46.0 (from fastapi->-r requirements.txt (line 5))
-2026-04-29T02:04:02.4982402Z   Using cached starlette-1.0.0-py3-none-any.whl.metadata (6.3 kB)
-2026-04-29T02:04:02.5134121Z Collecting annotated-doc>=0.0.2 (from fastapi->-r requirements.txt (line 5))
-2026-04-29T02:04:02.5147656Z   Using cached annotated_doc-0.0.4-py3-none-any.whl.metadata (6.6 kB)
-2026-04-29T02:04:02.5357645Z Collecting click>=7.0 (from uvicorn->-r requirements.txt (line 6))
-2026-04-29T02:04:02.5371287Z   Using cached click-8.3.3-py3-none-any.whl.metadata (2.6 kB)
-2026-04-29T02:04:02.5529972Z Collecting pyee<14,>=13 (from playwright->-r requirements.txt (line 8))
-2026-04-29T02:04:02.5543389Z   Using cached pyee-13.0.1-py3-none-any.whl.metadata (3.0 kB)
-2026-04-29T02:04:02.7426688Z Collecting greenlet<4.0.0,>=3.1.1 (from playwright->-r requirements.txt (line 8))
-2026-04-29T02:04:02.7443128Z   Using cached greenlet-3.5.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.7 kB)
-2026-04-29T02:04:02.8397385Z Collecting cffi>=2.0.0 (from cryptography>=38.0.3->google-auth<3.0.0,>=2.48.1->google-auth[requests]<3.0.0,>=2.48.1->google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:02.8412035Z   Using cached cffi-2.0.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.6 kB)
-2026-04-29T02:04:02.8565648Z Collecting pycparser (from cffi>=2.0.0->cryptography>=38.0.3->google-auth<3.0.0,>=2.48.1->google-auth[requests]<3.0.0,>=2.48.1->google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:02.8580181Z   Using cached pycparser-3.0-py3-none-any.whl.metadata (8.2 kB)
-2026-04-29T02:04:02.8802917Z Collecting pyasn1<0.7.0,>=0.6.1 (from pyasn1-modules>=0.2.1->google-auth<3.0.0,>=2.48.1->google-auth[requests]<3.0.0,>=2.48.1->google-genai->-r requirements.txt (line 1))
-2026-04-29T02:04:02.8815481Z   Using cached pyasn1-0.6.3-py3-none-any.whl.metadata (8.4 kB)
-2026-04-29T02:04:02.9043238Z Collecting httplib2<1.0.0,>=0.19.0 (from google-api-python-client->google-generativeai->-r requirements.txt (line 2))
-2026-04-29T02:04:02.9055935Z   Using cached httplib2-0.31.2-py3-none-any.whl.metadata (2.2 kB)
-2026-04-29T02:04:02.9179101Z Collecting google-auth-httplib2<1.0.0,>=0.2.0 (from google-api-python-client->google-generativeai->-r requirements.txt (line 2))
-2026-04-29T02:04:02.9191915Z   Using cached google_auth_httplib2-0.3.1-py3-none-any.whl.metadata (3.0 kB)
-2026-04-29T02:04:02.9345487Z Collecting uritemplate<5,>=3.0.1 (from google-api-python-client->google-generativeai->-r requirements.txt (line 2))
-2026-04-29T02:04:02.9358241Z   Using cached uritemplate-4.2.0-py3-none-any.whl.metadata (2.6 kB)
-2026-04-29T02:04:02.9608052Z Collecting pyparsing<4,>=3.1 (from httplib2<1.0.0,>=0.19.0->google-api-python-client->google-generativeai->-r requirements.txt (line 2))
-2026-04-29T02:04:02.9621226Z   Using cached pyparsing-3.3.2-py3-none-any.whl.metadata (5.8 kB)
-2026-04-29T02:04:02.9679513Z Using cached playwright_stealth-1.0.6-py3-none-any.whl (28 kB)
-2026-04-29T02:04:02.9692456Z Using cached google_genai-1.73.1-py3-none-any.whl (783 kB)
-2026-04-29T02:04:02.9708387Z Using cached requests-2.33.1-py3-none-any.whl (64 kB)
-2026-04-29T02:04:02.9722396Z Using cached pydantic-2.13.3-py3-none-any.whl (471 kB)
-2026-04-29T02:04:02.9738073Z Using cached pydantic_core-2.46.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
-2026-04-29T02:04:02.9759243Z Using cached anyio-4.13.0-py3-none-any.whl (114 kB)
-2026-04-29T02:04:02.9773586Z Using cached charset_normalizer-3.4.7-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (214 kB)
-2026-04-29T02:04:02.9787653Z Using cached distro-1.9.0-py3-none-any.whl (20 kB)
-2026-04-29T02:04:02.9800917Z Using cached google_auth-2.49.2-py3-none-any.whl (240 kB)
-2026-04-29T02:04:02.9814594Z Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
-2026-04-29T02:04:02.9827563Z Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
-2026-04-29T02:04:02.9841675Z Using cached idna-3.13-py3-none-any.whl (68 kB)
-2026-04-29T02:04:02.9855059Z Using cached tenacity-9.1.4-py3-none-any.whl (28 kB)
-2026-04-29T02:04:02.9867839Z Using cached typing_extensions-4.15.0-py3-none-any.whl (44 kB)
-2026-04-29T02:04:02.9881199Z Using cached urllib3-2.6.3-py3-none-any.whl (131 kB)
-2026-04-29T02:04:02.9894892Z Using cached websockets-16.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (184 kB)
-2026-04-29T02:04:02.9907830Z Using cached google_generativeai-0.8.6-py3-none-any.whl (155 kB)
-2026-04-29T02:04:02.9921273Z Using cached google_ai_generativelanguage-0.6.15-py3-none-any.whl (1.3 MB)
-2026-04-29T02:04:02.9939067Z Using cached google_api_core-2.30.3-py3-none-any.whl (173 kB)
-2026-04-29T02:04:02.9952370Z Using cached googleapis_common_protos-1.74.0-py3-none-any.whl (300 kB)
-2026-04-29T02:04:02.9966395Z Using cached grpcio-1.80.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (6.8 MB)
-2026-04-29T02:04:03.0006268Z Using cached grpcio_status-1.71.2-py3-none-any.whl (14 kB)
-2026-04-29T02:04:03.0019091Z Using cached proto_plus-1.27.2-py3-none-any.whl (50 kB)
-2026-04-29T02:04:03.0031840Z Using cached protobuf-5.29.6-cp38-abi3-manylinux2014_x86_64.whl (320 kB)
-2026-04-29T02:04:03.0045587Z Using cached python_dotenv-1.2.2-py3-none-any.whl (22 kB)
-2026-04-29T02:04:03.0058091Z Using cached fastapi-0.136.1-py3-none-any.whl (117 kB)
-2026-04-29T02:04:03.0071716Z Using cached uvicorn-0.46.0-py3-none-any.whl (70 kB)
-2026-04-29T02:04:03.0084537Z Using cached playwright-1.58.0-py3-none-manylinux1_x86_64.whl (46.2 MB)
-2026-04-29T02:04:03.0263599Z Using cached greenlet-3.5.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (615 kB)
-2026-04-29T02:04:03.0279592Z Using cached pyee-13.0.1-py3-none-any.whl (15 kB)
-2026-04-29T02:04:03.0292799Z Using cached annotated_doc-0.0.4-py3-none-any.whl (5.3 kB)
-2026-04-29T02:04:03.0305530Z Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
-2026-04-29T02:04:03.0318346Z Using cached certifi-2026.4.22-py3-none-any.whl (135 kB)
-2026-04-29T02:04:03.0331717Z Using cached click-8.3.3-py3-none-any.whl (110 kB)
-2026-04-29T02:04:03.0344925Z Using cached cryptography-47.0.0-cp311-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
-2026-04-29T02:04:03.0374332Z Using cached cffi-2.0.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (215 kB)
-2026-04-29T02:04:03.0387526Z Using cached h11-0.16.0-py3-none-any.whl (37 kB)
-2026-04-29T02:04:03.0400812Z Using cached pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
-2026-04-29T02:04:03.0413998Z Using cached pyasn1-0.6.3-py3-none-any.whl (83 kB)
-2026-04-29T02:04:03.0426984Z Using cached starlette-1.0.0-py3-none-any.whl (72 kB)
-2026-04-29T02:04:03.0440245Z Using cached typing_inspection-0.4.2-py3-none-any.whl (14 kB)
-2026-04-29T02:04:03.0452985Z Using cached google_api_python_client-2.194.0-py3-none-any.whl (15.0 MB)
-2026-04-29T02:04:03.0516885Z Using cached google_auth_httplib2-0.3.1-py3-none-any.whl (9.5 kB)
-2026-04-29T02:04:03.0529781Z Using cached httplib2-0.31.2-py3-none-any.whl (91 kB)
-2026-04-29T02:04:03.0542928Z Using cached pyparsing-3.3.2-py3-none-any.whl (122 kB)
-2026-04-29T02:04:03.0556220Z Using cached uritemplate-4.2.0-py3-none-any.whl (11 kB)
-2026-04-29T02:04:03.0569042Z Using cached pycparser-3.0-py3-none-any.whl (48 kB)
-2026-04-29T02:04:03.0581985Z Using cached sniffio-1.3.1-py3-none-any.whl (10 kB)
-2026-04-29T02:04:03.0594474Z Using cached tqdm-4.67.3-py3-none-any.whl (78 kB)
-2026-04-29T02:04:03.2531755Z Installing collected packages: websockets, urllib3, uritemplate, typing-extensions, tqdm, tenacity, sniffio, python-dotenv, pyparsing, pycparser, pyasn1, protobuf, idna, h11, greenlet, distro, click, charset_normalizer, certifi, annotated-types, annotated-doc, uvicorn, typing-inspection, requests, pyee, pydantic-core, pyasn1-modules, proto-plus, httplib2, httpcore, grpcio, googleapis-common-protos, cffi, anyio, starlette, pydantic, playwright, httpx, grpcio-status, cryptography, playwright-stealth, google-auth, fastapi, google-auth-httplib2, google-api-core, google-genai, google-api-python-client, google-ai-generativelanguage, google-generativeai
-2026-04-29T02:04:07.8488431Z 
-2026-04-29T02:04:07.8515682Z Successfully installed annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.13.0 certifi-2026.4.22 cffi-2.0.0 charset_normalizer-3.4.7 click-8.3.3 cryptography-47.0.0 distro-1.9.0 fastapi-0.136.1 google-ai-generativelanguage-0.6.15 google-api-core-2.30.3 google-api-python-client-2.194.0 google-auth-2.49.2 google-auth-httplib2-0.3.1 google-genai-1.73.1 google-generativeai-0.8.6 googleapis-common-protos-1.74.0 greenlet-3.5.0 grpcio-1.80.0 grpcio-status-1.71.2 h11-0.16.0 httpcore-1.0.9 httplib2-0.31.2 httpx-0.28.1 idna-3.13 playwright-1.58.0 playwright-stealth-1.0.6 proto-plus-1.27.2 protobuf-5.29.6 pyasn1-0.6.3 pyasn1-modules-0.4.2 pycparser-3.0 pydantic-2.13.3 pydantic-core-2.46.3 pyee-13.0.1 pyparsing-3.3.2 python-dotenv-1.2.2 requests-2.33.1 sniffio-1.3.1 starlette-1.0.0 tenacity-9.1.4 tqdm-4.67.3 typing-extensions-4.15.0 typing-inspection-0.4.2 uritemplate-4.2.0 urllib3-2.6.3 uvicorn-0.46.0 websockets-16.0
-2026-04-29T02:04:07.8544014Z 
-2026-04-29T02:04:07.8544311Z [notice] A new release of pip is available: 26.0.1 -> 26.1
-2026-04-29T02:04:07.8544800Z [notice] To update, run: pip install --upgrade pip
-2026-04-29T02:04:08.2561654Z ##[group]Run playwright install chromium --with-deps
-2026-04-29T02:04:08.2562109Z [36;1mplaywright install chromium --with-deps[0m
-2026-04-29T02:04:08.2585024Z shell: /usr/bin/bash -e {0}
-2026-04-29T02:04:08.2585286Z env:
-2026-04-29T02:04:08.2585480Z   TZ: Africa/Cairo
-2026-04-29T02:04:08.2585778Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:08.2586236Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
-2026-04-29T02:04:08.2586677Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:08.2587077Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:08.2587468Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:08.2588091Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
-2026-04-29T02:04:08.2588427Z ##[endgroup]
-2026-04-29T02:04:08.6664566Z Installing dependencies...
-2026-04-29T02:04:08.6746667Z Switching to root user to install dependencies...
-2026-04-29T02:04:08.7748954Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
-2026-04-29T02:04:08.8201992Z Hit:6 https://packages.microsoft.com/repos/azure-cli noble InRelease
-2026-04-29T02:04:08.8203377Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
-2026-04-29T02:04:08.8362605Z Get:8 https://dl.google.com/linux/chrome-stable/deb stable InRelease [1825 B]
-2026-04-29T02:04:08.8774611Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
-2026-04-29T02:04:08.8784087Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
-2026-04-29T02:04:08.8833974Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
-2026-04-29T02:04:08.8858468Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
-2026-04-29T02:04:08.9830736Z Get:9 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [103 kB]
-2026-04-29T02:04:08.9965442Z Get:10 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [128 kB]
-2026-04-29T02:04:09.0009152Z Get:11 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [11.6 kB]
-2026-04-29T02:04:09.0439871Z Get:12 https://dl.google.com/linux/chrome-stable/deb stable/main amd64 Packages [1212 B]
-2026-04-29T02:04:09.1308835Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1919 kB]
-2026-04-29T02:04:09.1508697Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [346 kB]
-2026-04-29T02:04:09.1531115Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [177 kB]
-2026-04-29T02:04:09.1539355Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 c-n-f Metadata [17.1 kB]
-2026-04-29T02:04:09.1552132Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1685 kB]
-2026-04-29T02:04:09.1649927Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [324 kB]
-2026-04-29T02:04:09.1690894Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [386 kB]
-2026-04-29T02:04:09.1734929Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 c-n-f Metadata [34.5 kB]
-2026-04-29T02:04:09.1748947Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [3054 kB]
-2026-04-29T02:04:09.1910328Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [702 kB]
-2026-04-29T02:04:09.2376112Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]
-2026-04-29T02:04:09.2383258Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 c-n-f Metadata [480 B]
-2026-04-29T02:04:09.2399304Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [44.4 kB]
-2026-04-29T02:04:09.2437561Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [10.2 kB]
-2026-04-29T02:04:09.2439819Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
-2026-04-29T02:04:09.2449478Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 c-n-f Metadata [656 B]
-2026-04-29T02:04:09.2453822Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Packages [40.6 kB]
-2026-04-29T02:04:09.2459765Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble-backports/main Translation-en [9172 B]
-2026-04-29T02:04:09.2470657Z Get:31 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [7364 B]
-2026-04-29T02:04:09.2477507Z Get:32 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [30.6 kB]
-2026-04-29T02:04:09.2487381Z Get:33 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe Translation-en [18.2 kB]
-2026-04-29T02:04:09.2496549Z Get:34 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [10.5 kB]
-2026-04-29T02:04:09.2509409Z Get:35 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 c-n-f Metadata [1484 B]
-2026-04-29T02:04:09.2513588Z Get:36 http://azure.archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [212 B]
-2026-04-29T02:04:09.2935557Z Get:37 http://azure.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Packages [748 B]
-2026-04-29T02:04:09.2948781Z Get:38 http://azure.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B]
-2026-04-29T02:04:09.2970577Z Get:39 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1624 kB]
-2026-04-29T02:04:09.3059293Z Get:40 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [259 kB]
-2026-04-29T02:04:09.3078536Z Get:41 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [21.8 kB]
-2026-04-29T02:04:09.3088325Z Get:42 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 c-n-f Metadata [11.0 kB]
-2026-04-29T02:04:09.3099027Z Get:43 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1182 kB]
-2026-04-29T02:04:09.3164576Z Get:44 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [227 kB]
-2026-04-29T02:04:09.3181471Z Get:45 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [74.2 kB]
-2026-04-29T02:04:09.3192042Z Get:46 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 c-n-f Metadata [23.1 kB]
-2026-04-29T02:04:09.3202648Z Get:47 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [2844 kB]
-2026-04-29T02:04:09.3348777Z Get:48 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [666 kB]
-2026-04-29T02:04:09.3384828Z Get:49 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Components [212 B]
-2026-04-29T02:04:09.3392565Z Get:50 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 Packages [28.8 kB]
-2026-04-29T02:04:09.3401307Z Get:51 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [7172 B]
-2026-04-29T02:04:09.3850931Z Get:52 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [208 B]
-2026-04-29T02:04:18.7000189Z Fetched 16.4 MB in 2s (8431 kB/s)
-2026-04-29T02:04:19.4319330Z Reading package lists...
-2026-04-29T02:04:19.4559553Z Reading package lists...
-2026-04-29T02:04:19.6151717Z Building dependency tree...
-2026-04-29T02:04:19.6159234Z Reading state information...
-2026-04-29T02:04:19.7568586Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.2).
-2026-04-29T02:04:19.7569713Z libasound2t64 set to manually installed.
-2026-04-29T02:04:19.7570452Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
-2026-04-29T02:04:19.7571323Z libatk-bridge2.0-0t64 set to manually installed.
-2026-04-29T02:04:19.7572133Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
-2026-04-29T02:04:19.7572800Z libatk1.0-0t64 set to manually installed.
-2026-04-29T02:04:19.7573480Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
-2026-04-29T02:04:19.7574510Z libatspi2.0-0t64 set to manually installed.
-2026-04-29T02:04:19.7574985Z libcairo2 is already the newest version (1.18.0-3build1).
-2026-04-29T02:04:19.7575469Z libcairo2 set to manually installed.
-2026-04-29T02:04:19.7575928Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.9).
-2026-04-29T02:04:19.7576331Z libcups2t64 set to manually installed.
-2026-04-29T02:04:19.7576824Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
-2026-04-29T02:04:19.7577207Z libdbus-1-3 set to manually installed.
-2026-04-29T02:04:19.7577815Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.1).
-2026-04-29T02:04:19.7578206Z libdrm2 set to manually installed.
-2026-04-29T02:04:19.7578571Z libgbm1 is already the newest version (25.2.8-0ubuntu0.24.04.1).
-2026-04-29T02:04:19.7578918Z libgbm1 set to manually installed.
-2026-04-29T02:04:19.7579252Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.8).
-2026-04-29T02:04:19.7579624Z libglib2.0-0t64 set to manually installed.
-2026-04-29T02:04:19.7579973Z libnspr4 is already the newest version (2:4.35-1.1build1).
-2026-04-29T02:04:19.7580323Z libnspr4 set to manually installed.
-2026-04-29T02:04:19.7580660Z libnss3 is already the newest version (2:3.98-1ubuntu0.1).
-2026-04-29T02:04:19.7580994Z libnss3 set to manually installed.
-2026-04-29T02:04:19.7581329Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
-2026-04-29T02:04:19.7581689Z libpango-1.0-0 set to manually installed.
-2026-04-29T02:04:19.7582018Z libx11-6 is already the newest version (2:1.8.7-1build1).
-2026-04-29T02:04:19.7582344Z libx11-6 set to manually installed.
-2026-04-29T02:04:19.7582653Z libxcb1 is already the newest version (1.15-1ubuntu2).
-2026-04-29T02:04:19.7583159Z libxcb1 set to manually installed.
-2026-04-29T02:04:19.7583497Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
-2026-04-29T02:04:19.7583860Z libxcomposite1 set to manually installed.
-2026-04-29T02:04:19.7584205Z libxdamage1 is already the newest version (1:1.1.6-1build1).
-2026-04-29T02:04:19.7584550Z libxdamage1 set to manually installed.
-2026-04-29T02:04:19.7584885Z libxext6 is already the newest version (2:1.3.4-1build2).
-2026-04-29T02:04:19.7585209Z libxext6 set to manually installed.
-2026-04-29T02:04:19.7585538Z libxfixes3 is already the newest version (1:6.0.0-2build1).
-2026-04-29T02:04:19.7585876Z libxfixes3 set to manually installed.
-2026-04-29T02:04:19.7586207Z libxkbcommon0 is already the newest version (1.6.0-1build1).
-2026-04-29T02:04:19.7586550Z libxkbcommon0 set to manually installed.
-2026-04-29T02:04:19.7586882Z libxrandr2 is already the newest version (2:1.5.2-2build1).
-2026-04-29T02:04:19.7587219Z libxrandr2 set to manually installed.
-2026-04-29T02:04:19.7587725Z xvfb is already the newest version (2:21.1.12-1ubuntu1.5).
-2026-04-29T02:04:19.7588212Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
-2026-04-29T02:04:19.7588734Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
-2026-04-29T02:04:19.7589112Z libfontconfig1 set to manually installed.
-2026-04-29T02:04:19.7589502Z libfreetype6 is already the newest version (2.13.2+dfsg-1ubuntu0.1).
-2026-04-29T02:04:19.7589885Z libfreetype6 set to manually installed.
-2026-04-29T02:04:19.7590233Z fonts-liberation is already the newest version (1:2.1.5-3).
-2026-04-29T02:04:19.7590586Z fonts-liberation set to manually installed.
-2026-04-29T02:04:19.7590927Z The following additional packages will be installed:
-2026-04-29T02:04:19.7591252Z   xfonts-encodings xfonts-utils
-2026-04-29T02:04:19.7591516Z Recommended packages:
-2026-04-29T02:04:19.7591762Z   fonts-ipafont-mincho fonts-tlwg-loma
-2026-04-29T02:04:19.8271987Z The following NEW packages will be installed:
-2026-04-29T02:04:19.8272919Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
-2026-04-29T02:04:19.8280357Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
-2026-04-29T02:04:19.8281106Z   xfonts-utils
-2026-04-29T02:04:19.8456500Z 0 upgraded, 9 newly installed, 0 to remove and 43 not upgraded.
-2026-04-29T02:04:19.8457196Z Need to get 21.1 MB of archives.
-2026-04-29T02:04:19.8458040Z After this operation, 79.5 MB of additional disk space will be used.
-2026-04-29T02:04:19.8458785Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
-2026-04-29T02:04:19.8645508Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
-2026-04-29T02:04:19.9333247Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
-2026-04-29T02:04:20.0359147Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
-2026-04-29T02:04:20.0399936Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
-2026-04-29T02:04:20.0980913Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
-2026-04-29T02:04:20.2172771Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
-2026-04-29T02:04:20.2281272Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
-2026-04-29T02:04:20.2321392Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
-2026-04-29T02:04:20.2420043Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
-2026-04-29T02:04:20.5018748Z Fetched 21.1 MB in 0s (51.2 MB/s)
-2026-04-29T02:04:20.5572937Z Selecting previously unselected package fonts-ipafont-gothic.
-2026-04-29T02:04:20.6409508Z (Reading database ... 
-2026-04-29T02:04:20.6409806Z (Reading database ... 5%
-2026-04-29T02:04:20.6410303Z (Reading database ... 10%
-2026-04-29T02:04:20.6410570Z (Reading database ... 15%
-2026-04-29T02:04:20.6410809Z (Reading database ... 20%
-2026-04-29T02:04:20.6411043Z (Reading database ... 25%
-2026-04-29T02:04:20.6411280Z (Reading database ... 30%
-2026-04-29T02:04:20.6411522Z (Reading database ... 35%
-2026-04-29T02:04:20.6411753Z (Reading database ... 40%
-2026-04-29T02:04:20.6411975Z (Reading database ... 45%
-2026-04-29T02:04:20.6412196Z (Reading database ... 50%
-2026-04-29T02:04:20.6756850Z (Reading database ... 55%
-2026-04-29T02:04:21.1705334Z (Reading database ... 60%
-2026-04-29T02:04:21.4450778Z (Reading database ... 65%
-2026-04-29T02:04:21.8739963Z (Reading database ... 70%
-2026-04-29T02:04:22.2593588Z (Reading database ... 75%
-2026-04-29T02:04:22.8033432Z (Reading database ... 80%
-2026-04-29T02:04:23.3843580Z (Reading database ... 85%
-2026-04-29T02:04:24.0747040Z (Reading database ... 90%
-2026-04-29T02:04:24.8233336Z (Reading database ... 95%
-2026-04-29T02:04:24.8233832Z (Reading database ... 100%
-2026-04-29T02:04:24.8234331Z (Reading database ... 220764 files and directories currently installed.)
-2026-04-29T02:04:24.8280721Z Preparing to unpack .../0-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
-2026-04-29T02:04:24.8372011Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
-2026-04-29T02:04:25.0601171Z Selecting previously unselected package fonts-freefont-ttf.
-2026-04-29T02:04:25.0740150Z Preparing to unpack .../1-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
-2026-04-29T02:04:25.0750228Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
-2026-04-29T02:04:25.1511597Z Selecting previously unselected package fonts-tlwg-loma-otf.
-2026-04-29T02:04:25.1650201Z Preparing to unpack .../2-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
-2026-04-29T02:04:25.1661669Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
-2026-04-29T02:04:25.1868255Z Selecting previously unselected package fonts-unifont.
-2026-04-29T02:04:25.2005661Z Preparing to unpack .../3-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
-2026-04-29T02:04:25.2015742Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
-2026-04-29T02:04:25.3089947Z Selecting previously unselected package fonts-wqy-zenhei.
-2026-04-29T02:04:25.3228987Z Preparing to unpack .../4-fonts-wqy-zenhei_0.9.45-8_all.deb ...
-2026-04-29T02:04:25.3369037Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
-2026-04-29T02:04:25.7990346Z Selecting previously unselected package xfonts-encodings.
-2026-04-29T02:04:25.8129022Z Preparing to unpack .../5-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
-2026-04-29T02:04:25.8139440Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
-2026-04-29T02:04:25.8440904Z Selecting previously unselected package xfonts-utils.
-2026-04-29T02:04:25.8583575Z Preparing to unpack .../6-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
-2026-04-29T02:04:25.8591682Z Unpacking xfonts-utils (1:7.7+6build3) ...
-2026-04-29T02:04:25.9071889Z Selecting previously unselected package xfonts-cyrillic.
-2026-04-29T02:04:25.9211402Z Preparing to unpack .../7-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
-2026-04-29T02:04:25.9220109Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
-2026-04-29T02:04:25.9563538Z Selecting previously unselected package xfonts-scalable.
-2026-04-29T02:04:25.9699883Z Preparing to unpack .../8-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
-2026-04-29T02:04:25.9708468Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
-2026-04-29T02:04:26.0111168Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
-2026-04-29T02:04:26.0226012Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
-2026-04-29T02:04:26.0245834Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
-2026-04-29T02:04:26.0265960Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
-2026-04-29T02:04:26.0285437Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
-2026-04-29T02:04:26.0351439Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
-2026-04-29T02:04:26.0369967Z Setting up fonts-unifont (1:15.1.01-1build1) ...
-2026-04-29T02:04:26.0390429Z Setting up xfonts-utils (1:7.7+6build3) ...
-2026-04-29T02:04:26.0430659Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
-2026-04-29T02:04:26.0696837Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
-2026-04-29T02:04:26.1128170Z Processing triggers for man-db (2.12.0-4build2) ...
-2026-04-29T02:04:26.1184885Z Not building database; man-db/auto-update is not 'true'.
-2026-04-29T02:04:26.1197499Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
-2026-04-29T02:04:27.2056180Z 
-2026-04-29T02:04:27.2056671Z Running kernel seems to be up-to-date.
-2026-04-29T02:04:27.2057130Z 
-2026-04-29T02:04:27.2057339Z No services need to be restarted.
-2026-04-29T02:04:27.2057867Z 
-2026-04-29T02:04:27.2058013Z No containers need to be restarted.
-2026-04-29T02:04:27.2058245Z 
-2026-04-29T02:04:27.2058406Z No user sessions are running outdated binaries.
-2026-04-29T02:04:27.2058682Z 
-2026-04-29T02:04:27.2058944Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
-2026-04-29T02:04:27.9958521Z Downloading Chrome for Testing 145.0.7632.6 (playwright chromium v1208) from https://cdn.playwright.dev/chrome-for-testing-public/145.0.7632.6/linux64/chrome-linux64.zip
-2026-04-29T02:04:28.0872989Z (node:3057) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
-2026-04-29T02:04:28.0874097Z (Use `node --trace-deprecation ...` to show where the warning was created)
-2026-04-29T02:04:28.1715311Z |                                                                                |   0% of 167.3 MiB
-2026-04-29T02:04:28.3127266Z |â â â â â â â â                                                                         |  10% of 167.3 MiB
-2026-04-29T02:04:28.3838819Z |â â â â â â â â â â â â â â â â                                                                 |  20% of 167.3 MiB
-2026-04-29T02:04:28.4566985Z |â â â â â â â â â â â â â â â â â â â â â â â â                                                         |  30% of 167.3 MiB
-2026-04-29T02:04:28.5267233Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                                 |  40% of 167.3 MiB
-2026-04-29T02:04:28.5898330Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                         |  50% of 167.3 MiB
-2026-04-29T02:04:28.6746083Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                 |  60% of 167.3 MiB
-2026-04-29T02:04:28.7302580Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                         |  70% of 167.3 MiB
-2026-04-29T02:04:28.7899045Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                 |  80% of 167.3 MiB
-2026-04-29T02:04:28.8651099Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â         |  90% of 167.3 MiB
-2026-04-29T02:04:28.9191744Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â | 100% of 167.3 MiB
-2026-04-29T02:04:31.5325402Z Chrome for Testing 145.0.7632.6 (playwright chromium v1208) downloaded to /home/runner/.cache/ms-playwright/chromium-1208
-2026-04-29T02:04:31.5332494Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
-2026-04-29T02:04:31.6293648Z (node:3068) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
-2026-04-29T02:04:31.6295374Z (Use `node --trace-deprecation ...` to show where the warning was created)
-2026-04-29T02:04:33.2124631Z |                                                                                |   0% of 2.3 MiB
-2026-04-29T02:04:33.2428288Z |â â â â â â â â                                                                         |  10% of 2.3 MiB
-2026-04-29T02:04:33.2573000Z |â â â â â â â â â â â â â â â â                                                                 |  20% of 2.3 MiB
-2026-04-29T02:04:33.2665102Z |â â â â â â â â â â â â â â â â â â â â â â â â                                                         |  30% of 2.3 MiB
-2026-04-29T02:04:33.2762074Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                                 |  40% of 2.3 MiB
-2026-04-29T02:04:33.2811549Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                         |  50% of 2.3 MiB
-2026-04-29T02:04:33.2881902Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                 |  60% of 2.3 MiB
-2026-04-29T02:04:33.2897453Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                         |  70% of 2.3 MiB
-2026-04-29T02:04:33.2979011Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                 |  80% of 2.3 MiB
-2026-04-29T02:04:33.3000922Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â         |  90% of 2.3 MiB
-2026-04-29T02:04:33.3067185Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â | 100% of 2.3 MiB
-2026-04-29T02:04:33.3670960Z FFmpeg (playwright ffmpeg v1011) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
-2026-04-29T02:04:33.3674905Z Downloading Chrome Headless Shell 145.0.7632.6 (playwright chromium-headless-shell v1208) from https://cdn.playwright.dev/chrome-for-testing-public/145.0.7632.6/linux64/chrome-headless-shell-linux64.zip
-2026-04-29T02:04:33.4627885Z (node:3079) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
-2026-04-29T02:04:33.4629685Z (Use `node --trace-deprecation ...` to show where the warning was created)
-2026-04-29T02:04:33.5855049Z |                                                                                |   0% of 110.9 MiB
-2026-04-29T02:04:33.7030410Z |â â â â â â â â                                                                         |  10% of 110.9 MiB
-2026-04-29T02:04:33.7583669Z |â â â â â â â â â â â â â â â â                                                                 |  20% of 110.9 MiB
-2026-04-29T02:04:33.8069824Z |â â â â â â â â â â â â â â â â â â â â â â â â                                                         |  30% of 110.9 MiB
-2026-04-29T02:04:33.8559590Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                                 |  40% of 110.9 MiB
-2026-04-29T02:04:33.8944462Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                         |  50% of 110.9 MiB
-2026-04-29T02:04:33.9371016Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                 |  60% of 110.9 MiB
-2026-04-29T02:04:33.9724959Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                         |  70% of 110.9 MiB
-2026-04-29T02:04:34.0071228Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                 |  80% of 110.9 MiB
-2026-04-29T02:04:34.0420429Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â         |  90% of 110.9 MiB
-2026-04-29T02:04:34.0794456Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â | 100% of 110.9 MiB
-2026-04-29T02:04:35.8941247Z Chrome Headless Shell 145.0.7632.6 (playwright chromium-headless-shell v1208) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1208
-2026-04-29T02:04:35.9178065Z ##[group]Run echo "GEMINI_API_KEY=***" >> .env
-2026-04-29T02:04:35.9179030Z [36;1mecho "GEMINI_API_KEY=***" >> .env[0m
-2026-04-29T02:04:35.9182724Z [36;1mecho "LINKEDIN_ACCESS_TOKEN=***" >> .env[0m
-2026-04-29T02:04:35.9183663Z [36;1mecho "TELEGRAM_BOT_TOKEN=***" >> .env[0m
-2026-04-29T02:04:35.9184285Z [36;1mecho "TELEGRAM_CHAT_ID=***" >> .env[0m
-2026-04-29T02:04:35.9184832Z [36;1mecho "TELEGRAM_MESSAGE=" >> .env[0m
-2026-04-29T02:04:35.9216836Z shell: /usr/bin/bash -e {0}
-2026-04-29T02:04:35.9217310Z env:
-2026-04-29T02:04:35.9217895Z   TZ: Africa/Cairo
-2026-04-29T02:04:35.9218409Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:35.9219226Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
-2026-04-29T02:04:35.9220056Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:35.9220756Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:35.9221519Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:35.9222256Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
-2026-04-29T02:04:35.9222863Z ##[endgroup]
-2026-04-29T02:04:35.9341685Z ##[group]Run actions/cache@v4
-2026-04-29T02:04:35.9341952Z with:
-2026-04-29T02:04:35.9342151Z   path: social_posts.db
-2026-04-29T02:04:35.9342394Z   key: social-posts-db-25087307288
-2026-04-29T02:04:35.9342669Z   restore-keys: social-posts-db-
+2026-04-29T02:09:11.9162561Z   enableCrossOsArchive: false
+2026-04-29T02:09:11.9164235Z   fail-on-cache-miss: false
+2026-04-29T02:09:11.9165763Z   lookup-only: false
+2026-04-29T02:09:11.9167504Z   save-always: false
+2026-04-29T02:09:11.9168885Z env:
+2026-04-29T02:09:11.9170110Z   TZ: Africa/Cairo
+2026-04-29T02:09:11.9171901Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:11.9174697Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-04-29T02:09:11.9177667Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:11.9180281Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:11.9182875Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:11.9185330Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-04-29T02:09:11.9188000Z ##[endgroup]
+2026-04-29T02:09:12.1820555Z Cache hit for: Linux-pip-3b36658a308ab5ff0f5baf21bf76a64740d38d60d83919f850a12c7208403754
+2026-04-29T02:09:13.1878082Z Received 86471787 of 86471787 (100.0%), 94.0 MBs/sec
+2026-04-29T02:09:13.1879993Z Cache Size: ~82 MB (86471787 B)
+2026-04-29T02:09:13.1910210Z [command]/usr/bin/tar -xf /home/runner/work/_temp/ebebe267-6df2-490d-a4a5-d42b68fb45f2/cache.tzst -P -C /home/runner/work/linkedin-automation/linkedin-automation --use-compress-program unzstd
+2026-04-29T02:09:13.3272312Z Cache restored successfully
+2026-04-29T02:09:13.3387133Z Cache restored from key: Linux-pip-3b36658a308ab5ff0f5baf21bf76a64740d38d60d83919f850a12c7208403754
+2026-04-29T02:09:13.3505286Z ##[group]Run pip install -r requirements.txt
+2026-04-29T02:09:13.3505758Z [36;1mpip install -r requirements.txt[0m
+2026-04-29T02:09:13.3544917Z shell: /usr/bin/bash -e {0}
+2026-04-29T02:09:13.3545246Z env:
+2026-04-29T02:09:13.3545497Z   TZ: Africa/Cairo
+2026-04-29T02:09:13.3545916Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:13.3546411Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-04-29T02:09:13.3547251Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:13.3547728Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:13.3548444Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:13.3548927Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-04-29T02:09:13.3549372Z ##[endgroup]
+2026-04-29T02:09:14.0825521Z Collecting google-genai (from -r requirements.txt (line 1))
+2026-04-29T02:09:14.0840373Z   Using cached google_genai-1.73.1-py3-none-any.whl.metadata (52 kB)
+2026-04-29T02:09:14.0988511Z Collecting google-generativeai (from -r requirements.txt (line 2))
+2026-04-29T02:09:14.1003111Z   Using cached google_generativeai-0.8.6-py3-none-any.whl.metadata (3.9 kB)
+2026-04-29T02:09:14.1143068Z Collecting python-dotenv (from -r requirements.txt (line 3))
+2026-04-29T02:09:14.1162858Z   Using cached python_dotenv-1.2.2-py3-none-any.whl.metadata (27 kB)
+2026-04-29T02:09:14.1401684Z Collecting requests (from -r requirements.txt (line 4))
+2026-04-29T02:09:14.1416333Z   Using cached requests-2.33.1-py3-none-any.whl.metadata (4.8 kB)
+2026-04-29T02:09:14.1936907Z Collecting fastapi (from -r requirements.txt (line 5))
+2026-04-29T02:09:14.1950549Z   Using cached fastapi-0.136.1-py3-none-any.whl.metadata (28 kB)
+2026-04-29T02:09:14.2203908Z Collecting uvicorn (from -r requirements.txt (line 6))
+2026-04-29T02:09:14.2217272Z   Using cached uvicorn-0.46.0-py3-none-any.whl.metadata (6.7 kB)
+2026-04-29T02:09:14.3286795Z Collecting pydantic (from -r requirements.txt (line 7))
+2026-04-29T02:09:14.3300599Z   Using cached pydantic-2.13.3-py3-none-any.whl.metadata (108 kB)
+2026-04-29T02:09:14.3651328Z Collecting playwright (from -r requirements.txt (line 8))
+2026-04-29T02:09:14.3665018Z   Using cached playwright-1.58.0-py3-none-manylinux1_x86_64.whl.metadata (3.5 kB)
+2026-04-29T02:09:14.3860317Z Collecting playwright-stealth==1.0.6 (from -r requirements.txt (line 9))
+2026-04-29T02:09:14.3873713Z   Using cached playwright_stealth-1.0.6-py3-none-any.whl.metadata (2.2 kB)
+2026-04-29T02:09:14.4024964Z Collecting anyio<5.0.0,>=4.8.0 (from google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:14.4041967Z   Using cached anyio-4.13.0-py3-none-any.whl.metadata (4.5 kB)
+2026-04-29T02:09:14.4291118Z Collecting google-auth<3.0.0,>=2.48.1 (from google-auth[requests]<3.0.0,>=2.48.1->google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:14.4304641Z   Using cached google_auth-2.49.2-py3-none-any.whl.metadata (6.2 kB)
+2026-04-29T02:09:14.4467718Z Collecting httpx<1.0.0,>=0.28.1 (from google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:14.4482132Z   Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+2026-04-29T02:09:14.4668330Z Collecting tenacity<9.2.0,>=8.2.3 (from google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:14.4682004Z   Using cached tenacity-9.1.4-py3-none-any.whl.metadata (1.2 kB)
+2026-04-29T02:09:14.5447852Z Collecting websockets<17.0,>=13.0.0 (from google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:14.5462857Z   Using cached websockets-16.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.8 kB)
+2026-04-29T02:09:14.5579770Z Collecting typing-extensions<5.0.0,>=4.14.0 (from google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:14.5594125Z   Using cached typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+2026-04-29T02:09:14.5713781Z Collecting distro<2,>=1.7.0 (from google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:14.5735793Z   Using cached distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
+2026-04-29T02:09:14.5844153Z Collecting sniffio (from google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:14.5864068Z   Using cached sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+2026-04-29T02:09:14.6761851Z Collecting charset_normalizer<4,>=2 (from requests->-r requirements.txt (line 4))
+2026-04-29T02:09:14.6776512Z   Using cached charset_normalizer-3.4.7-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (40 kB)
+2026-04-29T02:09:14.6901504Z Collecting idna<4,>=2.5 (from requests->-r requirements.txt (line 4))
+2026-04-29T02:09:14.6914446Z   Using cached idna-3.13-py3-none-any.whl.metadata (8.0 kB)
+2026-04-29T02:09:14.7096100Z Collecting urllib3<3,>=1.26 (from requests->-r requirements.txt (line 4))
+2026-04-29T02:09:14.7109500Z   Using cached urllib3-2.6.3-py3-none-any.whl.metadata (6.9 kB)
+2026-04-29T02:09:14.7251154Z Collecting certifi>=2023.5.7 (from requests->-r requirements.txt (line 4))
+2026-04-29T02:09:14.7263944Z   Using cached certifi-2026.4.22-py3-none-any.whl.metadata (2.5 kB)
+2026-04-29T02:09:14.7346571Z Collecting annotated-types>=0.6.0 (from pydantic->-r requirements.txt (line 7))
+2026-04-29T02:09:14.7359900Z   Using cached annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+2026-04-29T02:09:15.3830132Z Collecting pydantic-core==2.46.3 (from pydantic->-r requirements.txt (line 7))
+2026-04-29T02:09:15.3849829Z   Using cached pydantic_core-2.46.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+2026-04-29T02:09:15.3972797Z Collecting typing-inspection>=0.4.2 (from pydantic->-r requirements.txt (line 7))
+2026-04-29T02:09:15.3986466Z   Using cached typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+2026-04-29T02:09:15.4187515Z Collecting pyasn1-modules>=0.2.1 (from google-auth<3.0.0,>=2.48.1->google-auth[requests]<3.0.0,>=2.48.1->google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:15.4200991Z   Using cached pyasn1_modules-0.4.2-py3-none-any.whl.metadata (3.5 kB)
+2026-04-29T02:09:15.6184776Z Collecting cryptography>=38.0.3 (from google-auth<3.0.0,>=2.48.1->google-auth[requests]<3.0.0,>=2.48.1->google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:15.6199371Z   Using cached cryptography-47.0.0-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.5 kB)
+2026-04-29T02:09:15.6387270Z Collecting httpcore==1.* (from httpx<1.0.0,>=0.28.1->google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:15.6400397Z   Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+2026-04-29T02:09:15.6539192Z Collecting h11>=0.16 (from httpcore==1.*->httpx<1.0.0,>=0.28.1->google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:15.6552193Z   Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+2026-04-29T02:09:15.6688308Z Collecting google-ai-generativelanguage==0.6.15 (from google-generativeai->-r requirements.txt (line 2))
+2026-04-29T02:09:15.6701139Z   Using cached google_ai_generativelanguage-0.6.15-py3-none-any.whl.metadata (5.7 kB)
+2026-04-29T02:09:15.6982225Z Collecting google-api-core (from google-generativeai->-r requirements.txt (line 2))
+2026-04-29T02:09:15.6995253Z   Using cached google_api_core-2.30.3-py3-none-any.whl.metadata (3.1 kB)
+2026-04-29T02:09:15.7440071Z Collecting google-api-python-client (from google-generativeai->-r requirements.txt (line 2))
+2026-04-29T02:09:15.7453571Z   Using cached google_api_python_client-2.194.0-py3-none-any.whl.metadata (7.0 kB)
+2026-04-29T02:09:15.8813890Z Collecting protobuf (from google-generativeai->-r requirements.txt (line 2))
+2026-04-29T02:09:15.8827748Z   Using cached protobuf-7.34.1-cp310-abi3-manylinux2014_x86_64.whl.metadata (595 bytes)
+2026-04-29T02:09:15.9096851Z Collecting tqdm (from google-generativeai->-r requirements.txt (line 2))
+2026-04-29T02:09:15.9109951Z   Using cached tqdm-4.67.3-py3-none-any.whl.metadata (57 kB)
+2026-04-29T02:09:15.9735338Z Collecting proto-plus<2.0.0dev,>=1.22.3 (from google-ai-generativelanguage==0.6.15->google-generativeai->-r requirements.txt (line 2))
+2026-04-29T02:09:15.9748775Z   Using cached proto_plus-1.27.2-py3-none-any.whl.metadata (2.2 kB)
+2026-04-29T02:09:15.9881568Z Collecting protobuf (from google-generativeai->-r requirements.txt (line 2))
+2026-04-29T02:09:15.9894798Z   Using cached protobuf-5.29.6-cp38-abi3-manylinux2014_x86_64.whl.metadata (592 bytes)
+2026-04-29T02:09:16.0027866Z Collecting googleapis-common-protos<2.0.0,>=1.63.2 (from google-api-core->google-generativeai->-r requirements.txt (line 2))
+2026-04-29T02:09:16.0040749Z   Using cached googleapis_common_protos-1.74.0-py3-none-any.whl.metadata (9.2 kB)
+2026-04-29T02:09:16.5011444Z Collecting grpcio<2.0.0,>=1.33.2 (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.10.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,<3.0.0dev,>=1.34.1->google-ai-generativelanguage==0.6.15->google-generativeai->-r requirements.txt (line 2))
+2026-04-29T02:09:16.5026138Z   Using cached grpcio-1.80.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (3.8 kB)
+2026-04-29T02:09:16.5345754Z Collecting grpcio-status<2.0.0,>=1.33.2 (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.10.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,<3.0.0dev,>=1.34.1->google-ai-generativelanguage==0.6.15->google-generativeai->-r requirements.txt (line 2))
+2026-04-29T02:09:16.5359072Z   Using cached grpcio_status-1.80.0-py3-none-any.whl.metadata (1.3 kB)
+2026-04-29T02:09:16.5500209Z INFO: pip is looking at multiple versions of grpcio-status to determine which version is compatible with other requirements. This could take a while.
+2026-04-29T02:09:16.5515990Z   Using cached grpcio_status-1.78.0-py3-none-any.whl.metadata (1.3 kB)
+2026-04-29T02:09:16.5543285Z   Using cached grpcio_status-1.76.0-py3-none-any.whl.metadata (1.1 kB)
+2026-04-29T02:09:16.5570817Z   Using cached grpcio_status-1.75.1-py3-none-any.whl.metadata (1.1 kB)
+2026-04-29T02:09:16.5597417Z   Using cached grpcio_status-1.75.0-py3-none-any.whl.metadata (1.1 kB)
+2026-04-29T02:09:16.5623902Z   Using cached grpcio_status-1.74.0-py3-none-any.whl.metadata (1.1 kB)
+2026-04-29T02:09:16.5650515Z   Using cached grpcio_status-1.73.1-py3-none-any.whl.metadata (1.1 kB)
+2026-04-29T02:09:16.5730830Z   Using cached grpcio_status-1.73.0-py3-none-any.whl.metadata (1.1 kB)
+2026-04-29T02:09:16.5744014Z INFO: pip is still looking at multiple versions of grpcio-status to determine which version is compatible with other requirements. This could take a while.
+2026-04-29T02:09:16.5759673Z   Using cached grpcio_status-1.72.2-py3-none-any.whl.metadata (1.1 kB)
+2026-04-29T02:09:16.5786160Z   Using cached grpcio_status-1.72.1-py3-none-any.whl.metadata (1.1 kB)
+2026-04-29T02:09:16.5812697Z   Using cached grpcio_status-1.71.2-py3-none-any.whl.metadata (1.1 kB)
+2026-04-29T02:09:16.6169528Z Collecting starlette>=0.46.0 (from fastapi->-r requirements.txt (line 5))
+2026-04-29T02:09:16.6183444Z   Using cached starlette-1.0.0-py3-none-any.whl.metadata (6.3 kB)
+2026-04-29T02:09:16.6356074Z Collecting annotated-doc>=0.0.2 (from fastapi->-r requirements.txt (line 5))
+2026-04-29T02:09:16.6371891Z   Using cached annotated_doc-0.0.4-py3-none-any.whl.metadata (6.6 kB)
+2026-04-29T02:09:16.6545033Z Collecting click>=7.0 (from uvicorn->-r requirements.txt (line 6))
+2026-04-29T02:09:16.6558807Z   Using cached click-8.3.3-py3-none-any.whl.metadata (2.6 kB)
+2026-04-29T02:09:16.6769799Z Collecting pyee<14,>=13 (from playwright->-r requirements.txt (line 8))
+2026-04-29T02:09:16.6782333Z   Using cached pyee-13.0.1-py3-none-any.whl.metadata (3.0 kB)
+2026-04-29T02:09:16.8641251Z Collecting greenlet<4.0.0,>=3.1.1 (from playwright->-r requirements.txt (line 8))
+2026-04-29T02:09:16.8655024Z   Using cached greenlet-3.5.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.7 kB)
+2026-04-29T02:09:16.9800044Z Collecting cffi>=2.0.0 (from cryptography>=38.0.3->google-auth<3.0.0,>=2.48.1->google-auth[requests]<3.0.0,>=2.48.1->google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:16.9813999Z   Using cached cffi-2.0.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.6 kB)
+2026-04-29T02:09:16.9950678Z Collecting pycparser (from cffi>=2.0.0->cryptography>=38.0.3->google-auth<3.0.0,>=2.48.1->google-auth[requests]<3.0.0,>=2.48.1->google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:16.9968709Z   Using cached pycparser-3.0-py3-none-any.whl.metadata (8.2 kB)
+2026-04-29T02:09:17.0168709Z Collecting pyasn1<0.7.0,>=0.6.1 (from pyasn1-modules>=0.2.1->google-auth<3.0.0,>=2.48.1->google-auth[requests]<3.0.0,>=2.48.1->google-genai->-r requirements.txt (line 1))
+2026-04-29T02:09:17.0182266Z   Using cached pyasn1-0.6.3-py3-none-any.whl.metadata (8.4 kB)
+2026-04-29T02:09:17.0363630Z Collecting httplib2<1.0.0,>=0.19.0 (from google-api-python-client->google-generativeai->-r requirements.txt (line 2))
+2026-04-29T02:09:17.0376281Z   Using cached httplib2-0.31.2-py3-none-any.whl.metadata (2.2 kB)
+2026-04-29T02:09:17.0457741Z Collecting google-auth-httplib2<1.0.0,>=0.2.0 (from google-api-python-client->google-generativeai->-r requirements.txt (line 2))
+2026-04-29T02:09:17.0470641Z   Using cached google_auth_httplib2-0.3.1-py3-none-any.whl.metadata (3.0 kB)
+2026-04-29T02:09:17.0559858Z Collecting uritemplate<5,>=3.0.1 (from google-api-python-client->google-generativeai->-r requirements.txt (line 2))
+2026-04-29T02:09:17.0574156Z   Using cached uritemplate-4.2.0-py3-none-any.whl.metadata (2.6 kB)
+2026-04-29T02:09:17.0801863Z Collecting pyparsing<4,>=3.1 (from httplib2<1.0.0,>=0.19.0->google-api-python-client->google-generativeai->-r requirements.txt (line 2))
+2026-04-29T02:09:17.0821064Z   Using cached pyparsing-3.3.2-py3-none-any.whl.metadata (5.8 kB)
+2026-04-29T02:09:17.0928115Z Using cached playwright_stealth-1.0.6-py3-none-any.whl (28 kB)
+2026-04-29T02:09:17.0928812Z Using cached google_genai-1.73.1-py3-none-any.whl (783 kB)
+2026-04-29T02:09:17.1018209Z Using cached requests-2.33.1-py3-none-any.whl (64 kB)
+2026-04-29T02:09:17.1019479Z Using cached pydantic-2.13.3-py3-none-any.whl (471 kB)
+2026-04-29T02:09:17.1020939Z Using cached pydantic_core-2.46.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+2026-04-29T02:09:17.1022151Z Using cached anyio-4.13.0-py3-none-any.whl (114 kB)
+2026-04-29T02:09:17.1023500Z Using cached charset_normalizer-3.4.7-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (214 kB)
+2026-04-29T02:09:17.1024870Z Using cached distro-1.9.0-py3-none-any.whl (20 kB)
+2026-04-29T02:09:17.1033548Z Using cached google_auth-2.49.2-py3-none-any.whl (240 kB)
+2026-04-29T02:09:17.1054661Z Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+2026-04-29T02:09:17.1072712Z Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+2026-04-29T02:09:17.1089620Z Using cached idna-3.13-py3-none-any.whl (68 kB)
+2026-04-29T02:09:17.1104297Z Using cached tenacity-9.1.4-py3-none-any.whl (28 kB)
+2026-04-29T02:09:17.1119347Z Using cached typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+2026-04-29T02:09:17.1135018Z Using cached urllib3-2.6.3-py3-none-any.whl (131 kB)
+2026-04-29T02:09:17.1168214Z Using cached websockets-16.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (184 kB)
+2026-04-29T02:09:17.1187984Z Using cached google_generativeai-0.8.6-py3-none-any.whl (155 kB)
+2026-04-29T02:09:17.1208025Z Using cached google_ai_generativelanguage-0.6.15-py3-none-any.whl (1.3 MB)
+2026-04-29T02:09:17.1234288Z Using cached google_api_core-2.30.3-py3-none-any.whl (173 kB)
+2026-04-29T02:09:17.1250103Z Using cached googleapis_common_protos-1.74.0-py3-none-any.whl (300 kB)
+2026-04-29T02:09:17.1266217Z Using cached grpcio-1.80.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (6.8 MB)
+2026-04-29T02:09:17.1304677Z Using cached grpcio_status-1.71.2-py3-none-any.whl (14 kB)
+2026-04-29T02:09:17.1319066Z Using cached proto_plus-1.27.2-py3-none-any.whl (50 kB)
+2026-04-29T02:09:17.1334906Z Using cached protobuf-5.29.6-cp38-abi3-manylinux2014_x86_64.whl (320 kB)
+2026-04-29T02:09:17.1352749Z Using cached python_dotenv-1.2.2-py3-none-any.whl (22 kB)
+2026-04-29T02:09:17.1367347Z Using cached fastapi-0.136.1-py3-none-any.whl (117 kB)
+2026-04-29T02:09:17.1381683Z Using cached uvicorn-0.46.0-py3-none-any.whl (70 kB)
+2026-04-29T02:09:17.1395242Z Using cached playwright-1.58.0-py3-none-manylinux1_x86_64.whl (46.2 MB)
+2026-04-29T02:09:17.1578967Z Using cached greenlet-3.5.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (615 kB)
+2026-04-29T02:09:17.1607272Z Using cached pyee-13.0.1-py3-none-any.whl (15 kB)
+2026-04-29T02:09:17.1620711Z Using cached annotated_doc-0.0.4-py3-none-any.whl (5.3 kB)
+2026-04-29T02:09:17.1635291Z Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
+2026-04-29T02:09:17.1650411Z Using cached certifi-2026.4.22-py3-none-any.whl (135 kB)
+2026-04-29T02:09:17.1665270Z Using cached click-8.3.3-py3-none-any.whl (110 kB)
+2026-04-29T02:09:17.1680562Z Using cached cryptography-47.0.0-cp311-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
+2026-04-29T02:09:17.1710746Z Using cached cffi-2.0.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (215 kB)
+2026-04-29T02:09:17.1725503Z Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+2026-04-29T02:09:17.1741116Z Using cached pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
+2026-04-29T02:09:17.1755467Z Using cached pyasn1-0.6.3-py3-none-any.whl (83 kB)
+2026-04-29T02:09:17.1771365Z Using cached starlette-1.0.0-py3-none-any.whl (72 kB)
+2026-04-29T02:09:17.1786144Z Using cached typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+2026-04-29T02:09:17.1801523Z Using cached google_api_python_client-2.194.0-py3-none-any.whl (15.0 MB)
+2026-04-29T02:09:17.1879665Z Using cached google_auth_httplib2-0.3.1-py3-none-any.whl (9.5 kB)
+2026-04-29T02:09:17.1897585Z Using cached httplib2-0.31.2-py3-none-any.whl (91 kB)
+2026-04-29T02:09:17.1910794Z Using cached pyparsing-3.3.2-py3-none-any.whl (122 kB)
+2026-04-29T02:09:17.1927211Z Using cached uritemplate-4.2.0-py3-none-any.whl (11 kB)
+2026-04-29T02:09:17.1942651Z Using cached pycparser-3.0-py3-none-any.whl (48 kB)
+2026-04-29T02:09:17.1957967Z Using cached sniffio-1.3.1-py3-none-any.whl (10 kB)
+2026-04-29T02:09:17.1973177Z Using cached tqdm-4.67.3-py3-none-any.whl (78 kB)
+2026-04-29T02:09:17.3765812Z Installing collected packages: websockets, urllib3, uritemplate, typing-extensions, tqdm, tenacity, sniffio, python-dotenv, pyparsing, pycparser, pyasn1, protobuf, idna, h11, greenlet, distro, click, charset_normalizer, certifi, annotated-types, annotated-doc, uvicorn, typing-inspection, requests, pyee, pydantic-core, pyasn1-modules, proto-plus, httplib2, httpcore, grpcio, googleapis-common-protos, cffi, anyio, starlette, pydantic, playwright, httpx, grpcio-status, cryptography, playwright-stealth, google-auth, fastapi, google-auth-httplib2, google-api-core, google-genai, google-api-python-client, google-ai-generativelanguage, google-generativeai
+2026-04-29T02:09:22.5842859Z 
+2026-04-29T02:09:22.5870883Z Successfully installed annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.13.0 certifi-2026.4.22 cffi-2.0.0 charset_normalizer-3.4.7 click-8.3.3 cryptography-47.0.0 distro-1.9.0 fastapi-0.136.1 google-ai-generativelanguage-0.6.15 google-api-core-2.30.3 google-api-python-client-2.194.0 google-auth-2.49.2 google-auth-httplib2-0.3.1 google-genai-1.73.1 google-generativeai-0.8.6 googleapis-common-protos-1.74.0 greenlet-3.5.0 grpcio-1.80.0 grpcio-status-1.71.2 h11-0.16.0 httpcore-1.0.9 httplib2-0.31.2 httpx-0.28.1 idna-3.13 playwright-1.58.0 playwright-stealth-1.0.6 proto-plus-1.27.2 protobuf-5.29.6 pyasn1-0.6.3 pyasn1-modules-0.4.2 pycparser-3.0 pydantic-2.13.3 pydantic-core-2.46.3 pyee-13.0.1 pyparsing-3.3.2 python-dotenv-1.2.2 requests-2.33.1 sniffio-1.3.1 starlette-1.0.0 tenacity-9.1.4 tqdm-4.67.3 typing-extensions-4.15.0 typing-inspection-0.4.2 uritemplate-4.2.0 urllib3-2.6.3 uvicorn-0.46.0 websockets-16.0
+2026-04-29T02:09:22.5911616Z 
+2026-04-29T02:09:22.5912146Z [notice] A new release of pip is available: 26.0.1 -> 26.1
+2026-04-29T02:09:22.5912835Z [notice] To update, run: pip install --upgrade pip
+2026-04-29T02:09:22.9758321Z ##[group]Run playwright install chromium --with-deps
+2026-04-29T02:09:22.9758787Z [36;1mplaywright install chromium --with-deps[0m
+2026-04-29T02:09:22.9780297Z shell: /usr/bin/bash -e {0}
+2026-04-29T02:09:22.9780554Z env:
+2026-04-29T02:09:22.9780750Z   TZ: Africa/Cairo
+2026-04-29T02:09:22.9781040Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:22.9781490Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-04-29T02:09:22.9781918Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:22.9782304Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:22.9782711Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:22.9783125Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-04-29T02:09:22.9783452Z ##[endgroup]
+2026-04-29T02:09:23.3889320Z Installing dependencies...
+2026-04-29T02:09:23.3972127Z Switching to root user to install dependencies...
+2026-04-29T02:09:23.4819315Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-04-29T02:09:23.5098255Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-04-29T02:09:23.5130720Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-04-29T02:09:23.5207728Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-04-29T02:09:23.5254799Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-04-29T02:09:23.5287789Z Hit:6 https://packages.microsoft.com/repos/azure-cli noble InRelease
+2026-04-29T02:09:23.5321576Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-04-29T02:09:23.5809138Z Get:8 https://dl.google.com/linux/chrome-stable/deb stable InRelease [1825 B]
+2026-04-29T02:09:23.6391199Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1919 kB]
+2026-04-29T02:09:23.6553193Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [346 kB]
+2026-04-29T02:09:23.6579258Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [177 kB]
+2026-04-29T02:09:23.6597399Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 c-n-f Metadata [17.1 kB]
+2026-04-29T02:09:23.6608673Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1685 kB]
+2026-04-29T02:09:23.6696472Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [324 kB]
+2026-04-29T02:09:23.6735059Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [386 kB]
+2026-04-29T02:09:23.6757998Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 c-n-f Metadata [34.5 kB]
+2026-04-29T02:09:23.6770189Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [3054 kB]
+2026-04-29T02:09:23.6998312Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [702 kB]
+2026-04-29T02:09:23.7498073Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]
+2026-04-29T02:09:23.7499377Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 c-n-f Metadata [480 B]
+2026-04-29T02:09:23.7500670Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [44.4 kB]
+2026-04-29T02:09:23.7505423Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [10.2 kB]
+2026-04-29T02:09:23.7515543Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+2026-04-29T02:09:23.7526497Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 c-n-f Metadata [656 B]
+2026-04-29T02:09:23.7541061Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Packages [40.6 kB]
+2026-04-29T02:09:23.7553529Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-backports/main Translation-en [9172 B]
+2026-04-29T02:09:23.7565069Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [7364 B]
+2026-04-29T02:09:23.7604245Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [30.6 kB]
+2026-04-29T02:09:23.7605814Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe Translation-en [18.2 kB]
+2026-04-29T02:09:23.7619670Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [10.5 kB]
+2026-04-29T02:09:23.7624079Z Get:31 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 c-n-f Metadata [1484 B]
+2026-04-29T02:09:23.7637962Z Get:32 http://azure.archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [212 B]
+2026-04-29T02:09:23.8064647Z Get:33 http://azure.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Packages [748 B]
+2026-04-29T02:09:23.8074859Z Get:34 http://azure.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B]
+2026-04-29T02:09:23.8085836Z Get:35 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1624 kB]
+2026-04-29T02:09:23.8188195Z Get:36 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [259 kB]
+2026-04-29T02:09:23.8202086Z Get:37 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [21.8 kB]
+2026-04-29T02:09:23.8227610Z Get:38 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 c-n-f Metadata [11.0 kB]
+2026-04-29T02:09:23.8250886Z Get:39 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1182 kB]
+2026-04-29T02:09:23.8316096Z Get:40 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [227 kB]
+2026-04-29T02:09:23.8332512Z Get:41 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [74.2 kB]
+2026-04-29T02:09:23.8342731Z Get:42 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 c-n-f Metadata [23.1 kB]
+2026-04-29T02:09:23.8356262Z Get:43 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [2844 kB]
+2026-04-29T02:09:23.8518316Z Get:44 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [666 kB]
+2026-04-29T02:09:23.8527884Z Get:49 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [128 kB]
+2026-04-29T02:09:23.8541146Z Get:45 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Components [212 B]
+2026-04-29T02:09:23.8559684Z Get:46 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 Packages [28.8 kB]
+2026-04-29T02:09:23.8568598Z Get:47 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [7172 B]
+2026-04-29T02:09:23.8574710Z Get:50 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [103 kB]
+2026-04-29T02:09:23.8619986Z Get:51 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [11.6 kB]
+2026-04-29T02:09:23.9061880Z Get:48 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [208 B]
+2026-04-29T02:09:23.9132137Z Get:52 https://dl.google.com/linux/chrome-stable/deb stable/main amd64 Packages [1212 B]
+2026-04-29T02:09:32.0727916Z Fetched 16.4 MB in 2s (9274 kB/s)
+2026-04-29T02:09:32.8024374Z Reading package lists...
+2026-04-29T02:09:32.8348269Z Reading package lists...
+2026-04-29T02:09:32.9832765Z Building dependency tree...
+2026-04-29T02:09:32.9840869Z Reading state information...
+2026-04-29T02:09:33.1204796Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.2).
+2026-04-29T02:09:33.1205601Z libasound2t64 set to manually installed.
+2026-04-29T02:09:33.1206337Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-04-29T02:09:33.1207383Z libatk-bridge2.0-0t64 set to manually installed.
+2026-04-29T02:09:33.1208188Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+2026-04-29T02:09:33.1208792Z libatk1.0-0t64 set to manually installed.
+2026-04-29T02:09:33.1209397Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-04-29T02:09:33.1210522Z libatspi2.0-0t64 set to manually installed.
+2026-04-29T02:09:33.1211096Z libcairo2 is already the newest version (1.18.0-3build1).
+2026-04-29T02:09:33.1211661Z libcairo2 set to manually installed.
+2026-04-29T02:09:33.1212257Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.9).
+2026-04-29T02:09:33.1212846Z libcups2t64 set to manually installed.
+2026-04-29T02:09:33.1213423Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+2026-04-29T02:09:33.1214017Z libdbus-1-3 set to manually installed.
+2026-04-29T02:09:33.1214386Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.1).
+2026-04-29T02:09:33.1214745Z libdrm2 set to manually installed.
+2026-04-29T02:09:33.1215110Z libgbm1 is already the newest version (25.2.8-0ubuntu0.24.04.1).
+2026-04-29T02:09:33.1215461Z libgbm1 set to manually installed.
+2026-04-29T02:09:33.1215795Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.8).
+2026-04-29T02:09:33.1216163Z libglib2.0-0t64 set to manually installed.
+2026-04-29T02:09:33.1216500Z libnspr4 is already the newest version (2:4.35-1.1build1).
+2026-04-29T02:09:33.1217249Z libnspr4 set to manually installed.
+2026-04-29T02:09:33.1217574Z libnss3 is already the newest version (2:3.98-1ubuntu0.1).
+2026-04-29T02:09:33.1217901Z libnss3 set to manually installed.
+2026-04-29T02:09:33.1218239Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+2026-04-29T02:09:33.1218599Z libpango-1.0-0 set to manually installed.
+2026-04-29T02:09:33.1218927Z libx11-6 is already the newest version (2:1.8.7-1build1).
+2026-04-29T02:09:33.1219244Z libx11-6 set to manually installed.
+2026-04-29T02:09:33.1219547Z libxcb1 is already the newest version (1.15-1ubuntu2).
+2026-04-29T02:09:33.1220240Z libxcb1 set to manually installed.
+2026-04-29T02:09:33.1220804Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+2026-04-29T02:09:33.1221430Z libxcomposite1 set to manually installed.
+2026-04-29T02:09:33.1222018Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+2026-04-29T02:09:33.1222635Z libxdamage1 set to manually installed.
+2026-04-29T02:09:33.1223039Z libxext6 is already the newest version (2:1.3.4-1build2).
+2026-04-29T02:09:33.1223369Z libxext6 set to manually installed.
+2026-04-29T02:09:33.1223696Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+2026-04-29T02:09:33.1224035Z libxfixes3 set to manually installed.
+2026-04-29T02:09:33.1224378Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+2026-04-29T02:09:33.1224723Z libxkbcommon0 set to manually installed.
+2026-04-29T02:09:33.1225052Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+2026-04-29T02:09:33.1225383Z libxrandr2 set to manually installed.
+2026-04-29T02:09:33.1225723Z xvfb is already the newest version (2:21.1.12-1ubuntu1.5).
+2026-04-29T02:09:33.1226403Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+2026-04-29T02:09:33.1227504Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+2026-04-29T02:09:33.1228185Z libfontconfig1 set to manually installed.
+2026-04-29T02:09:33.1228608Z libfreetype6 is already the newest version (2.13.2+dfsg-1ubuntu0.1).
+2026-04-29T02:09:33.1228987Z libfreetype6 set to manually installed.
+2026-04-29T02:09:33.1229329Z fonts-liberation is already the newest version (1:2.1.5-3).
+2026-04-29T02:09:33.1229686Z fonts-liberation set to manually installed.
+2026-04-29T02:09:33.1230019Z The following additional packages will be installed:
+2026-04-29T02:09:33.1230342Z   xfonts-encodings xfonts-utils
+2026-04-29T02:09:33.1230618Z Recommended packages:
+2026-04-29T02:09:33.1230877Z   fonts-ipafont-mincho fonts-tlwg-loma
+2026-04-29T02:09:33.1387419Z The following NEW packages will be installed:
+2026-04-29T02:09:33.1388476Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+2026-04-29T02:09:33.1393965Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+2026-04-29T02:09:33.1394646Z   xfonts-utils
+2026-04-29T02:09:33.1561032Z 0 upgraded, 9 newly installed, 0 to remove and 43 not upgraded.
+2026-04-29T02:09:33.1561732Z Need to get 21.1 MB of archives.
+2026-04-29T02:09:33.1562359Z After this operation, 79.5 MB of additional disk space will be used.
+2026-04-29T02:09:33.1563090Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-04-29T02:09:33.2000668Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+2026-04-29T02:09:33.3592919Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+2026-04-29T02:09:33.5872807Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+2026-04-29T02:09:33.6216430Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+2026-04-29T02:09:33.6968179Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+2026-04-29T02:09:33.8208223Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+2026-04-29T02:09:33.8541946Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+2026-04-29T02:09:33.8820384Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+2026-04-29T02:09:33.9201885Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+2026-04-29T02:09:34.1724312Z Fetched 21.1 MB in 1s (26.8 MB/s)
+2026-04-29T02:09:34.1962605Z Selecting previously unselected package fonts-ipafont-gothic.
+2026-04-29T02:09:34.2271808Z (Reading database ... 
+2026-04-29T02:09:34.2272429Z (Reading database ... 5%
+2026-04-29T02:09:34.2273139Z (Reading database ... 10%
+2026-04-29T02:09:34.2273406Z (Reading database ... 15%
+2026-04-29T02:09:34.2273642Z (Reading database ... 20%
+2026-04-29T02:09:34.2274003Z (Reading database ... 25%
+2026-04-29T02:09:34.2274422Z (Reading database ... 30%
+2026-04-29T02:09:34.2274865Z (Reading database ... 35%
+2026-04-29T02:09:34.2275231Z (Reading database ... 40%
+2026-04-29T02:09:34.2275456Z (Reading database ... 45%
+2026-04-29T02:09:34.2276073Z (Reading database ... 50%
+2026-04-29T02:09:34.2370679Z (Reading database ... 55%
+2026-04-29T02:09:34.3338123Z (Reading database ... 60%
+2026-04-29T02:09:34.4755725Z (Reading database ... 65%
+2026-04-29T02:09:34.6803550Z (Reading database ... 70%
+2026-04-29T02:09:34.8683676Z (Reading database ... 75%
+2026-04-29T02:09:35.0300366Z (Reading database ... 80%
+2026-04-29T02:09:35.1705839Z (Reading database ... 85%
+2026-04-29T02:09:35.3693898Z (Reading database ... 90%
+2026-04-29T02:09:35.5187148Z (Reading database ... 95%
+2026-04-29T02:09:35.5187802Z (Reading database ... 100%
+2026-04-29T02:09:35.5188262Z (Reading database ... 220764 files and directories currently installed.)
+2026-04-29T02:09:35.5227369Z Preparing to unpack .../0-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+2026-04-29T02:09:35.5322121Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-04-29T02:09:35.7577758Z Selecting previously unselected package fonts-freefont-ttf.
+2026-04-29T02:09:35.7709704Z Preparing to unpack .../1-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+2026-04-29T02:09:35.7718468Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-04-29T02:09:35.8524650Z Selecting previously unselected package fonts-tlwg-loma-otf.
+2026-04-29T02:09:35.8656557Z Preparing to unpack .../2-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+2026-04-29T02:09:35.8664431Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-04-29T02:09:35.8870092Z Selecting previously unselected package fonts-unifont.
+2026-04-29T02:09:35.9001053Z Preparing to unpack .../3-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+2026-04-29T02:09:35.9011197Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+2026-04-29T02:09:36.0029503Z Selecting previously unselected package fonts-wqy-zenhei.
+2026-04-29T02:09:36.0163204Z Preparing to unpack .../4-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+2026-04-29T02:09:36.0263230Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+2026-04-29T02:09:36.4874542Z Selecting previously unselected package xfonts-encodings.
+2026-04-29T02:09:36.5007044Z Preparing to unpack .../5-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+2026-04-29T02:09:36.5013841Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-04-29T02:09:36.5300144Z Selecting previously unselected package xfonts-utils.
+2026-04-29T02:09:36.5432186Z Preparing to unpack .../6-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+2026-04-29T02:09:36.5439548Z Unpacking xfonts-utils (1:7.7+6build3) ...
+2026-04-29T02:09:36.5802879Z Selecting previously unselected package xfonts-cyrillic.
+2026-04-29T02:09:36.5933916Z Preparing to unpack .../7-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+2026-04-29T02:09:36.5942548Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-04-29T02:09:36.6286601Z Selecting previously unselected package xfonts-scalable.
+2026-04-29T02:09:36.6417541Z Preparing to unpack .../8-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+2026-04-29T02:09:36.6426523Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+2026-04-29T02:09:36.6825806Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+2026-04-29T02:09:36.6945350Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-04-29T02:09:36.6968978Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-04-29T02:09:36.6989642Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-04-29T02:09:36.7009945Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-04-29T02:09:36.7073530Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+2026-04-29T02:09:36.7091403Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+2026-04-29T02:09:36.7112258Z Setting up xfonts-utils (1:7.7+6build3) ...
+2026-04-29T02:09:36.7152230Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-04-29T02:09:36.7423735Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+2026-04-29T02:09:36.7680941Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-04-29T02:09:36.7703010Z Not building database; man-db/auto-update is not 'true'.
+2026-04-29T02:09:36.7715369Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+2026-04-29T02:09:37.4689931Z 
+2026-04-29T02:09:37.4690435Z Running kernel seems to be up-to-date.
+2026-04-29T02:09:37.4690865Z 
+2026-04-29T02:09:37.4691054Z No services need to be restarted.
+2026-04-29T02:09:37.4691363Z 
+2026-04-29T02:09:37.4691547Z No containers need to be restarted.
+2026-04-29T02:09:37.4691871Z 
+2026-04-29T02:09:37.4692099Z No user sessions are running outdated binaries.
+2026-04-29T02:09:37.4692463Z 
+2026-04-29T02:09:37.4692820Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-04-29T02:09:38.2437994Z Downloading Chrome for Testing 145.0.7632.6 (playwright chromium v1208) from https://cdn.playwright.dev/chrome-for-testing-public/145.0.7632.6/linux64/chrome-linux64.zip
+2026-04-29T02:09:38.3370397Z (node:3098) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-04-29T02:09:38.3371480Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-04-29T02:09:38.4339928Z |                                                                                |   0% of 167.3 MiB
+2026-04-29T02:09:38.5994795Z |â â â â â â â â                                                                         |  10% of 167.3 MiB
+2026-04-29T02:09:38.7074983Z |â â â â â â â â â â â â â â â â                                                                 |  20% of 167.3 MiB
+2026-04-29T02:09:38.8350306Z |â â â â â â â â â â â â â â â â â â â â â â â â                                                         |  30% of 167.3 MiB
+2026-04-29T02:09:38.9397251Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                                 |  40% of 167.3 MiB
+2026-04-29T02:09:39.0570747Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                         |  50% of 167.3 MiB
+2026-04-29T02:09:39.1475129Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                 |  60% of 167.3 MiB
+2026-04-29T02:09:39.2832030Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                         |  70% of 167.3 MiB
+2026-04-29T02:09:39.4386525Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                 |  80% of 167.3 MiB
+2026-04-29T02:09:39.5846220Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â         |  90% of 167.3 MiB
+2026-04-29T02:09:39.7429121Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â | 100% of 167.3 MiB
+2026-04-29T02:09:42.3304379Z Chrome for Testing 145.0.7632.6 (playwright chromium v1208) downloaded to /home/runner/.cache/ms-playwright/chromium-1208
+2026-04-29T02:09:42.3308141Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+2026-04-29T02:09:42.4242244Z (node:3110) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-04-29T02:09:42.4243966Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-04-29T02:09:42.5554616Z |                                                                                |   0% of 2.3 MiB
+2026-04-29T02:09:42.5620774Z |â â â â â â â â                                                                         |  10% of 2.3 MiB
+2026-04-29T02:09:42.5661674Z |â â â â â â â â â â â â â â â â                                                                 |  20% of 2.3 MiB
+2026-04-29T02:09:42.5690101Z |â â â â â â â â â â â â â â â â â â â â â â â â                                                         |  30% of 2.3 MiB
+2026-04-29T02:09:42.5716197Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                                 |  40% of 2.3 MiB
+2026-04-29T02:09:42.5728696Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                         |  50% of 2.3 MiB
+2026-04-29T02:09:42.5744819Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                 |  60% of 2.3 MiB
+2026-04-29T02:09:42.5761168Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                         |  70% of 2.3 MiB
+2026-04-29T02:09:42.5776387Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                 |  80% of 2.3 MiB
+2026-04-29T02:09:42.5830961Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â         |  90% of 2.3 MiB
+2026-04-29T02:09:42.5841005Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â | 100% of 2.3 MiB
+2026-04-29T02:09:42.6390096Z FFmpeg (playwright ffmpeg v1011) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+2026-04-29T02:09:42.6394232Z Downloading Chrome Headless Shell 145.0.7632.6 (playwright chromium-headless-shell v1208) from https://cdn.playwright.dev/chrome-for-testing-public/145.0.7632.6/linux64/chrome-headless-shell-linux64.zip
+2026-04-29T02:09:42.7328109Z (node:3121) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-04-29T02:09:42.7329449Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-04-29T02:09:42.8238144Z |                                                                                |   0% of 110.9 MiB
+2026-04-29T02:09:42.9591944Z |â â â â â â â â                                                                         |  10% of 110.9 MiB
+2026-04-29T02:09:43.0655022Z |â â â â â â â â â â â â â â â â                                                                 |  20% of 110.9 MiB
+2026-04-29T02:09:43.2482875Z |â â â â â â â â â â â â â â â â â â â â â â â â                                                         |  30% of 110.9 MiB
+2026-04-29T02:09:43.3258625Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                                 |  40% of 110.9 MiB
+2026-04-29T02:09:43.3934669Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                         |  50% of 110.9 MiB
+2026-04-29T02:09:43.4857218Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                                 |  60% of 110.9 MiB
+2026-04-29T02:09:43.5824574Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                         |  70% of 110.9 MiB
+2026-04-29T02:09:43.7115657Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â                 |  80% of 110.9 MiB
+2026-04-29T02:09:43.7934067Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â         |  90% of 110.9 MiB
+2026-04-29T02:09:43.8693041Z |â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â â | 100% of 110.9 MiB
+2026-04-29T02:09:45.7738987Z Chrome Headless Shell 145.0.7632.6 (playwright chromium-headless-shell v1208) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1208
+2026-04-29T02:09:45.7968148Z ##[group]Run echo "GEMINI_API_KEY=***" >> .env
+2026-04-29T02:09:45.7968733Z [36;1mecho "GEMINI_API_KEY=***" >> .env[0m
+2026-04-29T02:09:45.7970493Z [36;1mecho "LINKEDIN_ACCESS_TOKEN=***" >> .env[0m
+2026-04-29T02:09:45.7970998Z [36;1mecho "TELEGRAM_BOT_TOKEN=***" >> .env[0m
+2026-04-29T02:09:45.7971339Z [36;1mecho "TELEGRAM_CHAT_ID=***" >> .env[0m
+2026-04-29T02:09:45.7971635Z [36;1mecho "TELEGRAM_MESSAGE=" >> .env[0m
+2026-04-29T02:09:45.7993038Z shell: /usr/bin/bash -e {0}
+2026-04-29T02:09:45.7993293Z env:
+2026-04-29T02:09:45.7993488Z   TZ: Africa/Cairo
+2026-04-29T02:09:45.7993782Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:45.7994242Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-04-29T02:09:45.7994682Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:45.7995076Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:45.7995488Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:45.7995879Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-04-29T02:09:45.7996201Z ##[endgroup]
+2026-04-29T02:09:45.8101116Z ##[group]Run actions/cache@v4
+2026-04-29T02:09:45.8101391Z with:
+2026-04-29T02:09:45.8101597Z   path: social_posts.db
+2026-04-29T02:09:45.8101851Z   key: social-posts-db-25087447219
+2026-04-29T02:09:45.8102133Z   restore-keys: social-posts-db-
 
-2026-04-29T02:04:35.9342935Z   enableCrossOsArchive: false
-2026-04-29T02:04:35.9343191Z   fail-on-cache-miss: false
-2026-04-29T02:04:35.9343467Z   lookup-only: false
-2026-04-29T02:04:35.9343680Z   save-always: false
-2026-04-29T02:04:35.9343883Z env:
-2026-04-29T02:04:35.9344062Z   TZ: Africa/Cairo
-2026-04-29T02:04:35.9344347Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:35.9344794Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
-2026-04-29T02:04:35.9345223Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:35.9345605Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:35.9346012Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:35.9346402Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
-2026-04-29T02:04:35.9346726Z ##[endgroup]
-2026-04-29T02:04:36.1501322Z Cache hit for restore-key: social-posts-db-25087087410
-2026-04-29T02:04:36.1967260Z Received 29582 of 29582 (100.0%), 2.8 MBs/sec
-2026-04-29T02:04:36.1968582Z Cache Size: ~0 MB (29582 B)
-2026-04-29T02:04:36.2004428Z [command]/usr/bin/tar -xf /home/runner/work/_temp/807cc9c6-a532-41ed-9a86-14e1efc06cda/cache.tzst -P -C /home/runner/work/linkedin-automation/linkedin-automation --use-compress-program unzstd
-2026-04-29T02:04:36.2052952Z Cache restored successfully
-2026-04-29T02:04:36.2131746Z Cache restored from key: social-posts-db-25087087410
-2026-04-29T02:04:36.2197352Z ##[group]Run python -c "from src.database import init_db; init_db()"
-2026-04-29T02:04:36.2198184Z [36;1mpython -c "from src.database import init_db; init_db()"[0m
-2026-04-29T02:04:36.2219660Z shell: /usr/bin/bash -e {0}
-2026-04-29T02:04:36.2219920Z env:
-2026-04-29T02:04:36.2220114Z   TZ: Africa/Cairo
-2026-04-29T02:04:36.2220403Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:36.2220848Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
-2026-04-29T02:04:36.2221278Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:36.2221663Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:36.2222046Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:36.2222441Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
-2026-04-29T02:04:36.2222789Z ##[endgroup]
-2026-04-29T02:04:36.3632746Z ##[group]Run if [ -n "$LINKEDIN_STATE_B64" ]; then
-2026-04-29T02:04:36.3633164Z [36;1mif [ -n "$LINKEDIN_STATE_B64" ]; then[0m
-2026-04-29T02:04:36.3633561Z [36;1m  echo "$LINKEDIN_STATE_B64" | base64 -d > src/linkedin_state.json[0m
-2026-04-29T02:04:36.3634019Z [36;1m  echo "[*] LinkedIn state file restored from secret."[0m
-2026-04-29T02:04:36.3634352Z [36;1melse[0m
-2026-04-29T02:04:36.3634701Z [36;1m  echo "[!] No LINKEDIN_STATE_B64 secret found. Scraping will require login."[0m
-2026-04-29T02:04:36.3635103Z [36;1mfi[0m
-2026-04-29T02:04:36.3656412Z shell: /usr/bin/bash -e {0}
-2026-04-29T02:04:36.3656674Z env:
-2026-04-29T02:04:36.3656869Z   TZ: Africa/Cairo
-2026-04-29T02:04:36.3657172Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:36.3657827Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
-2026-04-29T02:04:36.3658271Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:36.3658746Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:36.3659156Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:36.3659558Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
-2026-04-29T02:04:36.3733728Z   LINKEDIN_STATE_B64: ***
-2026-04-29T02:04:36.3734002Z ##[endgroup]
-2026-04-29T02:04:36.3800197Z [*] LinkedIn state file restored from secret.
-2026-04-29T02:04:36.3836879Z ##[group]Run sudo apt-get update && sudo apt-get install -y xvfb
-2026-04-29T02:04:36.3837361Z [36;1msudo apt-get update && sudo apt-get install -y xvfb[0m
-2026-04-29T02:04:36.3857514Z shell: /usr/bin/bash -e {0}
-2026-04-29T02:04:36.3858069Z env:
-2026-04-29T02:04:36.3858270Z   TZ: Africa/Cairo
-2026-04-29T02:04:36.3858575Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:36.3859035Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
-2026-04-29T02:04:36.3859487Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:36.3859887Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:36.3860281Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:36.3860690Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
-2026-04-29T02:04:36.3861017Z ##[endgroup]
-2026-04-29T02:04:36.4451838Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
-2026-04-29T02:04:36.4806900Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
-2026-04-29T02:04:36.4813108Z Hit:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease
-2026-04-29T02:04:36.4819746Z Hit:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease
-2026-04-29T02:04:36.4827459Z Hit:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease
-2026-04-29T02:04:36.4843323Z Hit:6 https://packages.microsoft.com/repos/azure-cli noble InRelease
-2026-04-29T02:04:36.4872340Z Hit:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease
-2026-04-29T02:04:36.5088324Z Hit:8 https://dl.google.com/linux/chrome-stable/deb stable InRelease
-2026-04-29T02:04:37.6920806Z Reading package lists...
-2026-04-29T02:04:37.7224463Z Reading package lists...
-2026-04-29T02:04:37.8847048Z Building dependency tree...
-2026-04-29T02:04:37.8854741Z Reading state information...
-2026-04-29T02:04:38.0504371Z xvfb is already the newest version (2:21.1.12-1ubuntu1.5).
-2026-04-29T02:04:38.0504894Z 0 upgraded, 0 newly installed, 0 to remove and 43 not upgraded.
-2026-04-29T02:04:38.0549768Z ##[group]Run xvfb-run --auto-servernum --server-args="-screen 0 1280x1024x24" python standalone_scheduler.py
-2026-04-29T02:04:38.0550566Z [36;1mxvfb-run --auto-servernum --server-args="-screen 0 1280x1024x24" python standalone_scheduler.py[0m
-2026-04-29T02:04:38.0572310Z shell: /usr/bin/bash -e {0}
-2026-04-29T02:04:38.0572568Z env:
-2026-04-29T02:04:38.0572763Z   TZ: Africa/Cairo
-2026-04-29T02:04:38.0573068Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:38.0573513Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
-2026-04-29T02:04:38.0573965Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:38.0574352Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:38.0574759Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:04:38.0575153Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
-2026-04-29T02:04:38.0575501Z ##[endgroup]
-2026-04-29T02:04:40.5894030Z /home/runner/work/linkedin-automation/linkedin-automation/src/content_generator.py:5: FutureWarning: 
-2026-04-29T02:04:40.5894891Z 
-2026-04-29T02:04:40.5895386Z All support for the `google.generativeai` package has ended. It will no longer be receiving 
-2026-04-29T02:04:40.5896475Z updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
-2026-04-29T02:04:40.5897260Z See README for more details:
-2026-04-29T02:04:40.5897558Z 
-2026-04-29T02:04:40.5900242Z https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
-2026-04-29T02:04:40.5900931Z 
-2026-04-29T02:04:40.5901146Z   import google.generativeai as genai
-2026-04-29T02:05:38.2760246Z 
-2026-04-29T02:05:38.2760848Z ==================================================
-2026-04-29T02:05:38.2761451Z [*] GitHub Actions Scheduler Run: 2026-04-29 05:04:39
-2026-04-29T02:05:38.2761937Z ==================================================
-2026-04-29T02:05:38.2764535Z [Health] â Ø§ÙØªÙÙÙ Ø³ÙÙÙ - ÙØ³Ø¬Ù Ø¯Ø®ÙÙ ÙÙ: ibrahim serry
-2026-04-29T02:05:38.2765158Z [*] Not posting time (current: 5:04). Next posts at: [9, 14]
-2026-04-29T02:05:38.2765743Z [*] Checking Telegram for direct webhook commands...
-2026-04-29T02:05:38.2766230Z [*] No webhook message found.
-2026-04-29T02:05:38.2766608Z [*] Running auto-reply check...
-2026-04-29T02:05:38.2766997Z [*] Starting Auto-Reply Job...
-2026-04-29T02:05:38.2768740Z [*] Checking comments for post ID 39: https://www.linkedin.com/feed/update/urn:li:share:7454705480771309568/
-2026-04-29T02:05:38.2769730Z Navigating to https://www.linkedin.com/feed/update/urn:li:share:7454705480771309568/
-2026-04-29T02:05:38.2770811Z [!] Scraper error: ÙÙ ÙØªÙÙÙ ÙÙ ÙØ±Ø§Ø¡Ø© Ø§ÙØªØ¹ÙÙÙØ§Øª. ØªØ£ÙØ¯ ÙÙ Ø£Ù Ø§ÙÙÙØ´ÙØ± ÙØ­ØªÙÙ Ø¹ÙÙ ØªØ¹ÙÙÙØ§Øª ÙÙØ±Ø¦Ù ÙÙØ¹Ø§ÙØ©.
-2026-04-29T02:05:38.2771725Z [*] Checking comments for post ID 38: https://www.linkedin.com/feed/update/urn:li:share:7454701727682895873/
-2026-04-29T02:05:38.2772652Z Navigating to https://www.linkedin.com/feed/update/urn:li:share:7454701727682895873/
-2026-04-29T02:05:38.2773622Z [!] Scraper error: ÙÙ ÙØªÙÙÙ ÙÙ ÙØ±Ø§Ø¡Ø© Ø§ÙØªØ¹ÙÙÙØ§Øª. ØªØ£ÙØ¯ ÙÙ Ø£Ù Ø§ÙÙÙØ´ÙØ± ÙØ­ØªÙÙ Ø¹ÙÙ ØªØ¹ÙÙÙØ§Øª ÙÙØ±Ø¦Ù ÙÙØ¹Ø§ÙØ©.
-2026-04-29T02:05:38.2774557Z [*] Checking comments for post ID 37: https://www.linkedin.com/feed/update/urn:li:share:7454694687875043329/
-2026-04-29T02:05:38.2775513Z Navigating to https://www.linkedin.com/feed/update/urn:li:share:7454694687875043329/
-2026-04-29T02:05:38.2776457Z [!] Scraper error: ÙÙ ÙØªÙÙÙ ÙÙ ÙØ±Ø§Ø¡Ø© Ø§ÙØªØ¹ÙÙÙØ§Øª. ØªØ£ÙØ¯ ÙÙ Ø£Ù Ø§ÙÙÙØ´ÙØ± ÙØ­ØªÙÙ Ø¹ÙÙ ØªØ¹ÙÙÙØ§Øª ÙÙØ±Ø¦Ù ÙÙØ¹Ø§ÙØ©.
-2026-04-29T02:05:38.2777112Z [*] Auto-Reply Job Complete. Replied: 0, Failed: 0
-2026-04-29T02:05:38.2777970Z 
-2026-04-29T02:05:38.2778127Z [*] Run complete at 2026-04-29 05:05:38
-2026-04-29T02:05:38.3520113Z ##[group]Run actions/upload-artifact@v4
-2026-04-29T02:05:38.3520420Z with:
-2026-04-29T02:05:38.3520632Z   name: scraper-screenshots
-2026-04-29T02:05:38.3520878Z   path: outputs/
-2026-04-29T02:05:38.3521089Z   retention-days: 1
-2026-04-29T02:05:38.3521314Z   if-no-files-found: warn
-2026-04-29T02:05:38.3521553Z   compression-level: 6
-2026-04-29T02:05:38.3521775Z   overwrite: false
-2026-04-29T02:05:38.3521995Z   include-hidden-files: false
-2026-04-29T02:05:38.3522237Z env:
-2026-04-29T02:05:38.3522418Z   TZ: Africa/Cairo
-2026-04-29T02:05:38.3522705Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:05:38.3523150Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
-2026-04-29T02:05:38.3523592Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:05:38.3523985Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:05:38.3524392Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
-2026-04-29T02:05:38.3524811Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
-2026-04-29T02:05:38.3525164Z ##[endgroup]
-2026-04-29T02:05:38.5746279Z ##[warning]No files were found with the provided path: outputs/. No artifacts will be uploaded.
-2026-04-29T02:05:38.5876981Z Post job cleanup.
-2026-04-29T02:05:38.7385309Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/linkedin-automation/linkedin-automation --files-from manifest.txt --use-compress-program zstdmt
-2026-04-29T02:05:38.9389950Z Sent 29581 of 29581 (100.0%), 0.4 MBs/sec
-2026-04-29T02:05:39.0102613Z Cache saved with key: social-posts-db-25087307288
-2026-04-29T02:05:39.0730866Z Post job cleanup.
-2026-04-29T02:05:39.2106598Z Cache hit occurred on the primary key Linux-pip-3b36658a308ab5ff0f5baf21bf76a64740d38d60d83919f850a12c7208403754, not saving cache.
-2026-04-29T02:05:39.2221233Z Post job cleanup.
-2026-04-29T02:05:39.3860309Z Post job cleanup.
-2026-04-29T02:05:39.4850696Z [command]/usr/bin/git version
-2026-04-29T02:05:39.4887312Z git version 2.53.0
-2026-04-29T02:05:39.4932891Z Temporarily overriding HOME='/home/runner/work/_temp/d5d58769-090b-461d-94f5-f2a3fe5720ee' before making global git config changes
-2026-04-29T02:05:39.4934296Z Adding repository directory to the temporary git global config as a safe directory
-2026-04-29T02:05:39.4939948Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/linkedin-automation/linkedin-automation
-2026-04-29T02:05:39.4975631Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
-2026-04-29T02:05:39.5007570Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
-2026-04-29T02:05:39.5234858Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
-2026-04-29T02:05:39.5256276Z http.https://github.com/.extraheader
-2026-04-29T02:05:39.5269306Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
-2026-04-29T02:05:39.5300089Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
-2026-04-29T02:05:39.5517525Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
-2026-04-29T02:05:39.5546991Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
-2026-04-29T02:05:39.5870284Z Cleaning up orphan processes
-2026-04-29T02:05:39.6140921Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/cache@v4, actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-04-29T02:09:45.8102404Z   enableCrossOsArchive: false
+2026-04-29T02:09:45.8102656Z   fail-on-cache-miss: false
+2026-04-29T02:09:45.8102893Z   lookup-only: false
+2026-04-29T02:09:45.8103110Z   save-always: false
+2026-04-29T02:09:45.8103311Z env:
+2026-04-29T02:09:45.8103495Z   TZ: Africa/Cairo
+2026-04-29T02:09:45.8103783Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:45.8104210Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-04-29T02:09:45.8104630Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:45.8105007Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:45.8105427Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:45.8105815Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-04-29T02:09:45.8106139Z ##[endgroup]
+2026-04-29T02:09:46.0747623Z Cache hit for restore-key: social-posts-db-25087307288
+2026-04-29T02:09:46.2647145Z Received 29581 of 29581 (100.0%), 0.5 MBs/sec
+2026-04-29T02:09:46.2648384Z Cache Size: ~0 MB (29581 B)
+2026-04-29T02:09:46.2685944Z [command]/usr/bin/tar -xf /home/runner/work/_temp/a426c95b-0f9b-4648-bd8a-580be1c77149/cache.tzst -P -C /home/runner/work/linkedin-automation/linkedin-automation --use-compress-program unzstd
+2026-04-29T02:09:46.2734201Z Cache restored successfully
+2026-04-29T02:09:46.2813665Z Cache restored from key: social-posts-db-25087307288
+2026-04-29T02:09:46.2880417Z ##[group]Run python -c "from src.database import init_db; init_db()"
+2026-04-29T02:09:46.2880948Z [36;1mpython -c "from src.database import init_db; init_db()"[0m
+2026-04-29T02:09:46.2902610Z shell: /usr/bin/bash -e {0}
+2026-04-29T02:09:46.2902867Z env:
+2026-04-29T02:09:46.2903065Z   TZ: Africa/Cairo
+2026-04-29T02:09:46.2903371Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:46.2903830Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-04-29T02:09:46.2904276Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:46.2904669Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:46.2905067Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:46.2905475Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-04-29T02:09:46.2905819Z ##[endgroup]
+2026-04-29T02:09:46.3969766Z ##[group]Run if [ -n "$LINKEDIN_STATE_B64" ]; then
+2026-04-29T02:09:46.3970162Z [36;1mif [ -n "$LINKEDIN_STATE_B64" ]; then[0m
+2026-04-29T02:09:46.3970548Z [36;1m  echo "$LINKEDIN_STATE_B64" | base64 -d > src/linkedin_state.json[0m
+2026-04-29T02:09:46.3970986Z [36;1m  echo "[*] LinkedIn state file restored from secret."[0m
+2026-04-29T02:09:46.3971309Z [36;1melse[0m
+2026-04-29T02:09:46.3971643Z [36;1m  echo "[!] No LINKEDIN_STATE_B64 secret found. Scraping will require login."[0m
+2026-04-29T02:09:46.3972049Z [36;1mfi[0m
+2026-04-29T02:09:46.3992656Z shell: /usr/bin/bash -e {0}
+2026-04-29T02:09:46.3992925Z env:
+2026-04-29T02:09:46.3993122Z   TZ: Africa/Cairo
+2026-04-29T02:09:46.3993431Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:46.3993871Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-04-29T02:09:46.3994308Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:46.3994746Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:46.3995138Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:46.3995529Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-04-29T02:09:46.4069838Z   LINKEDIN_STATE_B64: ***
+2026-04-29T02:09:46.4070111Z ##[endgroup]
+2026-04-29T02:09:46.4132603Z [*] LinkedIn state file restored from secret.
+2026-04-29T02:09:46.4156458Z ##[group]Run sudo apt-get update && sudo apt-get install -y xvfb
+2026-04-29T02:09:46.4157554Z [36;1msudo apt-get update && sudo apt-get install -y xvfb[0m
+2026-04-29T02:09:46.4177635Z shell: /usr/bin/bash -e {0}
+2026-04-29T02:09:46.4188972Z env:
+2026-04-29T02:09:46.4189320Z   TZ: Africa/Cairo
+2026-04-29T02:09:46.4189850Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:46.4190598Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-04-29T02:09:46.4191056Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:46.4191477Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:46.4191877Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:46.4192276Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-04-29T02:09:46.4192624Z ##[endgroup]
+2026-04-29T02:09:46.4858815Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-04-29T02:09:46.5232479Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-04-29T02:09:46.5248932Z Hit:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease
+2026-04-29T02:09:46.5261511Z Hit:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease
+2026-04-29T02:09:46.5269867Z Hit:6 https://packages.microsoft.com/repos/azure-cli noble InRelease
+2026-04-29T02:09:46.5277562Z Hit:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease
+2026-04-29T02:09:46.5300829Z Hit:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease
+2026-04-29T02:09:46.5453642Z Hit:8 https://dl.google.com/linux/chrome-stable/deb stable InRelease
+2026-04-29T02:09:47.7399640Z Reading package lists...
+2026-04-29T02:09:47.7692959Z Reading package lists...
+2026-04-29T02:09:47.9210452Z Building dependency tree...
+2026-04-29T02:09:47.9217958Z Reading state information...
+2026-04-29T02:09:48.0759646Z xvfb is already the newest version (2:21.1.12-1ubuntu1.5).
+2026-04-29T02:09:48.0760529Z 0 upgraded, 0 newly installed, 0 to remove and 43 not upgraded.
+2026-04-29T02:09:48.0804839Z ##[group]Run xvfb-run --auto-servernum --server-args="-screen 0 1280x1024x24" python standalone_scheduler.py
+2026-04-29T02:09:48.0805631Z [36;1mxvfb-run --auto-servernum --server-args="-screen 0 1280x1024x24" python standalone_scheduler.py[0m
+2026-04-29T02:09:48.0827556Z shell: /usr/bin/bash -e {0}
+2026-04-29T02:09:48.0827812Z env:
+2026-04-29T02:09:48.0828019Z   TZ: Africa/Cairo
+2026-04-29T02:09:48.0828325Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:48.0828777Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-04-29T02:09:48.0829279Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:48.0829671Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:48.0830070Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:09:48.0830463Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-04-29T02:09:48.0830812Z ##[endgroup]
+2026-04-29T02:09:50.0463244Z /home/runner/work/linkedin-automation/linkedin-automation/src/content_generator.py:5: FutureWarning: 
+2026-04-29T02:09:50.0464089Z 
+2026-04-29T02:09:50.0464592Z All support for the `google.generativeai` package has ended. It will no longer be receiving 
+2026-04-29T02:09:50.0465700Z updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+2026-04-29T02:09:50.0466497Z See README for more details:
+2026-04-29T02:09:50.0467080Z 
+2026-04-29T02:09:50.0467607Z https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+2026-04-29T02:09:50.0468283Z 
+2026-04-29T02:09:50.0468492Z   import google.generativeai as genai
+2026-04-29T02:10:42.2150086Z 
+2026-04-29T02:10:42.2150629Z ==================================================
+2026-04-29T02:10:42.2151242Z [*] GitHub Actions Scheduler Run: 2026-04-29 05:09:49
+2026-04-29T02:10:42.2151762Z ==================================================
+2026-04-29T02:10:42.2153023Z [Health] â Ø§ÙØªÙÙÙ Ø³ÙÙÙ - ÙØ³Ø¬Ù Ø¯Ø®ÙÙ ÙÙ: ibrahim serry
+2026-04-29T02:10:42.2153613Z [*] Not posting time (current: 5:09). Next posts at: [9, 14]
+2026-04-29T02:10:42.2154194Z [*] Checking Telegram for direct webhook commands...
+2026-04-29T02:10:42.2154690Z [*] No webhook message found.
+2026-04-29T02:10:42.2155091Z [*] Running auto-reply check...
+2026-04-29T02:10:42.2155506Z [*] Starting Auto-Reply Job...
+2026-04-29T02:10:42.2156226Z [*] Checking comments for post ID 39: https://www.linkedin.com/feed/update/urn:li:share:7454705480771309568/
+2026-04-29T02:10:42.2157552Z Navigating to https://www.linkedin.com/feed/update/urn:li:share:7454705480771309568/
+2026-04-29T02:10:42.2158243Z   Using JS extraction...
+2026-04-29T02:10:42.2158951Z [!] Scraper error: ÙÙ ÙØªÙÙÙ ÙÙ ÙØ±Ø§Ø¡Ø© Ø§ÙØªØ¹ÙÙÙØ§Øª. ØªØ£ÙØ¯ ÙÙ Ø£Ù Ø§ÙÙÙØ´ÙØ± ÙØ­ØªÙÙ Ø¹ÙÙ ØªØ¹ÙÙÙØ§Øª ÙÙØ±Ø¦Ù ÙÙØ¹Ø§ÙØ©.
+2026-04-29T02:10:42.2159885Z [*] Checking comments for post ID 38: https://www.linkedin.com/feed/update/urn:li:share:7454701727682895873/
+2026-04-29T02:10:42.2160842Z Navigating to https://www.linkedin.com/feed/update/urn:li:share:7454701727682895873/
+2026-04-29T02:10:42.2161483Z   Using JS extraction...
+2026-04-29T02:10:42.2162148Z [!] Scraper error: ÙÙ ÙØªÙÙÙ ÙÙ ÙØ±Ø§Ø¡Ø© Ø§ÙØªØ¹ÙÙÙØ§Øª. ØªØ£ÙØ¯ ÙÙ Ø£Ù Ø§ÙÙÙØ´ÙØ± ÙØ­ØªÙÙ Ø¹ÙÙ ØªØ¹ÙÙÙØ§Øª ÙÙØ±Ø¦Ù ÙÙØ¹Ø§ÙØ©.
+2026-04-29T02:10:42.2163057Z [*] Checking comments for post ID 37: https://www.linkedin.com/feed/update/urn:li:share:7454694687875043329/
+2026-04-29T02:10:42.2164032Z Navigating to https://www.linkedin.com/feed/update/urn:li:share:7454694687875043329/
+2026-04-29T02:10:42.2164671Z   Using JS extraction...
+2026-04-29T02:10:42.2165332Z [!] Scraper error: ÙÙ ÙØªÙÙÙ ÙÙ ÙØ±Ø§Ø¡Ø© Ø§ÙØªØ¹ÙÙÙØ§Øª. ØªØ£ÙØ¯ ÙÙ Ø£Ù Ø§ÙÙÙØ´ÙØ± ÙØ­ØªÙÙ Ø¹ÙÙ ØªØ¹ÙÙÙØ§Øª ÙÙØ±Ø¦Ù ÙÙØ¹Ø§ÙØ©.
+2026-04-29T02:10:42.2166321Z [*] Auto-Reply Job Complete. Replied: 0, Failed: 0
+2026-04-29T02:10:42.2166655Z 
+2026-04-29T02:10:42.2167205Z [*] Run complete at 2026-04-29 05:10:42
+2026-04-29T02:10:42.2933909Z ##[group]Run actions/upload-artifact@v4
+2026-04-29T02:10:42.2934220Z with:
+2026-04-29T02:10:42.2934440Z   name: scraper-screenshots
+2026-04-29T02:10:42.2934693Z   path: outputs/
+2026-04-29T02:10:42.2934908Z   retention-days: 1
+2026-04-29T02:10:42.2935135Z   if-no-files-found: warn
+2026-04-29T02:10:42.2935373Z   compression-level: 6
+2026-04-29T02:10:42.2935599Z   overwrite: false
+2026-04-29T02:10:42.2935818Z   include-hidden-files: false
+2026-04-29T02:10:42.2936057Z env:
+2026-04-29T02:10:42.2936241Z   TZ: Africa/Cairo
+2026-04-29T02:10:42.2936523Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:10:42.2937355Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-04-29T02:10:42.2937791Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:10:42.2938214Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:10:42.2938592Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-04-29T02:10:42.2939007Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-04-29T02:10:42.2939332Z ##[endgroup]
+2026-04-29T02:10:42.5125193Z ##[warning]No files were found with the provided path: outputs/. No artifacts will be uploaded.
+2026-04-29T02:10:42.5250621Z Post job cleanup.
+2026-04-29T02:10:42.6725149Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/linkedin-automation/linkedin-automation --files-from manifest.txt --use-compress-program zstdmt
+2026-04-29T02:10:42.9790494Z Sent 29580 of 29580 (100.0%), 0.2 MBs/sec
+2026-04-29T02:10:43.0722948Z Cache saved with key: social-posts-db-25087447219
+2026-04-29T02:10:43.1376407Z Post job cleanup.
+2026-04-29T02:10:43.2679163Z Cache hit occurred on the primary key Linux-pip-3b36658a308ab5ff0f5baf21bf76a64740d38d60d83919f850a12c7208403754, not saving cache.
+2026-04-29T02:10:43.2799543Z Post job cleanup.
+2026-04-29T02:10:43.4443331Z Post job cleanup.
+2026-04-29T02:10:43.5416633Z [command]/usr/bin/git version
+2026-04-29T02:10:43.5458752Z git version 2.53.0
+2026-04-29T02:10:43.5502920Z Temporarily overriding HOME='/home/runner/work/_temp/640c3615-fbd2-4a28-967d-9706d20c7751' before making global git config changes
+2026-04-29T02:10:43.5504370Z Adding repository directory to the temporary git global config as a safe directory
+2026-04-29T02:10:43.5510081Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/linkedin-automation/linkedin-automation
+2026-04-29T02:10:43.5550250Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-04-29T02:10:43.5582024Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-04-29T02:10:43.5803529Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-04-29T02:10:43.5823664Z http.https://github.com/.extraheader
+2026-04-29T02:10:43.5836354Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-04-29T02:10:43.5866291Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-04-29T02:10:43.6081037Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-04-29T02:10:43.6110218Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-04-29T02:10:43.6429116Z Cleaning up orphan processes
+2026-04-29T02:10:43.6796535Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/cache@v4, actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
