@@ -131,7 +131,14 @@ def run_scheduler():
     import asyncio
     from src.auto_reply import run_auto_replies
     try:
-        asyncio.run(run_auto_replies())
+        # Check if there's a manual test URL passed from GitHub Actions
+        test_url = os.getenv("TEST_URL")
+        if test_url:
+            print(f"[*] Manual test URL detected: {test_url}")
+            from src.auto_reply import process_post_comments
+            asyncio.run(process_post_comments(test_url, 999))
+        else:
+            asyncio.run(run_auto_replies())
     except Exception as e:
         print(f"[!] Auto-reply error: {e}")
 
