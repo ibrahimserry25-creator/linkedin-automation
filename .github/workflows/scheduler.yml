@@ -2,8 +2,8 @@ name: LinkedIn Automation Scheduler
 
 on:
   schedule:
-    # Post times: 9:00 AM, 3:00 PM Cairo (UTC+3 = 6,12 UTC)
-    - cron: '0 6,11 * * *'
+    # Runs every 3 hours
+    - cron: '0 */3 * * *'
   workflow_dispatch:
     inputs:
       telegram_message:
@@ -71,8 +71,11 @@ jobs:
             echo "[!] No LINKEDIN_STATE_B64 secret found. Scraping will require login."
           fi
 
+      - name: Install xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
       - name: Run scheduler
-        run: python standalone_scheduler.py
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x1024x24" python standalone_scheduler.py
 
       - name: Upload screenshots
         if: always()

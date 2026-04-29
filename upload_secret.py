@@ -18,8 +18,13 @@ with open("src/linkedin_state.json", "rb") as f:
 # Get repo public key for encryption
 headers = {"Authorization": f"Bearer {GITHUB_TOKEN}", "Accept": "application/vnd.github.v3+json"}
 r = requests.get(f"https://api.github.com/repos/{REPO}/actions/secrets/public-key", headers=headers)
+if r.status_code != 200:
+    print(f"❌ Error getting public key ({r.status_code}): {r.text}")
+    print("يرجى التأكد من أن GITHUB_TOKEN موجود في ملف .env وصحيح.")
+    exit(1)
+
 key_data = r.json()
-print(f"Got public key: {key_data.get('key_id', 'ERROR')}")
+print(f"Got public key: {key_data.get('key_id', 'SUCCESS')}")
 
 # Encrypt the secret
 public_key = public.PublicKey(key_data["key"].encode("utf-8"), encoding.Base64Encoder())

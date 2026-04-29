@@ -1,29 +1,27 @@
 import os
 import asyncio
 from playwright.async_api import async_playwright
-from playwright_stealth import stealth_async
+
 STATE_FILE = os.path.join(os.path.dirname(__file__), "linkedin_state.json")
 
-async def scrape_linkedin_comments(url: str):
+async def scrape_linkedin_comments(url: str, post_id: int = None):
     """
     Scrapes comments from a LinkedIn post URL using Playwright.
     If not logged in, opens a visible browser to allow the user to login once.
     """
     async with async_playwright() as p:
         # Launch real Google Chrome to bypass Google SSO "Insecure Browser" blocks
-        needs_login = not os.path.exists(STATE_FILE)
         try:
-            browser = await p.chromium.launch(headless=not needs_login)
+            browser = await p.chromium.launch(headless=False, channel="chrome")
         except Exception:
             # Fallback to default chromium if Chrome is not installed
-            browser = await p.chromium.launch(headless=not needs_login)
+            browser = await p.chromium.launch(headless=False)
         
         needs_login = not os.path.exists(STATE_FILE)
         
         if needs_login:
             context = await browser.new_context()
             page = await context.new_page()
-            await stealth_async(page)
             print("[!] No saved state found. Forcing login...")
             await page.goto("https://www.linkedin.com/login", wait_until="domcontentloaded")
             try:
@@ -37,131 +35,58 @@ async def scrape_linkedin_comments(url: str):
         else:
             context = await browser.new_context(storage_state=STATE_FILE)
             page = await context.new_page()
-            await stealth_async(page)
 
         try:
             print(f"Navigating to {url}")
-            try:
-                await page.goto(url, wait_until="networkidle", timeout=30000)
-            except Exception:
-                await page.goto(url, wait_until="domcontentloaded", timeout=20000)
-            await page.wait_for_timeout(5000)
-
-            # Save screenshot for debugging
-            try:
-                import time as _time
-                screenshot_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "outputs", f"screenshot_{_time.time():.0f}.png")
-                os.makedirs(os.path.dirname(screenshot_path), exist_ok=True)
-                await page.screenshot(path=screenshot_path, full_page=False)
-                print(f"[*] Screenshot saved: {screenshot_path}")
-            except Exception as e:
-                print(f"[!] Screenshot failed: {e}")
+            await page.goto(url, wait_until="domcontentloaded")
+            await page.wait_for_timeout(4000)
 
             # Check if login is still required (cookie expired)
-            current_url = page.url
-            if "login" in current_url or "authwall" in current_url:
-                if os.path.exists(STATE_FILE):
-                    os.remove(STATE_FILE)
+            if await page.query_selector("input[id='session_key']") or await page.query_selector("input[id='username']"):
+                os.remove(STATE_FILE)
                 await browser.close()
-                # Send Telegram alert about expired session
-                try:
-                    from src.telegram_notifier import send_telegram_alert
-                    send_telegram_alert(
-                        "🚨 تنبيه: جلسة لينكدإن منتهية!\n\n"
-                        "انتهت صلاحية ملف الجلسة (linkedin_state.json).\n"
-                        "يرجى فتح لوحة التحكم والنقر على 'سحب التعليقات' مرة واحدة لتسجيل الدخول من جديد.\n\n"
-                        f"⏰ الوقت: {__import__('time').strftime('%Y-%m-%d %H:%M:%S')}"
-                    )
-                except Exception:
-                    pass
                 return {"error": "انتهت صلاحية تسجيل الدخول. يرجى الضغط على الزر مرة أخرى لتسجيل الدخول من جديد."}
 
-            # Click "show comments" button if it exists
-            try:
-                show_comments_btn = await page.query_selector("button[aria-label*='comment'], button[aria-label*='Comment'], button[aria-label*='تعليق']")
-                if show_comments_btn:
-                    await show_comments_btn.click()
-                    await page.wait_for_timeout(3000)
-            except Exception:
-                pass
 
             # Scroll to load comments
-            for _ in range(6):
-                await page.evaluate("window.scrollBy(0, 600)")
+            for _ in range(4):
+                await page.evaluate("window.scrollBy(0, 800)")
                 await page.wait_for_timeout(1500)
 
-            comments_data = []
+            comments_text = []
             
-            # Strategy 1: comments-comment-item (current LinkedIn structure)
-            comment_nodes = await page.query_selector_all("[class*='comments-comment-item']")
-            print(f"  Strategy 1: Found {len(comment_nodes)} comment nodes")
-            
+            # Strategy 1: Look for common comment article or div tags
+            comment_nodes = await page.query_selector_all("article[class*='comment']")
+            if not comment_nodes:
+                comment_nodes = await page.query_selector_all("div[class*='comment-item']")
+                
             for node in comment_nodes:
-                author = "Unknown"
-                text = ""
-                # Get author name
-                author_el = await node.query_selector("[class*='comment-item__inline-show-more-text'], a[class*='hoverable-link-text'] span[dir='ltr'], span[class*='comment-item__author']")
-                if not author_el:
-                    author_el = await node.query_selector("a span span")
-                if author_el:
-                    author = (await author_el.inner_text()).strip()
-                
-                # Get comment text
-                text_el = await node.query_selector("[class*='comment-item__main-content'], span[class*='comment-item__inline-show-more-text'], [dir='ltr']")
-                if not text_el:
-                    text_el = await node.query_selector("span.break-words")
+                # Look for the text direction tag or component text
+                text_el = await node.query_selector(".update-components-text, span[dir='ltr'], div[dir='ltr']")
                 if text_el:
-                    text = (await text_el.inner_text()).strip()
-                
-                if text and len(text) > 1:
-                    comments_data.append({"author": author, "text": text})
-            
-            # Strategy 2: article-based comments
-            if not comments_data:
-                comment_nodes = await page.query_selector_all("article[class*='comment']")
-                print(f"  Strategy 2: Found {len(comment_nodes)} article comment nodes")
-                for node in comment_nodes:
-                    text_el = await node.query_selector("span[dir='ltr'], div[dir='ltr'], span.break-words")
-                    if text_el:
-                        text = (await text_el.inner_text()).strip()
-                        if text and len(text) > 1:
-                            comments_data.append({"author": "Unknown", "text": text})
-            
-            # Strategy 3: Generic text blocks (skip the post itself)
-            if not comments_data:
-                all_text_blocks = await page.query_selector_all("span.break-words, .update-components-text span[dir='ltr']")
-                print(f"  Strategy 3: Found {len(all_text_blocks)} text blocks")
+                    text = await text_el.inner_text()
+                    text = text.strip()
+                    if text and text not in comments_text:
+                        comments_text.append(text)
+
+            # Strategy 2: If strategy 1 fails, grab all update-components-text and skip the first one (the post itself)
+            if not comments_text:
+                all_text_blocks = await page.query_selector_all(".update-components-text")
                 if len(all_text_blocks) > 1:
                     for el in all_text_blocks[1:]:
-                        text = (await el.inner_text()).strip()
-                        if text and len(text) > 1 and text not in [c["text"] for c in comments_data]:
-                            comments_data.append({"author": "Unknown", "text": text})
-
-            # Strategy 4: Last resort - use page.evaluate to extract from DOM
-            if not comments_data:
-                print("  Strategy 4: Using JS extraction...")
-                js_comments = await page.evaluate("""() => {
-                    const results = [];
-                    // Try to find comment containers
-                    const els = document.querySelectorAll('[class*="comment"] span[dir], [class*="comment"] .break-words');
-                    els.forEach(el => {
-                        const text = el.innerText.trim();
-                        if (text.length > 1) results.push({author: 'Unknown', text: text});
-                    });
-                    return results;
-                }""")
-                if js_comments:
-                    comments_data = js_comments
-                    print(f"  Strategy 4: Found {len(comments_data)} comments via JS")
+                        text = await el.inner_text()
+                        text = text.strip()
+                        if text and text not in comments_text:
+                            comments_text.append(text)
 
             await browser.close()
             
-            if not comments_data:
+            if not comments_text:
                 return {"error": "لم نتمكن من قراءة التعليقات. تأكد من أن المنشور يحتوي على تعليقات ومرئي للعامة."}
-            
-            # Return in both formats for compatibility
-            comments_text = [c["text"] for c in comments_data[:10]]
-            return {"comments": comments_text, "comments_data": comments_data[:10]}
+                
+            results = comments_text[:10]
+            comments_data = [{"author": "Unknown", "text": t} for t in results]
+            return {"comments": results, "comments_data": comments_data}
             
         except Exception as e:
             await browser.close()
