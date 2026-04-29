@@ -140,7 +140,8 @@ def post_comment_on_linkedin(post_urn: str, comment_text: str) -> tuple[bool, st
 
     # Post the comment via Social Actions API
     from urllib.parse import quote as url_quote
-    comment_url = f"https://api.linkedin.com/v2/socialActions/{url_quote(post_urn, safe='')}/comments"
+    import re
+
     comment_data = {
         "actor": person_urn,
         "message": {
@@ -148,14 +149,40 @@ def post_comment_on_linkedin(post_urn: str, comment_text: str) -> tuple[bool, st
         }
     }
 
-    try:
-        res = requests.post(comment_url, headers=headers, json=comment_data)
-        if res.status_code in [200, 201]:
-            return True, "تم نشر التعليق بنجاح على لينكدإن! ✅"
-        else:
-            return False, f"فشل نشر التعليق: {res.text}"
-    except Exception as e:
-        return False, f"خطأ أثناء نشر التعليق: {e}"
+    # Build candidate URNs to try (LinkedIn entity URNs differ from web URLs)
+    candidate_urns = [post_urn]
+
+    # If web URL gave us a 'share' URN, our API might have created a 'ugcPost'
+    if "urn:li:share:" in post_urn:
+        candidate_urns.append(post_urn.replace("urn:li:share:", "urn:li:ugcPost:"))
+
+    # Also try activity URN (same numeric ID)
+    numeric_match = re.search(r':(\d+)$', post_urn)
+    if numeric_match:
+        candidate_urns.append(f"urn:li:activity:{numeric_match.group(1)}")
+
+    # Remove duplicates while preserving order
+    seen = set()
+    unique_urns = []
+    for u in candidate_urns:
+        if u not in seen:
+            seen.add(u)
+            unique_urns.append(u)
+
+    last_error = ""
+    for urn in unique_urns:
+        comment_url = f"https://api.linkedin.com/v2/socialActions/{url_quote(urn, safe='')}/comments"
+        try:
+            res = requests.post(comment_url, headers=headers, json=comment_data)
+            if res.status_code in [200, 201]:
+                return True, "تم نشر التعليق بنجاح على لينكدإن! ✅"
+            else:
+                last_error = f"فشل نشر التعليق (URN={urn}): {res.text}"
+                print(f"[!] Comment post failed for {urn}: {res.status_code} - {res.text[:200]}")
+        except Exception as e:
+            last_error = f"خطأ أثناء نشر التعليق (URN={urn}): {e}"
+
+    return False, last_error
 
 
 def check_linkedin_token_health() -> tuple[bool, str]:
