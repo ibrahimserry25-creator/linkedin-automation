@@ -13,9 +13,10 @@ async def scrape_linkedin_comments(url: str, post_id: int = None):
     If not logged in, opens a visible browser to allow the user to login once.
     In GitHub Actions (datacenter IPs), scraping usually fails due to LinkedIn blocking.
     """
-    if IN_GITHUB_ACTIONS:
-        print("[!] GitHub Actions detected: LinkedIn scraping likely blocked by datacenter IP. Skipping.")
-        return {"error": "GitHub_Actions_Blocked", "message": "LinkedIn يحجب سحب التعليقات من سيرفرات GitHub (Datacenter IP). شغّل السحب من جهازك المحلي."}
+    # Temporarily removed GitHub Actions block to test US-based session
+    # if IN_GITHUB_ACTIONS:
+    #     print("[!] GitHub Actions detected: LinkedIn scraping likely blocked by datacenter IP. Skipping.")
+    #     return {"error": "GitHub_Actions_Blocked", "message": "LinkedIn يحجب سحب التعليقات من سيرفرات GitHub (Datacenter IP). شغّل السحب من جهازك المحلي."}
 
     async with async_playwright() as p:
         # Launch real Google Chrome to bypass Google SSO "Insecure Browser" blocks
