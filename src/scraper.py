@@ -73,7 +73,7 @@ async def scrape_linkedin_comments(url: str, post_id: int = None):
                 # Look for the text direction tag or component text
                 text_el = await node.query_selector(".update-components-text, span[dir='ltr'], div[dir='ltr']")
                 if text_el:
-                    text = await el.inner_text()
+                    text = await text_el.inner_text()
                     text = text.strip()
                     if text and text not in comments_text:
                         comments_text.append(text)

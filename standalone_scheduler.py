@@ -23,7 +23,7 @@ from src.telegram_notifier import send_telegram_alert
 from src.database import save_post, init_db
 from src.auto_reply import run_auto_replies, process_post_comments
 
-# Post hours (Cairo time): 9 AM and 3 PM
+# Post hours (Cairo time): 9 AM and 2 PM
 POST_HOURS = [9, 14]
 
 def generate_and_publish_now():
@@ -31,7 +31,7 @@ def generate_and_publish_now():
     from src.content_generator import generate_recommendations, generate_post, generate_image_prompt, ANGLES
     from src.image_generator import generate_image
     
-    niche = "الوظائف، مقابلات العمل، التكنولوجيا، الذكاء الاصطناعي، مشاكل العمل، تطوير الذات، وكيفية الحصول على ترقية"
+    niche = "الوظائف، مقابلات العمل، التكنولوجيا، الذكاء الاصطناعي، تطوير الذات، وكيفية الحصول على ترقية"
     
     print("[*] Generating a new post with AI...")
     
@@ -84,13 +84,13 @@ def generate_and_publish_now():
     if success:
         print(f"[+] Published successfully!")
         send_telegram_alert(
-            f"✅ <b>تم نشر بوست جديد!</b>\n📌 {topic_title}\n⏰ {datetime.now().strftime('%H:%M')}"
+            f"✅ <b>تم نشر بوست جديد تلقائياً!</b>\n📌 {topic_title}\n⏰ {datetime.now().strftime('%H:%M')}"
         )
         return True
     else:
         print(f"[!] Failed to publish: {message}")
         send_telegram_alert(
-            f"❌ <b>فشل نشر البوست</b>\n📌 {topic_title}\n⚠️ {message}"
+            f"❌ <b>فشل نشر البوست التلقائي</b>\n📌 {topic_title}\n⚠️ {message}"
         )
         return False
 
@@ -110,36 +110,31 @@ def run_scheduler():
         print("[!] Token unhealthy. Exiting.")
         return
 
-    # ── Step 2: Check if it's posting time (9, 14, 19) ────
+    # ── Step 2: Check if it's posting time (9, 14) ────
     current_hour = datetime.now().hour
     current_minute = datetime.now().minute
+    
+    # If triggered via Telegram webhook, skip auto-post
     is_webhook = bool(os.getenv("TELEGRAM_MESSAGE", "").strip())
     
-    if current_hour in POST_HOURS and current_minute < 10 and not is_webhook:
-        print(f"[*] It's posting time! Hour: {current_hour}:00")
+    if current_hour in POST_HOURS and current_minute < 15 and not is_webhook:
+        print(f"[*] It's scheduled posting time! Hour: {current_hour}:00")
         generate_and_publish_now()
-    elif is_webhook:
-        print(f"[*] Skipping auto-post (this is a Telegram webhook run).")
     else:
-        print(f"[*] Not posting time (current: {current_hour}:{current_minute:02d}). Next posts at: {POST_HOURS}")
+        print(f"[*] Skipping scheduled post (current: {current_hour}:{current_minute:02d}).")
 
     # ── Step 3: Check Telegram for direct commands ────────
-    print("[*] Checking Telegram for direct webhook commands...")
+    print("[*] Checking for Telegram direct commands...")
     from src.telegram_bot import process_webhook_message
     process_webhook_message()
 
-    # ── Step 4: Auto-reply ───
-    print("[*] Running auto-reply check...")
-    try:
-        # Check if there's a manual test URL passed from GitHub Actions
-        test_url = os.getenv("TEST_URL")
-        if test_url:
-            print(f"[*] Manual test URL detected: {test_url}")
-            asyncio.run(process_post_comments(test_url, 999))
-        else:
-            asyncio.run(run_auto_replies())
-    except Exception as e:
-        print(f"[!] Auto-reply error: {e}")
+    # ── Step 4: Auto-reply (DISABLED as requested) ────────
+    print("[*] Auto-reply is disabled as per user request.")mport
+    #         asyncio.run(process_post_comments(test_url, 999))
+    #     else:
+    #         asyncio.run(run_auto_replies())
+    # except Exception as e:
+    #     print(f"[!] Auto-reply error: {e}")
         import traceback
         traceback.print_exc()
 

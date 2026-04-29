@@ -3,6 +3,7 @@ import os
 import time
 import re
 from src.scraper import scrape_linkedin_comments
+from src.linkedin_comments_api import fetch_linkedin_comments_via_api
 from src.content_generator import generate_smart_replies
 from src.linkedin_publisher import post_comment_on_linkedin
 from src.telegram_notifier import send_telegram_alert
@@ -20,6 +21,18 @@ def _ensure_comments_table(cursor):
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ''')
+    cursor.execute("PRAGMA table_info(comments)")
+    existing_columns = {row[1] for row in cursor.fetchall()}
+    if "author" not in existing_columns:
+        cursor.execute("ALTER TABLE comments ADD COLUMN author TEXT")
+    if "reply_text" not in existing_columns:
+        cursor.execute("ALTER TABLE comments ADD COLUMN reply_text TEXT")
+
+def _build_fallback_reply(author: str) -> str:
+    name = (author or "").strip()
+    if name and name != "Unknown":
+        return f"شكرا يا {name} على تعليقك الجميل، سعيد جدا برأيك."
+    return "شكرا جدا على تعليقك، سعيد بتفاعلك مع المحتوى."
 
 def _extract_urn_from_url(post_url):
     """
@@ -60,6 +73,7 @@ async def process_post_comments(post_url, post_id, post_content=""):
     print(f"[*] Navigating to {post_url}")
     result = await scrape_linkedin_comments(post_url)
 
+    comments = []
     if "error" in result:
         error_msg = result.get("error", "")
         if error_msg == "GitHub_Actions_Blocked":
@@ -70,15 +84,34 @@ async def process_post_comments(post_url, post_id, post_content=""):
                 "عشان الـ Auto-Reply يشتغل، شغّل <code>python api.py</code> على جهازك المحلي.\n\n"
                 "💡 النشر على الوقت (9:00 و 14:00) شغال عادي في GitHub Actions."
             )
+            conn.close()
+            return 0
+
+        print(f"[!] Scraper error: {error_msg}. Falling back to LinkedIn API.")
+        send_telegram_alert(
+            f"⚠️ <b>فشل سحب التعليقات بالمتصفح</b>\n"
+            f"سيتم المحاولة عبر LinkedIn API.\n"
+            f"السبب: {error_msg}"
+        )
+
+        post_urn = _extract_urn_from_url(post_url)
+        if post_urn:
+            api_ok, api_comments = fetch_linkedin_comments_via_api(post_urn)
+            if api_ok:
+                comments = api_comments
+            else:
+                print("[!] LinkedIn API fallback failed to fetch comments.")
         else:
-            print(f"[!] Error: {error_msg}")
+            print("[!] Could not extract post URN for API fallback.")
+    else:
+        comments = result.get("comments_data", [])
+        if not comments:
+            # Fallback to plain comments list
+            comments = [{"author": "Unknown", "text": c} for c in result.get("comments", [])]
+
+    if not comments:
         conn.close()
         return 0
-
-    comments = result.get("comments_data", [])
-    if not comments:
-        # Fallback to plain comments list
-        comments = [{"author": "Unknown", "text": c} for c in result.get("comments", [])]
         
     replied_count = 0
     
@@ -92,7 +125,9 @@ async def process_post_comments(post_url, post_id, post_content=""):
                        (post_id, text, author))
         if cursor.fetchone(): continue
 
-        print(f"  [+] New comment found: \"{text[:50]}...\"")
+        # Avoid Windows cp1252 console encoding crashes on Arabic text.
+        safe_preview = text[:50].encode("ascii", "backslashreplace").decode("ascii")
+        print(f"  [+] New comment found: '{safe_preview}'...")
         send_telegram_alert(
             f"📩 <b>تعليق جديد على بوست!</b>\n\n"
             f"👤 <b>الشخص:</b> {author}\n"
@@ -100,31 +135,36 @@ async def process_post_comments(post_url, post_id, post_content=""):
             f"⏳ جاري كتابة الرد..."
         )
         replies = generate_smart_replies(text, "reply")
-        if replies:
+        if replies and replies[0].get("text"):
             reply_text = replies[0]["text"]
-            post_urn = _extract_urn_from_url(post_url)
-            if post_urn:
-                success, msg = post_comment_on_linkedin(post_urn, reply_text)
-                if success:
-                    cursor.execute("INSERT INTO comments (post_id, comment_text, author, reply_text) VALUES (?, ?, ?, ?)",
-                                   (post_id, text, author, reply_text))
-                    conn.commit()
-                    replied_count += 1
-                    print(f"  [✓] Replied successfully!")
-                    send_telegram_alert(
-                        f"💬 <b>رد تلقائي جديد!</b>\n\n"
-                        f"👤 <b>الشخص:</b> {author}\n"
-                        f"📝 <b>تعليقه:</b> {text}\n\n"
-                        f"🤖 <b>الرد:</b> {reply_text}"
-                    )
-                else:
-                    print(f"  [!] Failed to post reply: {msg}")
-                    send_telegram_alert(
-                        f"❌ <b>فشل الرد التلقائي على تعليق</b>\n\n"
-                        f"👤 {author}\n"
-                        f"📝 {text[:100]}...\n"
-                        f"⚠️ السبب: {msg}"
-                    )
+        else:
+            reply_text = _build_fallback_reply(author)
+            print("  [!] AI reply unavailable, using fallback template.")
+            send_telegram_alert("⚠️ تعذر توليد رد بالذكاء الاصطناعي، تم استخدام رد احتياطي.")
+
+        post_urn = _extract_urn_from_url(post_url)
+        if post_urn:
+            success, msg = post_comment_on_linkedin(post_urn, reply_text)
+            if success:
+                cursor.execute("INSERT INTO comments (post_id, comment_text, author, reply_text) VALUES (?, ?, ?, ?)",
+                               (post_id, text, author, reply_text))
+                conn.commit()
+                replied_count += 1
+                print("  [+] Replied successfully!")
+                send_telegram_alert(
+                    f"💬 <b>رد تلقائي جديد!</b>\n\n"
+                    f"👤 <b>الشخص:</b> {author}\n"
+                    f"📝 <b>تعليقه:</b> {text}\n\n"
+                    f"🤖 <b>الرد:</b> {reply_text}"
+                )
+            else:
+                print(f"  [!] Failed to post reply: {msg}")
+                send_telegram_alert(
+                    f"❌ <b>فشل الرد التلقائي على تعليق</b>\n\n"
+                    f"👤 {author}\n"
+                    f"📝 {text[:100]}...\n"
+                    f"⚠️ السبب: {msg}"
+                )
 
     conn.close()
     return replied_count

@@ -133,8 +133,9 @@ def run_token_health_loop():
         time.sleep(3600 * 6)  # Check every 6 hours
 
 threading.Thread(target=run_daily_loop, daemon=True).start()
-threading.Thread(target=run_reply_loop, daemon=True).start()
 threading.Thread(target=run_token_health_loop, daemon=True).start()
+# Auto-reply disabled to save Gemini API quota
+# threading.Thread(target=run_reply_loop, daemon=True).start()
 
 # ─── Models ────────────────────────────────────────────────
 class GenerateRequest(BaseModel):

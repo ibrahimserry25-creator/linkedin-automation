@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: LinkedIn Auto-Reply Webhook Handler
+
+Resources:
+  LinkedInWebhookFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: linkedin-auto-reply
+      Handler: webhook_handler.lambda_handler
+      Runtime: python3.11
+      CodeUri: .
+      Environment:
+        Variables:
+          GEMINI_API_KEY: !Ref GeminiApiKey
+          LINKEDIN_ACCESS_TOKEN: !Ref LinkedInAccessToken
+      Events:
+        Webhook:
+          Type: Api
+          Properties:
+            Path: /webhook/linkedin
+            Method: post
+      Timeout: 30
+      MemorySize: 256
+
+Parameters:
+  GeminiApiKey:
+    Type: String
+    Description: Gemini API key for generating replies
+    NoEcho: true
+    
+  LinkedInAccessToken:
+    Type: String
+    Description: LinkedIn access token for posting replies
+    NoEcho: true
+
+Outputs:
+  WebhookUrl:
+    Description: API Gateway endpoint URL for LinkedIn webhooks
+    Value: !Sub "https://{ServerlessRestApi}.execute-api.{AWS::Region}.amazonaws.com/webhook/linkedin"
