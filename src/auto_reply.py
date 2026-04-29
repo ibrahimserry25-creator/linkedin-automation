@@ -24,14 +24,32 @@ def _ensure_comments_table(cursor):
 def _extract_urn_from_url(post_url):
     """
     Extracts the LinkedIn URN from a post URL.
+    Supports:
+      - feed/update/urn:li:share:12345
+      - feed/update/urn:li:ugcPost:12345
+      - posts/...-activity-12345-abc
+      - posts/...-share-12345-abc
+      - posts/...-ugcPost-12345-abc
     """
-    match = re.search(r'(urn:li:[a-zA-Z:]+\d+)', post_url)
-    if not match:
-        # Try to find numeric ID for activity links
-        match = re.search(r'activity-(\d+)', post_url)
+    # Strip query parameters for cleaner matching
+    clean_url = post_url.split('?')[0]
+
+    # 1. Direct URN in URL path (feed/update/urn:li:share:12345)
+    match = re.search(r'(urn:li:[a-zA-Z:]+\d+)', clean_url)
+    if match:
+        return match.group(1)
+
+    # 2. /posts/ URLs with activity-, share-, ugcPost- suffixes
+    for pattern, urn_prefix in [
+        (r'activity-(\d+)', 'urn:li:activity'),
+        (r'share-(\d+)', 'urn:li:share'),
+        (r'ugcPost-(\d+)', 'urn:li:ugcPost'),
+    ]:
+        match = re.search(pattern, clean_url)
         if match:
-            return f"urn:li:activity:{match.group(1)}"
-    return match.group(1) if match else None
+            return f"{urn_prefix}:{match.group(1)}"
+
+    return None
 
 async def process_post_comments(post_url, post_id, post_content=""):
     """Scrapes, generates replies and posts them for a single URL."""

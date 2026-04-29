@@ -67,7 +67,10 @@ function buildCard(post) {
         </div>
 
         <div class="history-actions">
-            ${post.post_url ? `<button class="btn btn-outline" style="border-color: var(--linkedin); color: var(--linkedin);" onclick="navigator.clipboard.writeText('${post.post_url}'); alert('تم نسخ رابط المنشور! 🎉\\nتفضل بلصقه في صفحة التفاعل لسحب تعليقاته.')">🔗 نسخ الرابط</button>` : ''}
+            ${post.post_url ? `
+                <a href="${escapeHtml(post.post_url)}" target="_blank" class="btn btn-outline" style="border-color: var(--linkedin); color: var(--linkedin); text-decoration: none;">🔗 فتح</a>
+                <button class="btn btn-outline copy-url-btn" data-url="${escapeHtml(post.post_url)}" style="border-color: var(--linkedin); color: var(--linkedin);">� نسخ</button>
+            ` : ''}
             <button class="btn btn-outline" onclick="openEditModal(${post.id})">✏️ تعديل</button>
             <button class="btn btn-danger" onclick="deletePost(${post.id})">🗑️ حذف</button>
         </div>
@@ -167,6 +170,20 @@ document.getElementById('modalSave').addEventListener('click', async () => {
     } finally {
         btn.innerText = '💾 حفظ التعديلات';
         btn.disabled = false;
+    }
+});
+
+// ── Copy URL handler (delegated) ──────────────────────
+document.getElementById('historyList').addEventListener('click', (e) => {
+    const btn = e.target.closest('.copy-url-btn');
+    if (!btn) return;
+    const url = btn.getAttribute('data-url');
+    if (url) {
+        navigator.clipboard.writeText(url).then(() => {
+            const original = btn.innerText;
+            btn.innerText = '✅ تم النسخ!';
+            setTimeout(() => { btn.innerText = original; }, 1500);
+        });
     }
 });
 
