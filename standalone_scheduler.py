@@ -21,7 +21,6 @@ import asyncio
 from src.linkedin_publisher import publish_to_linkedin, check_linkedin_token_health
 from src.telegram_notifier import send_telegram_alert
 from src.database import save_post, init_db
-from src.auto_reply import run_auto_replies, process_post_comments
 
 # Post hours (Cairo time): 9 AM and 2 PM
 POST_HOURS = [9, 14]
@@ -35,7 +34,6 @@ def generate_and_publish_now():
     
     print("[*] Generating a new post with AI...")
     
-    # 1. Get topic
     try:
         recommendations = generate_recommendations(niche)
     except Exception as e:
@@ -50,21 +48,18 @@ def generate_and_publish_now():
     topic_title = item.get("title", "موضوع عام")
     angle = item.get("angle", random.choice(ANGLES))
     
-    # 2. Generate content
-    print(f"[*] Writing post about: {topic_title}")
+    print(f"[*] Writing post about: {topic_title.encode('ascii', 'ignore').decode()}")
     content = generate_post(topic_title, "LinkedIn")
     if not content:
         print("[!] Failed to generate content.")
         return False
     
-    # 3. Generate image
     print(f"[*] Generating image...")
     img_prompt = generate_image_prompt(topic_title, content)
     safe_filename = f"auto_{int(time.time())}"
     image_path = generate_image(img_prompt, safe_filename)
     image_url = f"/outputs/{os.path.basename(image_path)}" if image_path else ""
     
-    # 4. Save to DB
     post_id = save_post(
         topic=topic_title,
         angle=angle,
@@ -77,7 +72,6 @@ def generate_and_publish_now():
     )
     print(f"[+] Saved post ID: {post_id}")
     
-    # 5. Publish immediately
     print("[*] Publishing to LinkedIn NOW...")
     success, message = publish_to_linkedin(post_id)
     
@@ -88,7 +82,7 @@ def generate_and_publish_now():
         )
         return True
     else:
-        print(f"[!] Failed to publish: {message}")
+        print(f"[!] Failed to publish: {message.encode('ascii', 'ignore').decode()}")
         send_telegram_alert(
             f"❌ <b>فشل نشر البوست التلقائي</b>\n📌 {topic_title}\n⚠️ {message}"
         )
@@ -99,9 +93,8 @@ def run_scheduler():
     print(f"[*] GitHub Actions Scheduler Run: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"{'='*50}")
 
-    # ── Step 1: Check token health ─────────────────────────
     is_healthy, health_msg = check_linkedin_token_health()
-    print(f"[Health] {health_msg}")
+    print(f"[Health] {health_msg.encode('ascii', 'ignore').decode()}")
     if not is_healthy:
         send_telegram_alert(
             f"🔑 <b>تنبيه: مشكلة في التوكن!</b>\n\n{health_msg}\n\n"
@@ -110,11 +103,9 @@ def run_scheduler():
         print("[!] Token unhealthy. Exiting.")
         return
 
-    # ── Step 2: Check if it's posting time (9, 14) ────
     current_hour = datetime.now().hour
     current_minute = datetime.now().minute
     
-    # If triggered via Telegram webhook, skip auto-post
     is_webhook = bool(os.getenv("TELEGRAM_MESSAGE", "").strip())
     
     if current_hour in POST_HOURS and current_minute < 15 and not is_webhook:
@@ -123,13 +114,9 @@ def run_scheduler():
     else:
         print(f"[*] Skipping scheduled post (current: {current_hour}:{current_minute:02d}).")
 
-    # ── Step 3: Check Telegram for direct commands ────────
     print("[*] Checking for Telegram direct commands...")
     from src.telegram_bot import process_webhook_message
     process_webhook_message()
-
-    # ── Step 4: Auto-reply (DISABLED as requested) ────────
-    print("[*] Auto-reply is disabled as per user request.")
 
     print(f"\n[*] Run complete at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 

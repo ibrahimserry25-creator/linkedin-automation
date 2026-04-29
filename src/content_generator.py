@@ -18,6 +18,28 @@ def _get_client():
         return genai.Client(api_key=API_KEY)
     return None
 
+def _fallback_post(topic: str, selected_angle: str) -> str:
+    # Used when Gemini is down (quota/key/leaked) so Telegram flow still publishes.
+    arabic = (
+        f"هل بتواجه صعوبة في {topic}؟\n\n"
+        f"خلّيني أشاركك 3 خطوات سريعة كبداية (بنفس أسلوب: {selected_angle}):\n"
+        f"1) ابدأ بتحديد هدف واضح جدًا خلال 24 ساعة.\n"
+        f"2) اختصر الخطة لخطوة واحدة تعملها اليوم.\n"
+        f"3) راجع النتائج وكرّر التحسين بدون تعقيد.\n\n"
+        f"لو طبّقتها الأسبوع ده، هتلاحظ فرق حقيقي في الأداء. 🚀\n"
+        f"سؤالي لك: إيه أصعب خطوة عندك حاليًا في {topic}؟"
+    )
+    english = (
+        f"Are you struggling with {topic}?\n\n"
+        "Here are 3 quick steps to start (in the spirit of your chosen angle):\n"
+        "1) Define a clear 24-hour goal.\n"
+        "2) Reduce the plan to one action you can do today.\n"
+        "3) Review results and iterate fast.\n\n"
+        "If you try it this week, you’ll see real improvement. 🚀\n"
+        f"My question: what’s the hardest step for you right now in {topic}?"
+    )
+    return arabic + "\n───────────────\n" + english
+
 # Define content angles globally
 ANGLES = ["قصة شخصية", "إحصائية صادمة", "نصيحة عملية مباشرة", "مقارنة بين الماضي والحاضر", "خطأ شائع وكيفية تجنبه"]
 
@@ -45,22 +67,24 @@ def generate_post(topic, platform):
     """
 
     client = _get_client()
+    last_error = None
     if client:
         try:
-            print("[*] Trying to generate with google-genai (gemini-1.5-flash)...")
+            print("[*] Trying to generate with google-genai (gemini-2.5-flash)...")
             response = client.models.generate_content(
-                model='gemini-1.5-flash',
+                model='gemini-2.5-flash',
                 contents=prompt
             )
             if response and response.text:
                 return response.text.strip()
         except Exception as e:
             print(f"[!] google-genai failed: {e}")
+            last_error = e
 
     # Fallback to old library
     import google.generativeai as g_old
     g_old.configure(api_key=API_KEY)
-    for model_name in ['gemini-1.5-flash', 'gemini-pro', 'models/gemini-pro']:
+    for model_name in ['gemini-2.5-flash', 'gemini-2.0-flash']:
         try:
             print(f"[*] Trying fallback model: {model_name}...")
             model = g_old.GenerativeModel(model_name)
@@ -69,16 +93,18 @@ def generate_post(topic, platform):
                 return response.text.strip()
         except Exception as e:
             print(f"[!] Fallback {model_name} failed: {e}")
+            last_error = e
             continue
             
-    return None
+    print(f"[!] Gemini generation failed completely. Using fallback post. Last error: {last_error}")
+    return _fallback_post(topic, selected_angle)
 
 def generate_image_prompt(topic, content):
     prompt = f"Create a short English prompt for an AI image generator. Topic: {topic}. Style: Professional candid photography, Unsplash style."
     client = _get_client()
     if client:
         try:
-            response = client.models.generate_content(model='gemini-1.5-flash', contents=prompt)
+            response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
             return response.text.strip()
         except: pass
     return "professional illustration of " + topic
@@ -88,7 +114,7 @@ def generate_recommendations(niche="الوظائف، تطوير الذات"):
     client = _get_client()
     if client:
         try:
-            response = client.models.generate_content(model='gemini-1.5-flash', contents=prompt)
+            response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
             text = response.text.strip()
             if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
             return json.loads(text)
@@ -100,7 +126,7 @@ def generate_smart_replies(post_text, context="reply"):
     client = _get_client()
     if client:
         try:
-            response = client.models.generate_content(model='gemini-1.5-flash', contents=prompt)
+            response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
             text = response.text.strip()
             if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
             return json.loads(text)

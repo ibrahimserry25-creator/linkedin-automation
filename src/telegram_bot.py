@@ -76,11 +76,11 @@ def process_telegram_update(update):
                     print(f"[+] Published successfully!")
                 else:
                     send_telegram_alert(f"❌ <b>حدث خطأ أثناء النشر:</b>\n{msg}")
-                    print(f"[!] Failed to publish: {msg}")
+                    print(f"[!] Failed to publish: {msg.encode('ascii', 'ignore').decode()}")
             except Exception as e:
                 import traceback
                 error_details = traceback.format_exc()
-                print(f"[!] Error during post creation: {e}\n{error_details}")
+                print(f"[!] Error during post creation: {e}")
                 send_telegram_alert(f"❌ <b>حدث خطأ تقني أثناء إنشاء البوست:</b>\n{str(e)}")
         else:
             send_telegram_alert(f"❌ <b>فشل الذكاء الاصطناعي في كتابة البوست.</b> حاول مرة أخرى.")
