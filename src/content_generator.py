@@ -2,14 +2,21 @@ import os
 import time
 from dotenv import load_dotenv
 import json
-import google.generativeai as genai
+try:
+    from google import genai
+except ImportError:
+    # Fallback to old library if new one is not installed
+    import google.generativeai as genai_old
+    genai = None
 
 # Load environment variables
 load_dotenv()
 API_KEY = os.getenv("GEMINI_API_KEY")
 
-# Configure the old stable library
-genai.configure(api_key=API_KEY)
+def _get_client():
+    if genai:
+        return genai.Client(api_key=API_KEY)
+    return None
 
 # Define content angles globally
 ANGLES = ["قصة شخصية", "إحصائية صادمة", "نصيحة عملية مباشرة", "مقارنة بين الماضي والحاضر", "خطأ شائع وكيفية تجنبه"]
@@ -21,184 +28,81 @@ def generate_post(topic, platform):
     import random
     selected_angle = random.choice(ANGLES)
 
-    if platform.lower() == "twitter":
-        prompt = f"اكتب تغريدة احترافية عن: {topic}. الزاوية: {selected_angle}. القواعد: قصيرة، إيموجي واحد، لا تزد عن 280 حرف."
-    else:
-        prompt = f"""
-        Write a highly engaging, professional LinkedIn post about: {topic}
-        Chosen Angle/Style: {selected_angle}
-        
-        CRITICAL RULES (Applying Behavioral Psychology):
-        1. TARGET AUDIENCE: Egyptian professionals. Write in a way that resonates with the Egyptian/Arab market.
-        2. ARABIC FIRST: You MUST write the entire post in ARABIC first (use Modern Standard Arabic mixed with light Egyptian dialect for relatability).
-        3. SEPARATOR: After the Arabic post, insert a separator line: "───────────────"
-        4. ENGLISH TRANSLATION: After the separator, write the ENGLISH translation.
-        5. THE HOOK (Attention): Start with a pattern-interrupting hook using curiosity, a bold claim, or a relatable pain point (FOMO).
-        6. THE BODY (Desire & Value): Use the PAS framework (Problem-Agitate-Solution) or AIDA. Keep sentences short, punchy, and use white space for easy scanning.
-        7. LENGTH: Keep it concise (max 200 words total for both languages combined).
-        8. CALL TO ACTION (Action): End with an open-ended, thought-provoking question to trigger reciprocity and encourage comments (in both languages).
-        9. Use relevant emojis sparingly (2-4 max).
-        """
-
-    # List of models to try using the stable library
-    models_to_try = [
-        'gemini-1.5-flash-latest',
-        'gemini-1.5-pro-latest',
-        'gemini-pro',
-        'gemini-1.0-pro'
-    ]
+    prompt = f"""
+    Write a highly engaging, professional LinkedIn post about: {topic}
+    Chosen Angle/Style: {selected_angle}
     
-    for model_name in models_to_try:
+    CRITICAL RULES:
+    1. TARGET AUDIENCE: Egyptian professionals.
+    2. ARABIC FIRST: Write the entire post in ARABIC first.
+    3. SEPARATOR: After the Arabic post, insert: "───────────────"
+    4. ENGLISH TRANSLATION: After the separator, write the ENGLISH translation.
+    5. THE HOOK: Start with a pattern-interrupting hook.
+    6. THE BODY: Use the PAS framework. Keep sentences short.
+    7. LENGTH: Concise (max 200 words total).
+    8. CALL TO ACTION: End with a thought-provoking question.
+    9. Use 2-4 emojis max.
+    """
+
+    client = _get_client()
+    if client:
         try:
-            print(f"[*] Trying to generate with {model_name}...")
-            model = genai.GenerativeModel(model_name)
+            print("[*] Trying to generate with google-genai (gemini-1.5-flash)...")
+            response = client.models.generate_content(
+                model='gemini-1.5-flash',
+                contents=prompt
+            )
+            if response and response.text:
+                return response.text.strip()
+        except Exception as e:
+            print(f"[!] google-genai failed: {e}")
+
+    # Fallback to old library
+    import google.generativeai as g_old
+    g_old.configure(api_key=API_KEY)
+    for model_name in ['gemini-1.5-flash', 'gemini-pro', 'models/gemini-pro']:
+        try:
+            print(f"[*] Trying fallback model: {model_name}...")
+            model = g_old.GenerativeModel(model_name)
             response = model.generate_content(prompt)
             if response and response.text:
                 return response.text.strip()
         except Exception as e:
-            print(f"[!] {model_name} failed: {e}")
+            print(f"[!] Fallback {model_name} failed: {e}")
             continue
             
     return None
 
 def generate_image_prompt(topic, content):
-    """
-    Generates an image prompt using the stable library.
-    """
-    prompt = f"Create a short, descriptive English prompt for an AI image generator. Topic: {topic}. Style: Highly realistic candid photography, natural lighting, shot on 35mm lens, Unsplash style, professional, no text, no cartoons, no fake 3D look."
-    
-    for model_name in ['gemini-1.5-flash-latest', 'gemini-pro', 'gemini-1.0-pro']:
+    prompt = f"Create a short English prompt for an AI image generator. Topic: {topic}. Style: Professional candid photography, Unsplash style."
+    client = _get_client()
+    if client:
         try:
-            model = genai.GenerativeModel(model_name)
-            response = model.generate_content(prompt)
-            if response and response.text:
-                return response.text.strip()
-        except:
-            continue
+            response = client.models.generate_content(model='gemini-1.5-flash', contents=prompt)
+            return response.text.strip()
+        except: pass
     return "professional illustration of " + topic
 
-def generate_recommendations(niche="الوظائف، مقابلات العمل، التكنولوجيا، الذكاء الاصطناعي، مشاكل العمل، تطوير الذات، وكيفية الحصول على ترقية"):
-    """
-    Generates 3 trending and engaging post ideas for the given niche.
-    Returns a JSON string containing an array of objects with 'title' and 'angle'.
-    """
-    prompt = f"""
-    You are an expert LinkedIn content strategist.
-    Suggest 3 highly engaging, trending topics to write about today for the niche: "{niche}".
-    For each topic, provide a short, catchy Title (Arabic) and a recommended Angle/Hook (Arabic).
-    
-    IMPORTANT: You MUST return ONLY valid JSON in the following format:
-    [
-        {{"title": "...", "angle": "..."}},
-        {{"title": "...", "angle": "..."}},
-        {{"title": "...", "angle": "..."}}
-    ]
-    Do not include markdown formatting like ```json or any other text.
-    """
-    for model_name in ['gemini-1.5-flash-latest', 'gemini-pro']:
+def generate_recommendations(niche="الوظائف، تطوير الذات"):
+    prompt = f"Suggest 3 engaging LinkedIn topics for: {niche}. Return ONLY valid JSON: [{{'title': '...', 'angle': '...'}}, ...]"
+    client = _get_client()
+    if client:
         try:
-            model = genai.GenerativeModel(model_name)
-            response = model.generate_content(prompt)
+            response = client.models.generate_content(model='gemini-1.5-flash', contents=prompt)
             text = response.text.strip()
-            if text.startswith("```json"):
-                text = text[7:-3].strip()
-            elif text.startswith("```"):
-                text = text[3:-3].strip()
+            if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
             return json.loads(text)
-        except:
-            continue
-            
-    # Fallback recommendations if all API calls fail
-    return [
-        {"title": "كيف تستخدم الذكاء الاصطناعي في عملك اليومي", "angle": "مقارنة بين الماضي والحاضر"},
-        {"title": "أكبر خطأ مهني ارتكبته وكيف تعلمت منه", "angle": "قصة شخصية"},
-        {"title": "أدوات مجانية تزيد إنتاجيتك للضعف", "angle": "نصيحة عملية مباشرة"}
-    ]
+        except: pass
+    return [{"title": "كيف تستخدم الذكاء الاصطناعي", "angle": "نصيحة عملية"}]
 
-def analyze_trend(keyword):
-    """
-    Analyzes a specific keyword/trend and returns a JSON summary of the trend 
-    along with two unique angles to write about it.
-    """
-    prompt = f"""
-    You are an expert LinkedIn trend analyzer.
-    The user wants to write about the topic/keyword: "{keyword}".
-    What is the current conversation or trend around this topic? 
-    Give me a brief summary of what people are saying, and 2 unique, non-cliché angles the user can take to stand out.
-    
-    IMPORTANT: Return ONLY valid JSON in the following format:
-    {{
-        "summary": "Brief summary in Arabic of the current trend/conversation",
-        "angles": [
-            "Angle 1 (Arabic)",
-            "Angle 2 (Arabic)"
-        ]
-    }}
-    Do not include markdown formatting like ```json or any other text.
-    """
-    try:
-        model = genai.GenerativeModel('gemini-flash-latest')
-        response = model.generate_content(prompt)
-        text = response.text.strip()
-        if text.startswith("```json"):
-            text = text[7:-3].strip()
-        elif text.startswith("```"):
-            text = text[3:-3].strip()
-        return json.loads(text)
-    except Exception as e:
-        print(f"[!] Error analyzing trend: {e}")
-        return {
-            "summary": "الذكاء الاصطناعي لم يتمكن من تحليل التريند حالياً.",
-            "angles": ["حاول طرح سؤال للنقاش", "شارك تجربتك الشخصية السريعة"]
-        }
-
-def generate_smart_replies(post_text, context="engagement"):
-    """
-    Generates 3 unique, high-quality smart replies for a given LinkedIn post.
-    context: 'engagement' (proactive comment on influencer's post) or 'reply' (reply to a comment on your post)
-    Returns a JSON list of reply objects.
-    """
-    if context == "reply":
-        instruction = "The user received this comment on their LinkedIn post and wants to reply professionally and warmly."
-        types = ["شكر وترحيب بأسلوب شخصي", "رد يضيف معلومة إضافية مفيدة", "رد يطرح سؤالاً ليكمل الحوار"]
-    else:
-        instruction = "The user wants to leave a high-value comment on this LinkedIn post by an influencer to attract their followers."
-        types = ["تعليق يضيف إحصائية أو معلومة نادرة", "تعليق يشارك تجربة شخصية مرتبطة", "تعليق يطرح سؤالاً ذكياً يثير نقاش"]
-
-    prompt = f"""
-    You are an expert LinkedIn engagement strategist.
-    {instruction}
-    
-    Post/Comment text:
-    ---
-    {post_text}
-    ---
-    
-    Write exactly 3 distinct, thoughtful replies in ARABIC. Each reply should be:
-    - Natural, human-sounding, not generic or sycophantic
-    - EXTREMELY CONCISE: Max 1-2 short sentences. Do not write long paragraphs.
-    - Match these styles: {types[0]}, {types[1]}, {types[2]}
-    
-    IMPORTANT: Return ONLY valid JSON in the following format, no markdown:
-    [
-        {{"type": "{types[0]}", "text": "..."}},
-        {{"type": "{types[1]}", "text": "..."}},
-        {{"type": "{types[2]}", "text": "..."}}
-    ]
-    """
-    try:
-        model = genai.GenerativeModel('gemini-flash-latest')
-        response = model.generate_content(prompt)
-        text = response.text.strip()
-        if text.startswith("```json"):
-            text = text[7:-3].strip()
-        elif text.startswith("```"):
-            text = text[3:-3].strip()
-        return json.loads(text)
-    except Exception as e:
-        print(f"[!] Error generating smart replies: {e}")
-        return [
-            {"type": "رد افتراضي", "text": "شكراً جزيلاً على هذا المحتوى القيّم، استمتعت بقراءته!"},
-            {"type": "رد افتراضي", "text": "هذه النقطة مهمة جداً، وقد واجهت شيئاً مشابهاً في تجربتي."},
-            {"type": "رد افتراضي", "text": "سؤال مثير للاهتمام، ما رأيك في...?"}
-        ]
+def generate_smart_replies(post_text, context="reply"):
+    prompt = f"Generate 3 short LinkedIn replies for: {post_text}. Return ONLY valid JSON: [{{'type': '...', 'text': '...'}}, ...]"
+    client = _get_client()
+    if client:
+        try:
+            response = client.models.generate_content(model='gemini-1.5-flash', contents=prompt)
+            text = response.text.strip()
+            if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
+            return json.loads(text)
+        except: pass
+    return [{"type": "شكر", "text": "شكراً جزيلاً!"}]
