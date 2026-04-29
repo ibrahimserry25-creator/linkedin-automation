@@ -3,6 +3,7 @@
 // ==========================================
 
 // 1️⃣ حط مفاتيحك هنا:
+// ⚠️ تحذير أمني: لا تشارك هذا الملف مع أي حد لأنه يحتوي على مفاتيح API
 var GEMINI_API_KEY = "AIzaSyC0brZIBZwd7QkKhv3L0J7gFh80cioKndY";
 var LINKEDIN_ACCESS_TOKEN = "AQUQE7QfgNR13afHokf-VevhtYH4mKkEnOimiT0OlVYp359pDk4qja1Euolzte1klbK_TqrL7NVVhM8bms11Bkma4Sj68nYcs1qM8xqjwUXGg92B3ix8CjxhEKVw_MugluitE5Hu5dsUdrElgnHsMswd1rXRvgngd-Pz2R1wz2W-D-HKk0ZK4tD7N9uREtE7NYSaZ3n9LLYtpAPhZL_0Nvtv2R-9owE6LDVczBG5INat1b2SLDU9nJvJeRb5TmL_6pB2RicVPzRAYtst6G9e5gw382OZFcZ7LusLl3xbbasCcmzA07IdQD1ZV163EMvEEQ1hv4FF_sITFXQ5k5ScvS_AXW-p5A";
 var TELEGRAM_BOT_TOKEN = "your_telegram_bot_token_here";
@@ -10,6 +11,10 @@ var TELEGRAM_CHAT_ID = "your_telegram_chat_id_here";
 
 // الدالة الرئيسية اللي هتشتغل كل 5 دقايق
 function checkLinkedInComments() {
+  // تأكد إن بيانات تليجرام متعبيش placeholder
+  if (TELEGRAM_BOT_TOKEN.indexOf("your_") === 0 || TELEGRAM_CHAT_ID.indexOf("your_") === 0) {
+    Logger.log("[!] تحذير: بيانات Telegram Bot Token أو Chat ID لسه placeholder. عدلهم في الكود.");
+  }
   // البحث عن إيميلات التعليقات الجديدة اللي لسة متقرتش
   var threads = GmailApp.search('from:messages-noreply@linkedin.com "commented on your" is:unread', 0, 5);
   
@@ -89,7 +94,7 @@ function postCommentToLinkedIn(targetUrn, actorUrn, replyText) {
   
   var options = {
     "method": "post",
-    "contentType": "application/json",
+    "contentType": "application/json; charset=UTF-8",
     "headers": {
       "Authorization": "Bearer " + LINKEDIN_ACCESS_TOKEN,
       "X-Restli-Protocol-Version": "2.0.0"
@@ -164,6 +169,10 @@ function generateReplyWithGemini(author, commentText) {
 }
 
 function sendTelegram(message) {
+  if (TELEGRAM_BOT_TOKEN.indexOf("your_") === 0 || TELEGRAM_CHAT_ID.indexOf("your_") === 0) {
+    Logger.log("[!] Skipping Telegram notification (tokens are still placeholders).");
+    return;
+  }
   var url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage";
   UrlFetchApp.fetch(url, {
     "method": "post",

@@ -1,8 +1,7 @@
-import re
-import time
 import sqlite3
 import os
-import asyncio
+import time
+import re
 from src.scraper import scrape_linkedin_comments
 from src.content_generator import generate_smart_replies
 from src.linkedin_publisher import post_comment_on_linkedin
@@ -11,27 +10,96 @@ from src.telegram_notifier import send_telegram_alert
 DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "social_posts.db")
 
 def _ensure_comments_table(cursor):
-    """Creates the comments table if it doesn't exist."""
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS comments (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             post_id INTEGER,
             comment_text TEXT,
             author TEXT,
-            auto_reply TEXT,
-            replied INTEGER DEFAULT 0,
-            replied_at DATETIME,
-            reply_published INTEGER DEFAULT 0
+            reply_text TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ''')
 
-def _extract_urn_from_url(post_url: str) -> str | None:
+def _extract_urn_from_url(post_url):
     """
     Extracts the LinkedIn URN from a post URL.
-    e.g. https://www.linkedin.com/feed/update/urn:li:ugcPost:1234567890/ -> urn:li:ugcPost:1234567890
     """
     match = re.search(r'(urn:li:[a-zA-Z:]+\d+)', post_url)
+    if not match:
+        # Try to find numeric ID for activity links
+        match = re.search(r'activity-(\d+)', post_url)
+        if match:
+            return f"urn:li:activity:{match.group(1)}"
     return match.group(1) if match else None
+
+async def process_post_comments(post_url, post_id, post_content=""):
+    """Scrapes, generates replies and posts them for a single URL."""
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    _ensure_comments_table(cursor)
+    
+    print(f"[*] Navigating to {post_url}")
+    result = await scrape_linkedin_comments(post_url)
+
+    if "error" in result:
+        print(f"[!] Error: {result['error']}")
+        conn.close()
+        return 0
+
+    comments = result.get("comments_data", [])
+    if not comments:
+        # Fallback to plain comments list
+        comments = [{"author": "Unknown", "text": c} for c in result.get("comments", [])]
+        
+    replied_count = 0
+    
+    for c in comments:
+        text = c.get("text", "").strip()
+        author = c.get("author", "Unknown")
+
+        if not text: continue
+
+        cursor.execute("SELECT id FROM comments WHERE post_id = ? AND comment_text = ? AND author = ?", 
+                       (post_id, text, author))
+        if cursor.fetchone(): continue
+
+        print(f"  [+] New comment found: \"{text[:50]}...\"")
+        send_telegram_alert(
+            f"📩 <b>تعليق جديد على بوست!</b>\n\n"
+            f"👤 <b>الشخص:</b> {author}\n"
+            f"📝 <b>التعليق:</b> {text}\n\n"
+            f"⏳ جاري كتابة الرد..."
+        )
+        replies = generate_smart_replies(text, "reply")
+        if replies:
+            reply_text = replies[0]["text"]
+            post_urn = _extract_urn_from_url(post_url)
+            if post_urn:
+                success, msg = post_comment_on_linkedin(post_urn, reply_text)
+                if success:
+                    cursor.execute("INSERT INTO comments (post_id, comment_text, author, reply_text) VALUES (?, ?, ?, ?)",
+                                   (post_id, text, author, reply_text))
+                    conn.commit()
+                    replied_count += 1
+                    print(f"  [✓] Replied successfully!")
+                    send_telegram_alert(
+                        f"💬 <b>رد تلقائي جديد!</b>\n\n"
+                        f"👤 <b>الشخص:</b> {author}\n"
+                        f"📝 <b>تعليقه:</b> {text}\n\n"
+                        f"🤖 <b>الرد:</b> {reply_text}"
+                    )
+                else:
+                    print(f"  [!] Failed to post reply: {msg}")
+                    send_telegram_alert(
+                        f"❌ <b>فشل الرد التلقائي على تعليق</b>\n\n"
+                        f"👤 {author}\n"
+                        f"📝 {text[:100]}...\n"
+                        f"⚠️ السبب: {msg}"
+                    )
+
+    conn.close()
+    return replied_count
 
 async def run_auto_replies():
     print("[*] Starting Auto-Reply Job...")
@@ -40,7 +108,6 @@ async def run_auto_replies():
     _ensure_comments_table(cursor)
     conn.commit()
 
-    # Fetch posts that are published and have a URL (only check last 7 days, max 3 posts)
     cursor.execute("""
         SELECT id, content, post_url FROM posts 
         WHERE status = 'Published' 
@@ -51,113 +118,18 @@ async def run_auto_replies():
         LIMIT 3
     """)
     published_posts = cursor.fetchall()
+    conn.close()
 
     if not published_posts:
-        print("[*] No published posts to check for comments.")
-        conn.close()
+        print("[*] No published posts to check.")
         return
 
     replied_count = 0
-    failed_count = 0
+    for post_id, post_content, post_url in published_posts:
+        replied_count += await process_post_comments(post_url, post_id, post_content)
 
-    for post in published_posts:
-        post_id, post_content, post_url = post
-        if not post_url or not post_url.startswith("http"):
-            continue
-
-        print(f"[*] Checking comments for post ID {post_id}: {post_url}")
-        try:
-            result = await scrape_linkedin_comments(post_url)
-
-            # If cookies are expired, notify via Telegram and stop
-            if "error" in result:
-                err_msg = result["error"]
-                print(f"[!] Scraper error: {err_msg}")
-                if "انتهت صلاحية" in err_msg or "تسجيل الدخول" in err_msg:
-                    send_telegram_alert(
-                        "🚨 <b>تنبيه: جلسة لينكدإن منتهية!</b>\n\n"
-                        "انتهت صلاحية ملف الجلسة (linkedin_state.json).\n"
-                        "يرجى فتح لوحة التحكم والنقر على 'سحب التعليقات' مرة واحدة لتسجيل الدخول من جديد.\n\n"
-                        f"⏰ الوقت: {time.strftime('%Y-%m-%d %H:%M:%S')}"
-                    )
-                continue
-
-            comments = result.get("comments", [])
-            for c in comments:
-                # Handle both dict format and plain string format
-                if isinstance(c, dict):
-                    text = c.get("text", "")
-                    author = c.get("author", "Unknown")
-                else:
-                    text = str(c)
-                    author = "Unknown"
-
-                if not text.strip():
-                    continue
-
-                # Skip if already replied
-                cursor.execute(
-                    "SELECT id FROM comments WHERE post_id = ? AND comment_text = ? AND author = ?",
-                    (post_id, text, author)
-                )
-                if cursor.fetchone():
-                    continue
-
-                print(f"[+] New comment by '{author}': {text[:80]}...")
-
-                # Generate smart reply
-                try:
-                    replies = generate_smart_replies(text, context="reply")
-                    best_reply = replies[0]["text"] if replies else "شكراً لتعليقك الرائع! 🙏"
-                except Exception as e:
-                    print(f"[!] Failed to generate reply: {e}")
-                    best_reply = "شكراً لمرورك الكريم! 🙏"
-
-                # Extract URN from URL and post the reply on LinkedIn
-                post_urn = _extract_urn_from_url(post_url)
-                reply_published = 0
-
-                if post_urn:
-                    success, msg = post_comment_on_linkedin(post_urn, best_reply)
-                    if success:
-                        reply_published = 1
-                        replied_count += 1
-                        print(f"   [+] Reply published on LinkedIn: {best_reply[:60]}...")
-                    else:
-                        failed_count += 1
-                        print(f"   [!] Failed to publish reply: {msg}")
-                else:
-                    print(f"   [!] Could not extract URN from URL: {post_url}")
-
-                # Save comment + reply to DB
-                cursor.execute(
-                    """INSERT INTO comments 
-                       (post_id, comment_text, author, auto_reply, replied, replied_at, reply_published) 
-                       VALUES (?, ?, ?, ?, 1, datetime('now','localtime'), ?)""",
-                    (post_id, text, author, best_reply, reply_published)
-                )
-                conn.commit()
-
-        except Exception as e:
-            print(f"[!] Error processing post {post_id}: {e}")
-
-    conn.close()
-
-    # Send Telegram summary if anything happened
-    if replied_count > 0 or failed_count > 0:
-        send_telegram_alert(
-            f"💬 <b>تقرير الردود التلقائية</b>\n\n"
-            f"✅ تم الرد على: {replied_count} تعليق\n"
-            f"❌ فشل النشر: {failed_count} تعليق\n"
-            f"⏰ {time.strftime('%Y-%m-%d %H:%M:%S')}"
-        )
-
-    print(f"[*] Auto-Reply Job Complete. Replied: {replied_count}, Failed: {failed_count}")
-
+    print(f"[*] Auto-Reply Job Complete. Replied: {replied_count}")
 
 def run_auto_replies_sync():
+    import asyncio
     asyncio.run(run_auto_replies())
-
-
-if __name__ == "__main__":
-    run_auto_replies_sync()

@@ -17,9 +17,11 @@ load_dotenv()
 # Make sure src/ is importable
 sys.path.insert(0, os.path.dirname(__file__))
 
+import asyncio
 from src.linkedin_publisher import publish_to_linkedin, check_linkedin_token_health
 from src.telegram_notifier import send_telegram_alert
 from src.database import save_post, init_db
+from src.auto_reply import run_auto_replies, process_post_comments
 
 # Post hours (Cairo time): 9 AM and 3 PM
 POST_HOURS = [9, 14]
@@ -128,19 +130,18 @@ def run_scheduler():
 
     # ── Step 4: Auto-reply ───
     print("[*] Running auto-reply check...")
-    import asyncio
-    from src.auto_reply import run_auto_replies
     try:
         # Check if there's a manual test URL passed from GitHub Actions
         test_url = os.getenv("TEST_URL")
         if test_url:
             print(f"[*] Manual test URL detected: {test_url}")
-            from src.auto_reply import process_post_comments
             asyncio.run(process_post_comments(test_url, 999))
         else:
             asyncio.run(run_auto_replies())
     except Exception as e:
         print(f"[!] Auto-reply error: {e}")
+        import traceback
+        traceback.print_exc()
 
     print(f"\n[*] Run complete at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 

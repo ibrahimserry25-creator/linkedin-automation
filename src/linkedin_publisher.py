@@ -30,7 +30,7 @@ def publish_to_linkedin(post_id):
         
     headers = {
         "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json; charset=UTF-8",
         "X-Restli-Protocol-Version": "2.0.0"
     }
 
@@ -125,7 +125,7 @@ def post_comment_on_linkedin(post_urn: str, comment_text: str) -> tuple[bool, st
 
     headers = {
         "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json; charset=UTF-8",
         "X-Restli-Protocol-Version": "2.0.0"
     }
 

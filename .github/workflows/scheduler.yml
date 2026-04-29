@@ -2,8 +2,10 @@ name: LinkedIn Automation Scheduler
 
 on:
   schedule:
-    # Runs every 3 hours
+    # Runs every 3 hours (for auto-reply & monitoring)
     - cron: '0 */3 * * *'
+    # Extra run at 14:00 Cairo to publish the second daily post
+    - cron: '0 14 * * *'
   workflow_dispatch:
     inputs:
       test_url:
