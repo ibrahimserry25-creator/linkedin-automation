@@ -129,14 +129,7 @@ def run_scheduler():
     process_webhook_message()
 
     # ── Step 4: Auto-reply (DISABLED as requested) ────────
-    print("[*] Auto-reply is disabled as per user request.")mport
-    #         asyncio.run(process_post_comments(test_url, 999))
-    #     else:
-    #         asyncio.run(run_auto_replies())
-    # except Exception as e:
-    #     print(f"[!] Auto-reply error: {e}")
-        import traceback
-        traceback.print_exc()
+    print("[*] Auto-reply is disabled as per user request.")
 
     print(f"\n[*] Run complete at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
