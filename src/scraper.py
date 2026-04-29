@@ -71,13 +71,30 @@ async def scrape_linkedin_comments(url: str, post_id: int = None):
 
             # Strategy 2: If strategy 1 fails, grab all update-components-text and skip the first one (the post itself)
             if not comments_text:
-                all_text_blocks = await page.query_selector_all(".update-components-text")
+                all_text_blocks = await page.query_selector_all(".update-components-text, span.break-words")
                 if len(all_text_blocks) > 1:
                     for el in all_text_blocks[1:]:
                         text = await el.inner_text()
                         text = text.strip()
                         if text and text not in comments_text:
                             comments_text.append(text)
+
+            # Strategy 3: Last resort - use page.evaluate to extract from DOM
+            if not comments_text:
+                print("  Using JS extraction...")
+                js_comments = await page.evaluate("""() => {
+                    const results = [];
+                    const els = document.querySelectorAll('[class*="comment"] span[dir], [class*="comment"] .break-words, .update-components-text span[dir]');
+                    els.forEach(el => {
+                        const text = el.innerText.trim();
+                        if (text.length > 5) results.push(text);
+                    });
+                    return results;
+                }""")
+                if js_comments:
+                    for t in js_comments:
+                        if t not in comments_text:
+                            comments_text.append(t)
 
             await browser.close()
             
