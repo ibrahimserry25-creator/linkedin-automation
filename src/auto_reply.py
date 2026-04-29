@@ -61,7 +61,17 @@ async def process_post_comments(post_url, post_id, post_content=""):
     result = await scrape_linkedin_comments(post_url)
 
     if "error" in result:
-        print(f"[!] Error: {result['error']}")
+        error_msg = result.get("error", "")
+        if error_msg == "GitHub_Actions_Blocked":
+            print("[!] Skipping auto-reply: GitHub Actions datacenter IP blocked by LinkedIn.")
+            send_telegram_alert(
+                "⚠️ <b>تنبيه: سحب التعليقات متوقف في GitHub Actions</b>\n\n"
+                "LinkedIn يحجب الـ IPs الخاصة بسيرفرات GitHub (Datacenter).\n"
+                "عشان الـ Auto-Reply يشتغل، شغّل <code>python api.py</code> على جهازك المحلي.\n\n"
+                "💡 النشر على الوقت (9:00 و 14:00) شغال عادي في GitHub Actions."
+            )
+        else:
+            print(f"[!] Error: {error_msg}")
         conn.close()
         return 0
 
