@@ -70,9 +70,9 @@ def generate_post(topic, platform):
     last_error = None
     if client:
         try:
-            print("[*] Trying to generate with google-genai (gemini-2.5-flash)...")
+            print("[*] Trying to generate with google-genai (gemini-2.0-flash)...")
             response = client.models.generate_content(
-                model='gemini-2.5-flash',
+                model='gemini-2.0-flash',
                 contents=prompt
             )
             if response and response.text:
@@ -84,7 +84,7 @@ def generate_post(topic, platform):
     # Fallback to old library
     import google.generativeai as g_old
     g_old.configure(api_key=API_KEY)
-    for model_name in ['gemini-2.5-flash', 'gemini-2.0-flash']:
+    for model_name in ['gemini-2.0-flash', 'gemini-1.5-pro']:
         try:
             print(f"[*] Trying fallback model: {model_name}...")
             model = g_old.GenerativeModel(model_name)
@@ -110,7 +110,7 @@ def generate_image_prompt(topic, content):
     client = _get_client()
     if client:
         try:
-            response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
+            response = client.models.generate_content(model='gemini-2.0-flash', contents=prompt)
             return response.text.strip()
         except: pass
     return "masterpiece, highly detailed professional photography of " + topic + ", perfect anatomy, cinematic lighting, 8k"
@@ -120,7 +120,7 @@ def generate_recommendations(niche="الوظائف، تطوير الذات"):
     client = _get_client()
     if client:
         try:
-            response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
+            response = client.models.generate_content(model='gemini-2.0-flash', contents=prompt)
             text = response.text.strip()
             if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
             return json.loads(text)
@@ -132,7 +132,7 @@ def generate_smart_replies(post_text, context="reply"):
     client = _get_client()
     if client:
         try:
-            response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
+            response = client.models.generate_content(model='gemini-2.0-flash', contents=prompt)
             text = response.text.strip()
             if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
             return json.loads(text)
