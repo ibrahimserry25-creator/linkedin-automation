@@ -30,6 +30,14 @@ def init_db():
             value TEXT
         )
     ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS chat_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            role TEXT,
+            content TEXT,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
     conn.commit()
     conn.close()
 
@@ -122,3 +130,25 @@ def mark_post_as_published(post_id, post_url=None):
         cursor.execute("UPDATE posts SET status = 'Published' WHERE id = ?", (post_id,))
     conn.commit()
     conn.close()
+
+def add_chat_message(role, content):
+    """Add a message to the chat history."""
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute('''
+        INSERT INTO chat_history (role, content)
+        VALUES (?, ?)
+    ''', (role, content))
+    conn.commit()
+    conn.close()
+
+def get_chat_history(limit=10):
+    """Get the recent chat history."""
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute("SELECT role, content FROM chat_history ORDER BY id DESC LIMIT ?", (limit,))
+    rows = cursor.fetchall()
+    conn.close()
+    # Reverse to get chronological order
+    return [{"role": r["role"], "content": r["content"]} for r in reversed(rows)]
