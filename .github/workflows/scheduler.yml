@@ -50,6 +50,7 @@ jobs:
           echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
           echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env
           echo "TELEGRAM_MESSAGE=${{ github.event.inputs.telegram_message }}" >> .env
+          echo "PEXELS_API_KEY=${{ secrets.PEXELS_API_KEY }}" >> .env
 
       - name: Restore database from cache (persistent storage)
         uses: actions/cache@v4

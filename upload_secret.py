@@ -62,3 +62,8 @@ if __name__ == "__main__":
         with open(state_path, "rb") as f:
             state_b64 = base64.b64encode(f.read()).decode()
             upload_github_secret("LINKEDIN_STATE_B64", state_b64)
+            
+    # Upload Pexels Key
+    pexels_key = os.getenv("PEXELS_API_KEY")
+    if pexels_key:
+        upload_github_secret("PEXELS_API_KEY", pexels_key)
