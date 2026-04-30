@@ -22,9 +22,9 @@ def generate_image(prompt, filename):
     
     # Define "Servers" (Using Pollinations with different backend models as different servers)
     servers = [
-        f"https://image.pollinations.ai/prompt/{safe_prompt}?width=1024&height=1024&nologo=true&seed={seed}&model=flux",  # Server 1
-        f"https://image.pollinations.ai/prompt/{safe_prompt}?width=1024&height=1024&nologo=true&seed={seed}&model=turbo", # Server 2
-        f"https://image.pollinations.ai/prompt/{safe_prompt}?width=1024&height=1024&nologo=true&seed={seed}"              # Server 3
+        f"https://image.pollinations.ai/prompt/{safe_prompt}?width=1024&height=1024&nologo=true&enhance=true&seed={seed}&model=flux",  # Server 1
+        f"https://image.pollinations.ai/prompt/{safe_prompt}?width=1024&height=1024&nologo=true&enhance=true&seed={seed}&model=turbo", # Server 2
+        f"https://image.pollinations.ai/prompt/{safe_prompt}?width=1024&height=1024&nologo=true&enhance=true&seed={seed}"              # Server 3
     ]
 
     response = None

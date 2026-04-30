@@ -100,14 +100,20 @@ def generate_post(topic, platform):
     return _fallback_post(topic, selected_angle)
 
 def generate_image_prompt(topic, content):
-    prompt = f"Create a short English prompt for an AI image generator. Topic: {topic}. Style: Professional candid photography, Unsplash style."
+    prompt = f"""
+    Create a short English prompt for an AI image generator. Topic: {topic}. 
+    CRITICAL RULES:
+    1. You CAN include humans, but if you do, keep the action simple (e.g., standing, walking, sitting) to avoid AI deformation.
+    2. Add these exact keywords at the end of the prompt: "masterpiece, highly detailed, perfect anatomy, 8k resolution, cinematic lighting".
+    3. Do NOT include text or writing in the image.
+    """
     client = _get_client()
     if client:
         try:
             response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
             return response.text.strip()
         except: pass
-    return "professional illustration of " + topic
+    return "masterpiece, highly detailed professional photography of " + topic + ", perfect anatomy, cinematic lighting, 8k"
 
 def generate_recommendations(niche="الوظائف، تطوير الذات"):
     prompt = f"Suggest 3 engaging LinkedIn topics for: {niche}. Return ONLY valid JSON: [{{'title': '...', 'angle': '...'}}, ...]"
