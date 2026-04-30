@@ -107,7 +107,7 @@ def process_telegram_update(update):
         genai.configure(api_key=api_key)
         
         model = genai.GenerativeModel(
-            model_name='gemini-1.5-flash',
+            model_name='gemini-2.0-flash',
             system_instruction=system_instruction,
             tools=[publish_new_post_tool]
         )
