@@ -48,17 +48,10 @@ def get_pexels_image(query, filename):
 
 def generate_image(prompt, filename):
     """
-    Tries Pexels for a real photo first. If it fails, falls back to Pollinations AI or Picsum.
+    Generates an AI image using Pollinations AI (Flux or Turbo models).
     """
-    print(f"[*] Generating/Fetching image for: '{prompt}'...")
+    print(f"[*] Generating AI image for: '{prompt}'...")
     
-    # 1. Try Pexels first for real stock photos!
-    filepath = get_pexels_image(prompt, filename)
-    if filepath:
-        print(f"[+] Real stock photo saved to: {filepath}")
-        return filepath
-        
-    print("[!] Pexels failed or no results. Falling back to AI Image Generation...")
     
     # 2. Fallback to Pollinations AI
     clean_prompt = re.sub(r'[^a-zA-Z0-9\s,.-]', '', prompt)[:200]

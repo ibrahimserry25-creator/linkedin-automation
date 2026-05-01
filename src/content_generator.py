@@ -102,10 +102,11 @@ def generate_post(topic, platform):
 def generate_image_prompt(topic, content):
     prompt = f"""
     Create a short English prompt for an AI image generator. Topic: {topic}. 
-    CRITICAL RULES:
-    1. You CAN include humans, but if you do, keep the action simple (e.g., standing, walking, sitting) to avoid AI deformation.
-    2. Add these exact keywords at the end of the prompt: "masterpiece, highly detailed, perfect anatomy, 8k resolution, cinematic lighting".
-    3. Do NOT include text or writing in the image.
+    CRITICAL RULES TO AVOID DEFORMATIONS:
+    1. DO NOT include any humans, faces, or body parts. Zero humans.
+    2. Instead, focus on abstract concepts, 3D isometric designs, minimalist objects, glowing technology, or professional modern office items (like a clean desk, glowing graph, laptop, coffee cup).
+    3. Do NOT include any text, letters, numbers, or writing in the image.
+    4. Add these exact keywords at the end: "3D render, minimalist, modern corporate aesthetic, vibrant colors, clean background, 8k resolution, Unreal Engine 5 style".
     """
     client = _get_client()
     if client:
@@ -113,7 +114,7 @@ def generate_image_prompt(topic, content):
             response = client.models.generate_content(model='gemini-flash-latest', contents=prompt)
             return response.text.strip()
         except: pass
-    return "masterpiece, highly detailed professional photography of " + topic + ", perfect anatomy, cinematic lighting, 8k"
+    return "3D isometric render representing " + topic + ", modern corporate aesthetic, glowing accents, minimalist, 8k, Unreal Engine 5 style, no text, no humans"
 
 def generate_recommendations(niche="الوظائف، تطوير الذات"):
     prompt = f"Suggest 3 engaging LinkedIn topics for: {niche}. Return ONLY valid JSON: [{{'title': '...', 'angle': '...'}}, ...]"
