@@ -103,10 +103,10 @@ def generate_image_prompt(topic, content):
     prompt = f"""
     Create a short English prompt for an AI image generator. Topic: {topic}. 
     CRITICAL RULES TO AVOID DEFORMATIONS:
-    1. DO NOT include any humans, faces, or body parts. Zero humans.
-    2. Instead, focus on abstract concepts, 3D isometric designs, minimalist objects, glowing technology, or professional modern office items (like a clean desk, glowing graph, laptop, coffee cup).
+    1. You CAN include humans, but they MUST NOT BE PHOTOREALISTIC. Use styles like: "flat vector illustration", "3D Pixar cartoon style", or "minimalist silhouette". 
+    2. Do NOT ask for real photos or photorealistic faces, as AI often deforms them.
     3. Do NOT include any text, letters, numbers, or writing in the image.
-    4. Add these exact keywords at the end: "3D render, minimalist, modern corporate aesthetic, vibrant colors, clean background, 8k resolution, Unreal Engine 5 style".
+    4. Add these exact keywords at the end: "high quality illustration, vibrant colors, clean background, 8k resolution, stylized art".
     """
     client = _get_client()
     if client:
