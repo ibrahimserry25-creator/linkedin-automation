@@ -8,8 +8,12 @@ on:
     - cron: '0 12 * * *'
   workflow_dispatch:
     inputs:
-      telegram_message:
-        description: 'Direct message from Telegram Webhook'
+      topic:
+        description: 'Post Topic from GAS'
+        required: false
+        default: ''
+      angle:
+        description: 'Post Angle from GAS'
         required: false
         default: ''
 
@@ -49,8 +53,10 @@ jobs:
           echo "LINKEDIN_ACCESS_TOKEN=${{ secrets.LINKEDIN_ACCESS_TOKEN }}" >> .env
           echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
           echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env
-          echo "TELEGRAM_MESSAGE=${{ github.event.inputs.telegram_message }}" >> .env
+          echo "POST_TOPIC=${{ github.event.inputs.topic }}" >> .env
+          echo "POST_ANGLE=${{ github.event.inputs.angle }}" >> .env
           echo "PEXELS_API_KEY=${{ secrets.PEXELS_API_KEY }}" >> .env
+          echo "GAS_WEBHOOK_URL=${{ secrets.GAS_WEBHOOK_URL }}" >> .env
 
       - name: Restore database from cache (persistent storage)
         uses: actions/cache@v4

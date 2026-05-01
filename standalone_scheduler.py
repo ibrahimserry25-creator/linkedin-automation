@@ -106,17 +106,19 @@ def run_scheduler():
     current_hour = datetime.now().hour
     current_minute = datetime.now().minute
     
-    is_webhook = bool(os.getenv("TELEGRAM_MESSAGE", "").strip())
+    is_dispatch = bool(os.getenv("POST_TOPIC", "").strip())
     
-    if current_hour in POST_HOURS and current_minute < 15 and not is_webhook:
+    if current_hour in POST_HOURS and current_minute < 15 and not is_dispatch:
         print(f"[*] It's scheduled posting time! Hour: {current_hour}:00")
         generate_and_publish_now()
+    elif is_dispatch:
+        print("[*] Received Google Apps Script Dispatch!")
+        topic = os.getenv("POST_TOPIC")
+        angle = os.getenv("POST_ANGLE", "أسلوب احترافي")
+        from src.telegram_bot import _execute_publish
+        _execute_publish(topic, angle)
     else:
         print(f"[*] Skipping scheduled post (current: {current_hour}:{current_minute:02d}).")
-
-    print("[*] Checking for Telegram direct commands...")
-    from src.telegram_bot import process_webhook_message
-    process_webhook_message()
 
     print(f"\n[*] Run complete at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
