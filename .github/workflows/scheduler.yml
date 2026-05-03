@@ -2,10 +2,10 @@ name: LinkedIn Automation Scheduler
 
 on:
   schedule:
-    # Runs at 9:00 AM Cairo (7:00 UTC)
-    - cron: '0 7 * * *'
-    # Runs at 2:00 PM Cairo (12:00 UTC)
-    - cron: '0 12 * * *'
+    # Runs at 9:00 AM Cairo (6:00 UTC)
+    - cron: '0 6 * * *'
+    # Runs at 2:00 PM Cairo (11:00 UTC)
+    - cron: '0 11 * * *'
   workflow_dispatch:
     inputs:
       topic:

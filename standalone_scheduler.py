@@ -106,9 +106,12 @@ def run_scheduler():
     current_hour = datetime.now().hour
     current_minute = datetime.now().minute
     
+    print(f"[*] Time check: {current_hour}:{current_minute:02d} (Target Hours: {POST_HOURS})")
+
     is_dispatch = bool(os.getenv("POST_TOPIC", "").strip())
     
-    if current_hour in POST_HOURS and current_minute < 15 and not is_dispatch:
+    # Check if we are within the first 45 minutes of the target hour
+    if current_hour in POST_HOURS and current_minute < 45 and not is_dispatch:
         print(f"[*] It's scheduled posting time! Hour: {current_hour}:00")
         generate_and_publish_now()
     elif is_dispatch:

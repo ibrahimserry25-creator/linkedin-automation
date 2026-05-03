@@ -102,11 +102,14 @@ def generate_post(topic, platform):
 def generate_image_prompt(topic, content):
     prompt = f"""
     Create a short English prompt for an AI image generator. Topic: {topic}. 
-    CRITICAL RULES TO AVOID DEFORMATIONS:
-    1. You CAN include humans, but they MUST NOT BE PHOTOREALISTIC. Use styles like: "flat vector illustration", "3D Pixar cartoon style", or "minimalist silhouette". 
-    2. Do NOT ask for real photos or photorealistic faces, as AI often deforms them.
-    3. Do NOT include any text, letters, numbers, or writing in the image.
-    4. Add these exact keywords at the end: "high quality illustration, vibrant colors, clean background, 8k resolution, stylized art".
+    STYLE VARIETY (Pick ONE for this prompt):
+    - Option A: Photorealistic cinematic photography. High-end lighting (golden hour or studio lighting), 8k, sharp focus, realistic textures, professional camera (Sony A7R IV).
+    - Option B: Fine art oil painting. Professional artist style, rich textures, visible brushstrokes, museum quality, expressive and atmospheric.
+    
+    CRITICAL RULES:
+    1. Do NOT include any text, letters, numbers, or writing in the image.
+    2. Focus on a clear, single subject related to the topic.
+    3. Add these exact keywords at the end: "high quality, 8k resolution, highly detailed, masterpiece, professional composition".
     """
     client = _get_client()
     if client:
