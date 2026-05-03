@@ -102,14 +102,15 @@ def generate_post(topic, platform):
 def generate_image_prompt(topic, content):
     prompt = f"""
     Create a short English prompt for an AI image generator. Topic: {topic}. 
-    STYLE VARIETY (Pick ONE for this prompt):
-    - Option A: Photorealistic cinematic photography. High-end lighting (golden hour or studio lighting), 8k, sharp focus, realistic textures, professional camera (Sony A7R IV).
-    - Option B: Fine art oil painting. Professional artist style, rich textures, visible brushstrokes, museum quality, expressive and atmospheric.
+    STYLE OPTIONS (Choose the one that best fits the topic to AVOID deformations):
+    - Option A: "Professional Digital Concept Art". High-end 3D render style, clean lines, atmospheric lighting, premium corporate aesthetic, but NOT a real photo. (Hides human flaws better).
+    - Option B: "Fine Art Oil Painting". Expressive brushstrokes, professional artist style, museum quality, rich textures. (Distortions look like artistic choice).
     
-    CRITICAL RULES:
-    1. Do NOT include any text, letters, numbers, or writing in the image.
-    2. Focus on a clear, single subject related to the topic.
-    3. Add these exact keywords at the end: "high quality, 8k resolution, highly detailed, masterpiece, professional composition".
+    CRITICAL RULES TO PREVENT DEFORMATIONS:
+    1. If humans are included, focus on "side profile", "back view", or "silhouette" to avoid facial issues.
+    2. Do NOT ask for "photorealistic faces" or "real people".
+    3. Do NOT include any text, letters, or numbers.
+    4. Add these exact keywords: "masterpiece, 8k resolution, highly detailed, professional lighting, clean composition, no text".
     """
     client = _get_client()
     if client:
