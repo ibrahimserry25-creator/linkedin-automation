@@ -84,23 +84,24 @@ def generate_image(prompt, filename):
     for i, server_url in enumerate(servers):
         print(f"[*] Trying Pollinations AI Server {i+1}...")
         try:
-            # Add a realistic User-Agent to prevent bot blocking
-            pollinations_headers = {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Accept": "image/jpeg,image/png,*/*",
-                "Referer": "https://pollinations.ai/"
-            }
-            response = requests.get(server_url, headers=pollinations_headers, timeout=30)
-            if response.status_code == 200:
-                outputs_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "outputs")
-                os.makedirs(outputs_dir, exist_ok=True)
-                filepath = os.path.join(outputs_dir, f"{filename}.jpg")
-                with open(filepath, 'wb') as f:
-                    f.write(response.content)
-                print(f"[+] AI Image saved from Pollinations to: {filepath}")
+            outputs_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "outputs")
+            os.makedirs(outputs_dir, exist_ok=True)
+            filepath = os.path.join(outputs_dir, f"{filename}.jpg")
+            
+            # Use curl via subprocess to bypass Cloudflare TLS fingerprinting blocking Python's requests
+            import subprocess
+            result = subprocess.run([
+                "curl", "-s", "-L", 
+                "-A", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", 
+                "-o", filepath, 
+                server_url
+            ], capture_output=True)
+            
+            if result.returncode == 0 and os.path.exists(filepath) and os.path.getsize(filepath) > 5000:
+                print(f"[+] AI Image saved from Pollinations using curl to: {filepath}")
                 return filepath
             else:
-                print(f"[!] Pollinations failed with status: {response.status_code}")
+                print(f"[!] Pollinations curl failed or returned invalid image. Size: {os.path.getsize(filepath) if os.path.exists(filepath) else 0}")
         except Exception as e:
             print(f"[!] Pollinations exception: {e}")
             continue
