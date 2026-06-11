@@ -58,10 +58,10 @@ def generate_image(prompt, filename):
     
     hf_token = os.getenv("HF_TOKEN")
     
-    # 1. Try Hugging Face API (FLUX.1-schnell)
+    # 1. Try Hugging Face API (Stable Diffusion XL)
     print("[*] Trying Hugging Face Inference API...")
     try:
-        url = "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell"
+        url = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
         headers = {"Authorization": f"Bearer {hf_token}"}
         response = requests.post(url, headers=headers, json={"inputs": clean_prompt}, timeout=45)
         if response.status_code == 200:
