@@ -83,6 +83,7 @@ def generate_image(prompt, filename):
     try:
         response = requests.get(f"https://picsum.photos/seed/{seed}/1024/1024", timeout=15)
         outputs_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "outputs")
+        os.makedirs(outputs_dir, exist_ok=True)
         filepath = os.path.join(outputs_dir, f"{filename}.jpg")
         with open(filepath, 'wb') as f:
             f.write(response.content)
