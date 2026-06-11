@@ -70,9 +70,9 @@ def generate_post(topic, platform):
     last_error = None
     if client:
         try:
-            print("[*] Trying to generate with google-genai (gemini-flash-latest)...")
+            print("[*] Trying to generate with google-genai (gemini-2.5-flash)...")
             response = client.models.generate_content(
-                model='gemini-flash-latest',
+                model='gemini-2.5-flash',
                 contents=prompt
             )
             if response and response.text:
@@ -84,7 +84,7 @@ def generate_post(topic, platform):
     # Fallback to old library
     import google.generativeai as g_old
     g_old.configure(api_key=API_KEY)
-    for model_name in ['gemini-flash-latest']:
+    for model_name in ['gemini-2.5-flash', 'gemini-1.5-flash']:
         try:
             print(f"[*] Trying fallback model: {model_name}...")
             model = g_old.GenerativeModel(model_name)
@@ -114,7 +114,7 @@ def generate_image_prompt(topic, content):
     client = _get_client()
     if client:
         try:
-            response = client.models.generate_content(model='gemini-flash-latest', contents=prompt)
+            response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
             return response.text.strip()
         except: pass
     return "3D isometric render representing " + topic + ", modern corporate aesthetic, glowing accents, minimalist, 8k, Unreal Engine 5 style, no text, no humans"
@@ -124,7 +124,7 @@ def generate_recommendations(niche="الوظائف، تطوير الذات"):
     client = _get_client()
     if client:
         try:
-            response = client.models.generate_content(model='gemini-flash-latest', contents=prompt)
+            response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
             text = response.text.strip()
             if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
             return json.loads(text)
@@ -136,7 +136,7 @@ def generate_smart_replies(post_text, context="reply"):
     client = _get_client()
     if client:
         try:
-            response = client.models.generate_content(model='gemini-flash-latest', contents=prompt)
+            response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
             text = response.text.strip()
             if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
             return json.loads(text)
