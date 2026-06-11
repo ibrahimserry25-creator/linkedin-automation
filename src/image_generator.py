@@ -88,20 +88,19 @@ def generate_image(prompt, filename):
             os.makedirs(outputs_dir, exist_ok=True)
             filepath = os.path.join(outputs_dir, f"{filename}.jpg")
             
-            # Use curl via subprocess to bypass Cloudflare TLS fingerprinting blocking Python's requests
-            import subprocess
-            result = subprocess.run([
-                "curl", "-s", "-L", 
-                "-A", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", 
-                "-o", filepath, 
-                server_url
-            ], capture_output=True)
+            # Use curl_cffi to perfectly spoof a real browser and bypass Cloudflare TLS fingerprinting
+            from curl_cffi import requests as cffi_requests
+            response = cffi_requests.get(server_url, impersonate="chrome", timeout=60)
             
-            if result.returncode == 0 and os.path.exists(filepath) and os.path.getsize(filepath) > 5000:
-                print(f"[+] AI Image saved from Pollinations using curl to: {filepath}")
+            if response.status_code == 200 and len(response.content) > 5000:
+                with open(filepath, 'wb') as f:
+                    f.write(response.content)
+                print(f"[+] AI Image saved from Pollinations using curl_cffi to: {filepath}")
                 return filepath
             else:
-                print(f"[!] Pollinations curl failed or returned invalid image. Size: {os.path.getsize(filepath) if os.path.exists(filepath) else 0}")
+                print(f"[!] Pollinations curl_cffi failed. Status: {response.status_code}, Size: {len(response.content)}")
+        except ImportError:
+            print("[!] curl_cffi is not installed. Please add it to requirements.txt")
         except Exception as e:
             print(f"[!] Pollinations exception: {e}")
             continue
