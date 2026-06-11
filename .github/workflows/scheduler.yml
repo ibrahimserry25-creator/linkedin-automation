@@ -57,6 +57,7 @@ jobs:
           echo "POST_ANGLE=${{ github.event.inputs.angle }}" >> .env
           echo "PEXELS_API_KEY=${{ secrets.PEXELS_API_KEY }}" >> .env
           echo "GAS_WEBHOOK_URL=${{ secrets.GAS_WEBHOOK_URL }}" >> .env
+          echo "HF_TOKEN=${{ secrets.HF_TOKEN }}" >> .env
 
       - name: Restore database from cache (persistent storage)
         uses: actions/cache@v4

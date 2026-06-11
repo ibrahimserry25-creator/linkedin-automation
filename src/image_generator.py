@@ -48,23 +48,41 @@ def get_pexels_image(query, filename):
 
 def generate_image(prompt, filename):
     """
-    Generates an AI image using Pollinations AI (Flux or Turbo models).
+    Generates an AI image using Hugging Face (FLUX) with Fallbacks.
     """
     print(f"[*] Generating AI image for: '{prompt}'...")
     
-    
-    # 2. Fallback to Pollinations AI
     clean_prompt = re.sub(r'[^a-zA-Z0-9\s,.-]', '', prompt)[:200]
     safe_prompt = quote(clean_prompt)
     seed = random.randint(1, 999999)
     
-    servers = [
-        f"https://image.pollinations.ai/prompt/{safe_prompt}?width=1024&height=1024&nologo=true&enhance=true&seed={seed}&model=flux",
-        f"https://image.pollinations.ai/prompt/{safe_prompt}?width=1024&height=1024&nologo=true&enhance=true&seed={seed}&model=turbo"
-    ]
+    hf_token = os.getenv("HF_TOKEN")
+    
+    # 1. Try Hugging Face API (FLUX.1-schnell)
+    print("[*] Trying Hugging Face Inference API...")
+    try:
+        url = "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell"
+        headers = {"Authorization": f"Bearer {hf_token}"}
+        response = requests.post(url, headers=headers, json={"inputs": clean_prompt}, timeout=45)
+        if response.status_code == 200:
+            outputs_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "outputs")
+            os.makedirs(outputs_dir, exist_ok=True)
+            filepath = os.path.join(outputs_dir, f"{filename}.jpg")
+            with open(filepath, 'wb') as f:
+                f.write(response.content)
+            print(f"[+] AI Image saved from HuggingFace to: {filepath}")
+            return filepath
+        else:
+            print(f"[!] HF failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"[!] HF exception: {e}")
 
+    # 2. Try Pollinations (if HF fails)
+    servers = [
+        f"https://image.pollinations.ai/prompt/{safe_prompt}?width=1024&height=1024&nologo=true&enhance=true&seed={seed}&model=flux"
+    ]
     for i, server_url in enumerate(servers):
-        print(f"[*] Trying AI Server {i+1}...")
+        print(f"[*] Trying Pollinations AI Server {i+1}...")
         try:
             response = requests.get(server_url, timeout=30)
             if response.status_code == 200:
@@ -73,7 +91,7 @@ def generate_image(prompt, filename):
                 filepath = os.path.join(outputs_dir, f"{filename}.jpg")
                 with open(filepath, 'wb') as f:
                     f.write(response.content)
-                print(f"[+] AI Image saved to: {filepath}")
+                print(f"[+] AI Image saved from Pollinations to: {filepath}")
                 return filepath
         except:
             continue
