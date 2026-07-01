@@ -101,15 +101,12 @@ def generate_post(topic, platform):
 
 def generate_image_prompt(topic, content):
     prompt = f"""
-    Create a short English prompt for an AI image generator. Topic: {topic}. 
-    STYLE OPTIONS (Choose the one that best fits the topic to AVOID deformations):
-    - Option A: "Professional Cinematic Photography". Like a shot from a high-budget movie. 35mm lens, golden hour lighting, sharp focus on the subject, blurry background (bokeh), realistic textures, but avoid direct extreme close-ups of faces.
-    - Option B: "Fine Art Oil Painting". Expressive brushstrokes, professional artist style, museum quality, rich textures.
+    Create a very short English search query (1 to 2 words maximum) to find a real stock photo on Pexels.
+    Topic: {topic}. 
     
-    CRITICAL RULES TO PREVENT DEFORMATIONS:
-    1. For humans: Prefer side views, working positions, or silhouettes. Avoid direct front-facing eye contact with the camera.
-    2. Do NOT include any text, letters, or numbers.
-    3. Add these exact keywords: "masterpiece, 8k resolution, highly detailed, professional cinematic lighting, clean composition, no text".
+    CRITICAL RULES:
+    1. Do NOT write a sentence or prompt. ONLY return 1 or 2 keywords (e.g., "business meeting", "success", "technology", "office").
+    2. Make it generic enough to guarantee finding good stock photos.
     """
     client = _get_client()
     if client:
@@ -117,7 +114,7 @@ def generate_image_prompt(topic, content):
             response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
             return response.text.strip()
         except: pass
-    return "3D isometric render representing " + topic + ", modern corporate aesthetic, glowing accents, minimalist, 8k, Unreal Engine 5 style, no text, no humans"
+    return "business"
 
 def generate_recommendations(niche="الوظائف، تطوير الذات"):
     prompt = f"Suggest 3 engaging LinkedIn topics for: {niche}. Return ONLY valid JSON: [{{'title': '...', 'angle': '...'}}, ...]"

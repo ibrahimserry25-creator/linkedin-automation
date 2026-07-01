@@ -48,65 +48,18 @@ def get_pexels_image(query, filename):
 
 def generate_image(prompt, filename):
     """
-    Generates an AI image using Hugging Face (FLUX) with Fallbacks.
+    Fetches a real stock photo for the given prompt to ensure high quality without AI deformations.
     """
-    print(f"[*] Generating AI image for: '{prompt}'...")
+    print(f"[*] Getting stock photo for: '{prompt}'...")
     
-    clean_prompt = re.sub(r'[^a-zA-Z0-9\s,.-]', '', prompt)[:200]
-    safe_prompt = quote(clean_prompt)
+    # 1. Try Pexels first for professional stock photos
+    image_path = get_pexels_image(prompt, filename)
+    if image_path:
+        return image_path
+        
+    # 2. Ultimate Fallback to Picsum if Pexels fails or API key is missing
+    print("[!] Pexels failed or key missing. Using ultimate Picsum fallback...")
     seed = random.randint(1, 999999)
-    
-    hf_token = os.getenv("HF_TOKEN")
-    
-    # 1. Try Hugging Face API (Stable Diffusion XL)
-    print("[*] Trying Hugging Face Inference API...")
-    try:
-        url = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
-        headers = {"Authorization": f"Bearer {hf_token}"}
-        response = requests.post(url, headers=headers, json={"inputs": clean_prompt}, timeout=45)
-        if response.status_code == 200:
-            outputs_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "outputs")
-            os.makedirs(outputs_dir, exist_ok=True)
-            filepath = os.path.join(outputs_dir, f"{filename}.jpg")
-            with open(filepath, 'wb') as f:
-                f.write(response.content)
-            print(f"[+] AI Image saved from HuggingFace to: {filepath}")
-            return filepath
-        else:
-            print(f"[!] HF failed with status {response.status_code}: {response.text}")
-    except Exception as e:
-        print(f"[!] HF exception: {e}")
-
-    # 2. Try Pollinations (if HF fails)
-    servers = [
-        f"https://image.pollinations.ai/prompt/{safe_prompt}?width=1024&height=1024&nologo=true&enhance=true&seed={seed}&model=flux"
-    ]
-    for i, server_url in enumerate(servers):
-        print(f"[*] Trying Pollinations AI Server {i+1}...")
-        try:
-            outputs_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "outputs")
-            os.makedirs(outputs_dir, exist_ok=True)
-            filepath = os.path.join(outputs_dir, f"{filename}.jpg")
-            
-            # Use curl_cffi to perfectly spoof a real browser and bypass Cloudflare TLS fingerprinting
-            from curl_cffi import requests as cffi_requests
-            response = cffi_requests.get(server_url, impersonate="chrome", timeout=60)
-            
-            if response.status_code == 200 and len(response.content) > 5000:
-                with open(filepath, 'wb') as f:
-                    f.write(response.content)
-                print(f"[+] AI Image saved from Pollinations using curl_cffi to: {filepath}")
-                return filepath
-            else:
-                print(f"[!] Pollinations curl_cffi failed. Status: {response.status_code}, Size: {len(response.content)}")
-        except ImportError:
-            print("[!] curl_cffi is not installed. Please add it to requirements.txt")
-        except Exception as e:
-            print(f"[!] Pollinations exception: {e}")
-            continue
-
-    # 3. Ultimate Fallback to Picsum
-    print("[!] All methods failed. Using ultimate Picsum fallback...")
     try:
         response = requests.get(f"https://picsum.photos/seed/{seed}/1024/1024", timeout=15)
         outputs_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "outputs")
