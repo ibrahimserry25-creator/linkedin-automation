@@ -25,6 +25,8 @@ def publish_to_linkedin(post_id):
     topic, content, image_path = row
     
     token = os.getenv("LINKEDIN_ACCESS_TOKEN")
+    if token:
+        token = token.strip()
     if not token:
         return False, "لم يتم العثور على مفتاح الوصول للينكدإن."
         
@@ -191,6 +193,8 @@ def check_linkedin_token_health() -> tuple[bool, str]:
     Returns (is_healthy: bool, message: str)
     """
     token = os.getenv("LINKEDIN_ACCESS_TOKEN")
+    if token:
+        token = token.strip()
     if not token:
         return False, "❌ لا يوجد LINKEDIN_ACCESS_TOKEN في ملف .env"
 
