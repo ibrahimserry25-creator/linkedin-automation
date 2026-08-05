@@ -25,8 +25,10 @@ from src.database import save_post, init_db, get_kv, set_kv
 # Post hours (Cairo time): 9 AM and 2 PM
 POST_HOURS = [9, 14]
 
-def generate_and_publish_now():
-    """Generates a single post with AI and publishes it directly to LinkedIn."""
+def generate_and_publish_now(target_hour=None):
+    """Generates a single post with AI and publishes it directly to LinkedIn.
+    If target_hour is provided, it waits until exactly that hour before publishing.
+    """
     from src.content_generator import generate_recommendations, generate_post, generate_image_prompt, ANGLES
     from src.image_generator import generate_image
     
@@ -81,7 +83,22 @@ def generate_and_publish_now():
     )
     print(f"[+] Saved post ID: {post_id}")
     
-    print("[*] Publishing to LinkedIn NOW...")
+    # Precise Timing Logic
+    if target_hour is not None:
+        now = datetime.now()
+        target_time = now.replace(hour=target_hour, minute=0, second=0, microsecond=0)
+        
+        # If target_hour is for tomorrow (e.g. we started at 23:50 for a 0:00 post), handle it
+        if target_time < now:
+            from datetime import timedelta
+            target_time += timedelta(days=1)
+            
+        wait_seconds = (target_time - now).total_seconds()
+        if wait_seconds > 0:
+            print(f"[*] Post prepared successfully! Waiting {wait_seconds:.0f} seconds until exactly {target_hour}:00 to publish...")
+            time.sleep(wait_seconds)
+    
+    print(f"[*] Publishing to LinkedIn NOW at {datetime.now().strftime('%H:%M:%S')}...")
     success, message = publish_to_linkedin(post_id)
     
     if success:
@@ -125,10 +142,16 @@ def run_scheduler():
 
     is_dispatch = bool(os.getenv("POST_TOPIC", "").strip())
     
-    # Check if we are within the first 45 minutes of the target hour
-    if current_hour in POST_HOURS and current_minute < 45 and not is_dispatch:
-        print(f"[*] It's scheduled posting time! Hour: {current_hour}:00")
-        generate_and_publish_now()
+    # Calculate target hour for precision
+    target_hour = None
+    if current_hour in POST_HOURS:
+        target_hour = current_hour
+    elif (current_hour + 1) in POST_HOURS and current_minute >= 45:
+        target_hour = current_hour + 1
+        
+    if target_hour is not None and not is_dispatch:
+        print(f"[*] It's scheduled posting time! Preparing post for {target_hour}:00...")
+        generate_and_publish_now(target_hour=target_hour)
     elif is_dispatch:
         print("[*] Received Google Apps Script Dispatch!")
         topic = os.getenv("POST_TOPIC", "")
