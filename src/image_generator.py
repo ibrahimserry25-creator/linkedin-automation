@@ -3,22 +3,21 @@ import requests
 import random
 import re
 from urllib.parse import quote
-from src.database import is_image_url_used
+from src.database import is_image_url_used, get_kv, set_kv
+from src.telegram_notifier import send_telegram_alert
 
 def get_pexels_image(query, filename):
-    """Fetches a real stock photo from Pexels."""
+    """Fetches a real stock photo from Pexels. Returns (filepath, error_msg)."""
     pexels_key = os.getenv("PEXELS_API_KEY")
     if not pexels_key:
-        print("[!] No PEXELS_API_KEY found.")
-        return None
+        return None, "No PEXELS_API_KEY found."
         
     print(f"[*] Searching Pexels for: '{query}'...")
     
-    # Clean query to 1 or 2 keywords for better stock photo results
     clean_query = re.sub(r'[^a-zA-Z0-9\s]', '', query).strip()
     words = clean_query.split()
     if len(words) > 3:
-        clean_query = " ".join(words[:2]) + " business" # fallback to generic business
+        clean_query = " ".join(words[:2]) + " business" 
 
     headers = {"Authorization": pexels_key}
     url = f"https://api.pexels.com/v1/search?query={quote(clean_query)}&per_page=15&orientation=square"
@@ -28,13 +27,10 @@ def get_pexels_image(query, filename):
         if response.status_code == 200:
             data = response.json()
             if data.get("photos"):
-                # Filter out used photos
                 unused_photos = [p for p in data["photos"] if not is_image_url_used(p["src"]["large2x"])]
                 if not unused_photos:
-                    print("[!] All fetched photos from Pexels have been used previously.")
-                    return None
+                    return None, "All fetched photos from Pexels have been used previously."
                     
-                # Pick a random photo from the unused ones
                 photo = random.choice(unused_photos)
                 image_url = photo["src"]["large2x"]
                 
@@ -47,18 +43,21 @@ def get_pexels_image(query, filename):
                 
                 with open(filepath, 'wb') as f:
                     f.write(img_data)
-                return filepath
+                return filepath, None
+            else:
+                return None, "No photos found for this query on Pexels."
+        else:
+            return None, f"Pexels API Error {response.status_code}: {response.text}"
     except Exception as e:
-        print(f"[!] Pexels search failed: {e}")
+        return None, f"Pexels Request Error: {str(e)}"
         
-    return None
+    return None, "Unknown Pexels error."
 
 def get_unsplash_image(query, filename):
-    """Fetches a real stock photo from Unsplash."""
+    """Fetches a real stock photo from Unsplash. Returns (filepath, error_msg)."""
     unsplash_key = os.getenv("UNSPLASH_ACCESS_KEY")
     if not unsplash_key:
-        print("[!] No UNSPLASH_ACCESS_KEY found.")
-        return None
+        return None, "No UNSPLASH_ACCESS_KEY found."
         
     print(f"[*] Searching Unsplash for: '{query}'...")
     
@@ -75,11 +74,9 @@ def get_unsplash_image(query, filename):
         if response.status_code == 200:
             data = response.json()
             if data.get("results"):
-                # Filter out used photos
                 unused_photos = [p for p in data["results"] if not is_image_url_used(p["urls"]["regular"])]
                 if not unused_photos:
-                    print("[!] All fetched photos from Unsplash have been used previously.")
-                    return None
+                    return None, "All fetched photos from Unsplash have been used previously."
                     
                 photo = random.choice(unused_photos)
                 image_url = photo["urls"]["regular"]
@@ -93,43 +90,49 @@ def get_unsplash_image(query, filename):
                 
                 with open(filepath, 'wb') as f:
                     f.write(img_data)
-                return filepath
+                return filepath, None
+            else:
+                return None, "No photos found for this query on Unsplash."
+        else:
+            return None, f"Unsplash API Error {response.status_code}: {response.text}"
     except Exception as e:
-        print(f"[!] Unsplash search failed: {e}")
+        return None, f"Unsplash Request Error: {str(e)}"
         
-    return None
+    return None, "Unknown Unsplash error."
 
 def generate_image(prompt, filename):
     """
-    Fetches a stock photo from Pexels or Unsplash (50/50). Returns (filepath, source_name).
+    Strictly alternates between Pexels and Unsplash. Returns (filepath, source_name).
+    Sends a Telegram alert if the primary choice fails.
     """
     print(f"[*] Getting stock photo for: '{prompt}'...")
     
-    choices = []
-    if os.getenv("PEXELS_API_KEY"):
-        choices.append("Pexels")
-    if os.getenv("UNSPLASH_ACCESS_KEY"):
-        choices.append("Unsplash")
-        
-    source = random.choice(choices) if choices else "Pexels"
+    # Determine strict alternation
+    last_source = get_kv("last_image_source") or "Unsplash"
+    primary_source = "Pexels" if last_source == "Unsplash" else "Unsplash"
     
-    image_path = None
-    if source == "Unsplash":
-        image_path = get_unsplash_image(prompt, filename)
+    # Save the new source choice
+    set_kv("last_image_source", primary_source)
+    
+    image_path, error = None, None
+    if primary_source == "Unsplash":
+        image_path, error = get_unsplash_image(prompt, filename)
         if not image_path:
-            source = "Pexels" # Fallback
-            image_path = get_pexels_image(prompt, filename)
+            send_telegram_alert(f"⚠️ <b>فشل سحب صورة من Unsplash</b>\nجاري اللجوء لـ Pexels كاحتياطي.\nالسبب: {error}")
+            primary_source = "Pexels"
+            image_path, error = get_pexels_image(prompt, filename)
     else:
-        image_path = get_pexels_image(prompt, filename)
-        if not image_path and "Unsplash" in choices:
-            source = "Unsplash" # Fallback
-            image_path = get_unsplash_image(prompt, filename)
+        image_path, error = get_pexels_image(prompt, filename)
+        if not image_path:
+            send_telegram_alert(f"⚠️ <b>فشل سحب صورة من Pexels</b>\nجاري اللجوء لـ Unsplash كاحتياطي.\nالسبب: {error}")
+            primary_source = "Unsplash"
+            image_path, error = get_unsplash_image(prompt, filename)
             
     if image_path:
-        return image_path, source
+        return image_path, primary_source
         
     # Ultimate Fallback to Picsum
-    print("[!] Pexels/Unsplash failed or keys missing. Using ultimate Picsum fallback...")
+    print("[!] Pexels and Unsplash both failed. Using ultimate Picsum fallback...")
     seed = random.randint(1, 999999)
     try:
         response = requests.get(f"https://picsum.photos/seed/{seed}/1024/1024", timeout=15)
