@@ -64,7 +64,7 @@ def generate_post(topic, platform):
     7. LENGTH: Concise (max 200 words total).
     8. CALL TO ACTION: End with a thought-provoking question.
     9. Use 2-4 emojis max.
-    10. MANDATORY: You MUST include 3 to 5 relevant hashtags at the very end of the Arabic post and the English post.
+    10. MANDATORY: You MUST include 6 to 10 relevant hashtags at the very end of the Arabic post and the English post.
     """
 
     client = _get_client()
