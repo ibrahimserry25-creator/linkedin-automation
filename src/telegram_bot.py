@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from src.database import save_post, mark_post_as_published
+from src.database import save_post, mark_post_as_published, get_kv
 from src.content_generator import generate_post, generate_image_prompt
 from src.image_generator import generate_image
 from src.linkedin_publisher import publish_to_linkedin
@@ -41,7 +41,16 @@ def _execute_publish(topic, angle):
             
         img_prompt = generate_image_prompt(topic, content)
         safe_filename = f"telegram_{int(time.time())}"
-        image_path = generate_image(img_prompt, safe_filename)
+        
+        # 50% No-Image Mode
+        mode_50 = get_kv("image_mode")
+        image_path, source = None, "بدون صورة"
+        
+        if mode_50 == "50" and __import__('random').random() < 0.5:
+            print("[*] 50% No-Image mode activated for this manual post! Skipping image.")
+        else:
+            image_path, source = generate_image(img_prompt, safe_filename)
+            
         image_url = f"/outputs/{os.path.basename(image_path)}" if image_path else ""
         
         # Save to local SQLite (for caching/logging purposes)
@@ -62,7 +71,13 @@ def _execute_publish(topic, angle):
         if success:
             mark_post_as_published(post_id)
             update_gas_status(topic, "Published")
-            send_telegram_alert(f"✅ <b>تم النشر بنجاح!</b> 🚀\n\n<b>الموضوع:</b> {topic}")
+            mode_status = "مفعل" if mode_50 == "50" else "ملغى"
+            send_telegram_alert(
+                f"✅ <b>تم النشر بنجاح!</b> 🚀\n\n"
+                f"<b>الموضوع:</b> {topic}\n"
+                f"📷 <b>المصدر:</b> {source}\n"
+                f"⚙️ <b>وضع 50%:</b> {mode_status}"
+            )
         else:
             update_gas_status(topic, "Failed (Publish)")
             send_telegram_alert(f"❌ <b>حدث خطأ أثناء النشر على لينكد إن:</b>\n{msg}")

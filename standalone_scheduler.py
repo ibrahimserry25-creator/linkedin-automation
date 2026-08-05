@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import asyncio
 from src.linkedin_publisher import publish_to_linkedin, check_linkedin_token_health
 from src.telegram_notifier import send_telegram_alert
-from src.database import save_post, init_db
+from src.database import save_post, init_db, get_kv, set_kv
 
 # Post hours (Cairo time): 9 AM and 2 PM
 POST_HOURS = [9, 14]
@@ -57,7 +57,16 @@ def generate_and_publish_now():
     print(f"[*] Generating image...")
     img_prompt = generate_image_prompt(topic_title, content)
     safe_filename = f"auto_{int(time.time())}"
-    image_path = generate_image(img_prompt, safe_filename)
+    
+    # 50% No-Image Mode
+    mode_50 = get_kv("image_mode")
+    image_path, source = None, "بدون صورة"
+    
+    if mode_50 == "50" and random.random() < 0.5:
+        print("[*] 50% No-Image mode activated for this post! Skipping image.")
+    else:
+        image_path, source = generate_image(img_prompt, safe_filename)
+        
     image_url = f"/outputs/{os.path.basename(image_path)}" if image_path else ""
     
     post_id = save_post(
@@ -77,8 +86,14 @@ def generate_and_publish_now():
     
     if success:
         print(f"[+] Published successfully!")
+        
+        mode_status = "مفعل" if mode_50 == "50" else "ملغى"
         send_telegram_alert(
-            f"✅ <b>تم نشر بوست جديد تلقائياً!</b>\n📌 {topic_title}\n⏰ {datetime.now().strftime('%H:%M')}"
+            f"✅ <b>تم نشر بوست جديد تلقائياً!</b>\n"
+            f"📌 {topic_title}\n"
+            f"📷 مصدر الصورة: {source}\n"
+            f"⚙️ وضع 50% (نص فقط): {mode_status}\n"
+            f"⏰ {datetime.now().strftime('%H:%M')}"
         )
         return True
     else:
@@ -116,8 +131,19 @@ def run_scheduler():
         generate_and_publish_now()
     elif is_dispatch:
         print("[*] Received Google Apps Script Dispatch!")
-        topic = os.getenv("POST_TOPIC")
+        topic = os.getenv("POST_TOPIC", "")
         angle = os.getenv("POST_ANGLE", "أسلوب احترافي")
+        
+        # Handle Mode 50 Toggles
+        if "شغل وضع 50" in topic:
+            set_kv("image_mode", "50")
+            send_telegram_alert("✅ <b>تم تفعيل وضع 50% للصور!</b>\n50% من البوستات القادمة ستكون نصية فقط.")
+            return
+        elif "وقف وضع 50" in topic:
+            set_kv("image_mode", "off")
+            send_telegram_alert("❌ <b>تم إيقاف وضع 50% للصور.</b>\nالآن جميع البوستات ستكون مرفقة بصور.")
+            return
+            
         from src.telegram_bot import _execute_publish
         _execute_publish(topic, angle)
     else:
