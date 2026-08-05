@@ -32,9 +32,25 @@ def generate_and_publish_now(target_hour=None):
     from src.content_generator import generate_recommendations, generate_post, generate_image_prompt, ANGLES
     from src.image_generator import generate_image
     
-    niche = "الوظائف، مقابلات العمل، التكنولوجيا، الذكاء الاصطناعي، تطوير الذات، وكيفية الحصول على ترقية"
+    NICHES = [
+      "أخبار وتقنيات الذكاء الاصطناعي الجديدة والتريند",
+      "نصائح احترافية لاجتياز مقابلات العمل (Interviews)",
+      "أهمية تطوير المهارات الناعمة (Soft Skills) للموظفين",
+      "أدوات ذكاء اصطناعي تزيد من الإنتاجية في العمل",
+      "قصص نجاح ملهمة في ريادة الأعمال والعمل الحر",
+      "أخطاء شائعة في البرمجة وكيفية تجنبها",
+      "مستقبل الوظائف في عصر الأتمتة والذكاء الاصطناعي",
+      "استراتيجيات التسويق الرقمي (Digital Marketing) الحديثة",
+      "قصص نجاح ملهمة لشركات عالمية بدأت من الصفر",
+      "نصائح للصحة النفسية وتجنب الإرهاق (Burnout) أثناء العمل",
+      "أفضل وأحدث البرامج التي يجب استخدامها لتسهيل وتسريع الشغل",
+      "الأتمتة (Automation): كيف تجعل البرامج تنجز المهام بدلاً منك في العمل",
+      "بيئة العمل: كيف تتعامل مع الإيجابيات والسلبيات في الشركات",
+      "مواقف مضحكة وخفيفة نتعرض لها يومياً في بيئة الشغل والمكاتب"
+    ]
+    niche = random.choice(NICHES)
     
-    print("[*] Generating a new post with AI...")
+    print(f"[*] Generating a new post with AI about niche: {niche.encode('ascii', 'ignore').decode()}...")
     
     try:
         recommendations = generate_recommendations(niche)
