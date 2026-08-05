@@ -3,6 +3,7 @@ import requests
 import random
 import re
 from urllib.parse import quote
+from src.database import is_image_url_used
 
 def get_pexels_image(query, filename):
     """Fetches a real stock photo from Pexels."""
@@ -27,11 +28,17 @@ def get_pexels_image(query, filename):
         if response.status_code == 200:
             data = response.json()
             if data.get("photos"):
-                # Pick a random photo from the top results to keep it diverse
-                photo = random.choice(data["photos"])
+                # Filter out used photos
+                unused_photos = [p for p in data["photos"] if not is_image_url_used(p["src"]["large2x"])]
+                if not unused_photos:
+                    print("[!] All fetched photos from Pexels have been used previously.")
+                    return None
+                    
+                # Pick a random photo from the unused ones
+                photo = random.choice(unused_photos)
                 image_url = photo["src"]["large2x"]
                 
-                print(f"[*] Found Pexels image! Downloading...")
+                print(f"[*] Found unique Pexels image! Downloading...")
                 img_data = requests.get(image_url, timeout=15).content
                 
                 outputs_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "outputs")

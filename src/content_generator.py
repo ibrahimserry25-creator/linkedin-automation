@@ -107,6 +107,7 @@ def generate_image_prompt(topic, content):
     CRITICAL RULES:
     1. Do NOT write a sentence or prompt. ONLY return 1 or 2 keywords (e.g., "business meeting", "success", "technology", "office").
     2. Make it generic enough to guarantee finding good stock photos.
+    3. EXTREMELY IMPORTANT: We MUST avoid any images containing women. Ensure your search terms focus ONLY on objects, concepts, or abstract things (e.g., "business graph", "office desk", "technology abstract", "success icon") and strictly avoid terms that might return people.
     """
     client = _get_client()
     if client:

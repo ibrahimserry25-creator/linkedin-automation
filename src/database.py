@@ -106,6 +106,17 @@ def delete_post(post_id):
     conn.commit()
     conn.close()
 
+def is_image_url_used(image_url):
+    """Check if an image URL has already been used in previous posts."""
+    if not image_url:
+        return False
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT id FROM posts WHERE image_url = ?", (image_url,))
+    row = cursor.fetchone()
+    conn.close()
+    return bool(row)
+
 def get_scheduled_posts():
     """Returns posts that are scheduled and ready to be published."""
     conn = sqlite3.connect(DB_PATH)
