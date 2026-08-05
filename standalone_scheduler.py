@@ -25,47 +25,51 @@ from src.database import save_post, init_db, get_kv, set_kv
 # Post hours (Cairo time): 9 AM and 2 PM
 POST_HOURS = [9, 14]
 
-def generate_and_publish_now(target_hour=None):
+def generate_and_publish_now(target_hour=None, force_topic=None, force_angle=None):
     """Generates a single post with AI and publishes it directly to LinkedIn.
     If target_hour is provided, it waits until exactly that hour before publishing.
     """
     from src.content_generator import generate_recommendations, generate_post, generate_image_prompt, ANGLES
     from src.image_generator import generate_image
     
-    NICHES = [
-      "أخبار وتقنيات الذكاء الاصطناعي الجديدة والتريند",
-      "نصائح احترافية لاجتياز مقابلات العمل (Interviews)",
-      "أهمية تطوير المهارات الناعمة (Soft Skills) للموظفين",
-      "أدوات ذكاء اصطناعي تزيد من الإنتاجية في العمل",
-      "قصص نجاح ملهمة في ريادة الأعمال والعمل الحر",
-      "أخطاء شائعة في البرمجة وكيفية تجنبها",
-      "مستقبل الوظائف في عصر الأتمتة والذكاء الاصطناعي",
-      "استراتيجيات التسويق الرقمي (Digital Marketing) الحديثة",
-      "قصص نجاح ملهمة لشركات عالمية بدأت من الصفر",
-      "نصائح للصحة النفسية وتجنب الإرهاق (Burnout) أثناء العمل",
-      "أفضل وأحدث البرامج التي يجب استخدامها لتسهيل وتسريع الشغل",
-      "الأتمتة (Automation): كيف تجعل البرامج تنجز المهام بدلاً منك في العمل",
-      "بيئة العمل: كيف تتعامل مع الإيجابيات والسلبيات في الشركات",
-      "مواقف مضحكة وخفيفة نتعرض لها يومياً في بيئة الشغل والمكاتب"
-    ]
-    niche = random.choice(NICHES)
-    
-    print(f"[*] Generating a new post with AI about niche: {niche.encode('ascii', 'ignore').decode()}...")
-    
-    try:
-        recommendations = generate_recommendations(niche)
-    except Exception as e:
-        print(f"[!] Failed to get recommendations: {e}")
-        return False
-    
-    if not recommendations:
-        print("[!] No recommendations generated.")
-        return False
-    
-    item = recommendations[0]
-    topic_title = item.get("title", "موضوع عام")
-    angle = item.get("angle", random.choice(ANGLES))
-    
+    if force_topic and force_angle:
+        topic_title = force_topic
+        angle = force_angle
+    else:
+        NICHES = [
+          "أخبار وتقنيات الذكاء الاصطناعي الجديدة والتريند",
+          "نصائح احترافية لاجتياز مقابلات العمل (Interviews)",
+          "أهمية تطوير المهارات الناعمة (Soft Skills) للموظفين",
+          "أدوات ذكاء اصطناعي تزيد من الإنتاجية في العمل",
+          "قصص نجاح ملهمة في ريادة الأعمال والعمل الحر",
+          "أخطاء شائعة في البرمجة وكيفية تجنبها",
+          "مستقبل الوظائف في عصر الأتمتة والذكاء الاصطناعي",
+          "استراتيجيات التسويق الرقمي (Digital Marketing) الحديثة",
+          "قصص نجاح ملهمة لشركات عالمية بدأت من الصفر",
+          "نصائح للصحة النفسية وتجنب الإرهاق (Burnout) أثناء العمل",
+          "أفضل وأحدث البرامج التي يجب استخدامها لتسهيل وتسريع الشغل",
+          "الأتمتة (Automation): كيف تجعل البرامج تنجز المهام بدلاً منك في العمل",
+          "بيئة العمل: كيف تتعامل مع الإيجابيات والسلبيات في الشركات",
+          "مواقف مضحكة وخفيفة نتعرض لها يومياً في بيئة الشغل والمكاتب"
+        ]
+        niche = random.choice(NICHES)
+        
+        print(f"[*] Generating a new post with AI about niche: {niche.encode('ascii', 'ignore').decode()}...")
+        
+        try:
+            recommendations = generate_recommendations(niche)
+        except Exception as e:
+            print(f"[!] Failed to get recommendations: {e}")
+            return False
+        
+        if not recommendations:
+            print("[!] No recommendations generated.")
+            return False
+        
+        item = recommendations[0]
+        topic_title = item.get("title", "موضوع عام")
+        angle = item.get("angle", random.choice(ANGLES))
+        
     print(f"[*] Writing post about: {topic_title.encode('ascii', 'ignore').decode()}")
     content = generate_post(topic_title, "LinkedIn")
     if not content:
@@ -181,6 +185,15 @@ def run_scheduler():
         elif "وقف وضع 50" in topic:
             set_kv("image_mode", "off")
             send_telegram_alert("❌ <b>تم إيقاف وضع 50% للصور.</b>\nالآن جميع البوستات ستكون مرفقة بصور.")
+            return
+            
+        if current_hour == 8:
+            print(f"[*] Received EARLY dispatch from GAS (8 AM). Preparing post and will wait until 9:00:00...")
+            generate_and_publish_now(target_hour=9, force_topic=topic, force_angle=angle)
+            return
+        elif current_hour == 13:
+            print(f"[*] Received EARLY dispatch from GAS (1 PM). Preparing post and will wait until 14:00:00...")
+            generate_and_publish_now(target_hour=14, force_topic=topic, force_angle=angle)
             return
             
         from src.telegram_bot import _execute_publish
