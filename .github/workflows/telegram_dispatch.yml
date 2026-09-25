@@ -1,0 +1,71 @@
+name: Telegram Quick Dispatch
+
+# This workflow is ONLY triggered manually from Google Apps Script (Telegram commands)
+# It is much faster than the scheduler because it skips Playwright & xvfb installation
+
+on:
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: 'Post Topic from GAS'
+        required: true
+        default: ''
+      angle:
+        description: 'Post Angle from GAS'
+        required: false
+        default: 'أسلوب احترافي'
+
+jobs:
+  quick-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15  # Much shorter timeout - no need for 45 minutes
+    env:
+      TZ: 'Africa/Cairo'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-dispatch-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-dispatch-
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies (no Playwright)
+        run: pip install -r requirements.txt
+
+      - name: Create .env from GitHub Secrets
+        run: |
+          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> .env
+          echo "LINKEDIN_ACCESS_TOKEN=${{ secrets.LINKEDIN_ACCESS_TOKEN }}" >> .env
+          echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
+          echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env
+          echo "POST_TOPIC=${{ github.event.inputs.topic }}" >> .env
+          echo "POST_ANGLE=${{ github.event.inputs.angle }}" >> .env
+          echo "PEXELS_API_KEY=${{ secrets.PEXELS_API_KEY }}" >> .env
+          echo "UNSPLASH_ACCESS_KEY=${{ secrets.UNSPLASH_ACCESS_KEY }}" >> .env
+          echo "GAS_WEBHOOK_URL=${{ secrets.GAS_WEBHOOK_URL }}" >> .env
+          echo "HF_TOKEN=${{ secrets.HF_TOKEN }}" >> .env
+
+      - name: Restore database from cache
+        uses: actions/cache@v4
+        with:
+          path: social_posts.db
+          key: social-posts-db-${{ github.run_id }}
+          restore-keys: |
+            social-posts-db-
+
+      - name: Initialize database (if new)
+        run: python -c "from src.database import init_db; init_db()"
+
+      - name: Run quick dispatch (no Playwright, no xvfb)
+        run: python standalone_scheduler.py
